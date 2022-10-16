@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-from flask import Flask, Blueprint, request, redirect,session,render_template, jsonify, make_response,abort,g
-import json
-from werkzeug.routing import BaseConverter
-
+from flask import Flask
+from app.parser import logParser
 class FlaskSiteConfig(object):
     """默认配置"""
-    GITLOGFILE ='1.txt'
+    GITLOG_FILE ='../1.txt'
 
 def create_flask_app(config):
 
@@ -22,3 +20,7 @@ app = create_flask_app(FlaskSiteConfig)
 @app.route('/') 
 def route_map():
     return 'Hello World!'
+
+@app.route('/logfile') 
+def logfile():
+    return logParser.get_contends(app.config['GITLOG_FILE'])

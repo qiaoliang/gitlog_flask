@@ -1,5 +1,5 @@
 import unittest
-from app import app
+from app.app import app
 
 
 class HelloWorldTestCase(unittest.TestCase):
