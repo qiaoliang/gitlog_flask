@@ -100,7 +100,7 @@ def parse(content):
             continue
         elif(changeFlag):               # -> 收集变更文件名信息
             if(line !=''):              # -> 去除多余的空行
-                ri.addChange(line[0:-1])# -> 去除行尾的换行符
+                ri.addChange(ChangeFile.create(line[0:-1]))# -> 去除行尾的换行符
             continue
         elif(line.strip() == ""):       # -> 如果两个 Revision 之间有空行就忽略空行
             continue

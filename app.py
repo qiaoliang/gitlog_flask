@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 from flask import Flask
-from app.parser import logParser
+from parser import logParser
 class FlaskSiteConfig(object):
     """默认配置"""
-    GITLOG_FILE ='../1.txt'
+    GITLOG_FILE ='./1.txt'
 
 def create_flask_app(config):
 
