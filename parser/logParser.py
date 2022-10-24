@@ -2,37 +2,10 @@
 解析下面 Git log 命令的输出
 $> git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n>>>>Detail:%n%b<<<<End" HEAD...224d > 1.txt
 '''
-import json,sqlite3
-class ChangeFile(object):
-    def __init__(self):
-        self.mode=""
-        self.orgin=''
-        self.target =''
-    @staticmethod
-    def create(str):
-        cfile = ChangeFile()
-        items=str.split('\t')
-        length = len(items)
-        if(length >= 2):
-            cfile.mode = items[0]
-            cfile.orgin = items[1]
-        if(length==3):
-            cfile.target = items[2]
-        return cfile
-class RevisionInfo(object):
-    def __init__(self):
-        self.rev = ""
-        self.brief = ""
-        self.detail= []
-        self.changes =[]
-    def setRev(self,r):
-        self.rev=r
-    def setBrief(self,b):
-        self.brief = b
-    def addDetail(self,d):
-        self.detail.append(d)
-    def addChange(self,c):
-        self.changes.append(c)
+import json
+from repo.revmode import ChangedFile,Revision
+from repo.db import saveRev
+
 def convert_to_dict(obj):
   '''把Object对象转换成Dict对象'''
   dict = {}
@@ -64,14 +37,15 @@ def class_to_dict(obj):
     dict.update(obj.__dict__)
     return dict
 
-def get_contends(path):
+def parseLog(path):
     '''path 是git log 文件路径'''
     lines =[]
     with open(path) as f:
         lines = f.readlines()
-    ris = parse(lines)  # -> 解析字符串数组，返回 RevisionInfo 的 List
-    result = convert_to_dicts(ris) # -> 将class list 转成 Dict
-    return json.dumps(result,ensure_ascii=False) # 返回json 字串
+    return parse(lines)  # -> 解析字符串数组，返回 RevisionInfo 的 List
+
+    # result = class_to_dict(ris) # -> 将class list 转成 Dict
+    # return json.dumps(result,ensure_ascii=False) # 返回json 字串
 def parse(content):
     ris =[]
     ri = None
@@ -81,7 +55,7 @@ def parse(content):
         if(line.startswith("Revision: ")):  # -> 是否为新的一个 Revision
             changeFlag = False              # -> 设置 Change File 段已结束
             detailFlag = False              # -> 设置 Detail 段已结束
-            ri = RevisionInfo()             # -> 创建一个新增的 Revision
+            ri = Revision()             # -> 创建一个新增的 Revision
             ri.setRev(line[10:-1])          # -> 保存 revision 信息
             ris.append(ri)                  # -> 将其加入到 Revision 集合中
             continue
@@ -100,41 +74,8 @@ def parse(content):
             continue
         elif(changeFlag):               # -> 收集变更文件名信息
             if(line !=''):              # -> 去除多余的空行
-                ri.addChange(ChangeFile.create(line[0:-1]))# -> 去除行尾的换行符
+                ri.addChange(ChangedFile.create(line[0:-1]))# -> 去除行尾的换行符
             continue
         elif(line.strip() == ""):       # -> 如果两个 Revision 之间有空行就忽略空行
             continue
     return ris
-def connDB():
-    conn = sqlite3.connect(':memory:')
-    print ("数据库打开成功")
-    return conn
-
-def createTable(conn):
-    c = conn.cursor()
-    c.execute('''CREATE TABLE COMPANY
-            (ID INT PRIMARY KEY     NOT NULL,
-       NAME           TEXT    NOT NULL,
-       AGE            INT     NOT NULL,
-       ADDRESS        CHAR(50),
-           SALARY         REAL);''')
-    print ("数据表创建成功")
-    conn.commit()
-
-def insertDB(conn):
-    c= conn.cursor()
-    c.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
-      VALUES (1, 'Paul', 32, 'California', 20000.00 )")
-    conn.commit()
-
-def selectDB(conn):
-    c = conn.cursor()
-    cursor = c.execute("SELECT id, name, address, salary  from COMPANY")
-    for row in cursor:
-       print ("ID = ", row[0])
-       print ("NAME = ", row[1])
-       print ("ADDRESS = ", row[2])
-       print ("SALARY = ", row[3], "\n")
-    print ("数据操作成功")
-def closeDB(conn):
-    conn.close()
