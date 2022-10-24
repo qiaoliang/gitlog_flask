@@ -1,4 +1,24 @@
-import json
+'''
+解析下面 Git log 命令的输出
+$> git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n>>>>Detail:%n%b<<<<End" HEAD...224d > 1.txt
+'''
+import json,sqlite3
+class ChangeFile(object):
+    def __init__(self):
+        self.mode=""
+        self.orgin=''
+        self.target =''
+    @staticmethod
+    def create(str):
+        cfile = ChangeFile()
+        items=str.split('\t')
+        length = len(items)
+        if(length >= 2):
+            cfile.mode = items[0]
+            cfile.orgin = items[1]
+        if(length==3):
+            cfile.target = items[2]
+        return cfile
 class RevisionInfo(object):
     def __init__(self):
         self.rev = ""
@@ -52,36 +72,69 @@ def get_contends(path):
     ris = parse(lines)  # -> 解析字符串数组，返回 RevisionInfo 的 List
     result = convert_to_dicts(ris) # -> 将class list 转成 Dict
     return json.dumps(result,ensure_ascii=False) # 返回json 字串
-
 def parse(content):
     ris =[]
     ri = None
     detailFlag = False # -> 是否开始收集 该 revision 的 detail 字段信息
     changeFlag = False # -> 是否开始收集 该 revision 的 变更文件列表
     for line in content:
-        if(line.startswith("Revision: ")):  # -> 开始解析新的一个 Revision
-            changeFlag = False
-            detailFlag = False
-            ri = RevisionInfo()
-            ris.append(ri)
-            ri.setRev(line[10:])
+        if(line.startswith("Revision: ")):  # -> 是否为新的一个 Revision
+            changeFlag = False              # -> 设置 Change File 段已结束
+            detailFlag = False              # -> 设置 Detail 段已结束
+            ri = RevisionInfo()             # -> 创建一个新增的 Revision
+            ri.setRev(line[10:-1])          # -> 保存 revision 信息
+            ris.append(ri)                  # -> 将其加入到 Revision 集合中
             continue
         elif(line.startswith('###')):   # -> 解析当前Revision的 Brief
-            ri.setBrief(line[3:])
+            ri.setBrief(line[3:-1])     # -> 去除行首的空白和行尾的换行符
             continue
-        elif(line.startswith('>>>>Detail:')): # -> 开始收集 Detail
-            detailFlag = True
+        elif(line.startswith('>>>>Detail:')):   # -> Detail 段是否开始
+            detailFlag = True                   # -> 设置 Detail 段开始
             continue
-        elif(line.startswith('<<<<End')):   #-> Detail 已经结束了
-            detailFlag = False
-            changeFlag = True
+        elif(line.startswith('<<<<End')):   #-> Detail 段是否结束
+            detailFlag = False              # -> 设置 Detail 段已结束
+            changeFlag = True               # -> 设置 Change File 段已开始
             continue
         elif (detailFlag):              # -> 收集 Detail信息
-            ri.addDetail(line)
+            ri.addDetail(line[0:-1])    # -> 去除行尾的换行符
             continue
         elif(changeFlag):               # -> 收集变更文件名信息
-            ri.addChange(line)
+            if(line !=''):              # -> 去除多余的空行
+                ri.addChange(line[0:-1])# -> 去除行尾的换行符
             continue
         elif(line.strip() == ""):       # -> 如果两个 Revision 之间有空行就忽略空行
             continue
     return ris
+def connDB():
+    conn = sqlite3.connect(':memory:')
+    print ("数据库打开成功")
+    return conn
+
+def createTable(conn):
+    c = conn.cursor()
+    c.execute('''CREATE TABLE COMPANY
+            (ID INT PRIMARY KEY     NOT NULL,
+       NAME           TEXT    NOT NULL,
+       AGE            INT     NOT NULL,
+       ADDRESS        CHAR(50),
+           SALARY         REAL);''')
+    print ("数据表创建成功")
+    conn.commit()
+
+def insertDB(conn):
+    c= conn.cursor()
+    c.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
+      VALUES (1, 'Paul', 32, 'California', 20000.00 )")
+    conn.commit()
+
+def selectDB(conn):
+    c = conn.cursor()
+    cursor = c.execute("SELECT id, name, address, salary  from COMPANY")
+    for row in cursor:
+       print ("ID = ", row[0])
+       print ("NAME = ", row[1])
+       print ("ADDRESS = ", row[2])
+       print ("SALARY = ", row[3], "\n")
+    print ("数据操作成功")
+def closeDB(conn):
+    conn.close()
