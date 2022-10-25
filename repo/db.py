@@ -53,4 +53,4 @@ def getAllRevId():
     result =[]
     for i in revInfo:
         result.append(i.rev)
-    return result 
+    return result
