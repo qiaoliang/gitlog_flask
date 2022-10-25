@@ -36,3 +36,10 @@ def getAllRevId():
     for i in revInfo:
         result.append(i.rev)
     return result
+
+def getChangedFiles():
+    revInfos = getAllRevInfo()
+    result = []
+    for item in revInfos:
+        result.append(item.toDict())
+    return result    

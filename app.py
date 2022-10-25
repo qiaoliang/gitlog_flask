@@ -33,3 +33,8 @@ def route_map():
 def rev():
     rev= db.getAllRevId()
     return jsonify(revisions=rev)
+
+@app.route('/changedfile') 
+def changed_file():
+    rev= db.getChangedFiles()
+    return jsonify(revisions=rev)
