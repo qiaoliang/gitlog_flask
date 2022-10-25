@@ -23,7 +23,16 @@
 $ pip3 install -r requirements.txt
 ```
 
-2. 启动服务器
+2. 生成 git log
+
+```bash
+$ cd {your_chromium_dir}/src
+$ git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n<<<<Detail:%n%b<<<<End" HEAD...{your_old-revision} > prod_gitlog.txt
+$ cp prod_gitlog.txt {your_flask_app_dir}
+```
+
+
+3. 启动服务器
 
 ```bash
 $ export FLASK_app=app
@@ -31,7 +40,7 @@ $ export FLASK_ENV=develop  # 默认是 production
 $ flask run -h 127.0.0.1 -p 1313
 ```
 
-3. 打开 <http://127.0.0.1:1313/> .
+4. 打开 <http://127.0.0.1:1313/> .
 
 
 ## 测试

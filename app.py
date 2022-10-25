@@ -4,11 +4,13 @@ from flask_cors import CORS
 from parser import logParser
 from repo import db
 from repo.revmode import Base
-
-
+import os
 class FlaskSiteConfig(object):
     """默认配置"""
-    GITLOG_FILE = './1.txt'
+    GITLOG_FILE = './prod_gitlog.txt'
+    if(os.getenv('FLASK_ENV')=='devolopment'):
+        GITLOG_FILE = './test_gitlog.txt'
+
 
 
 def create_flask_app(config):
@@ -43,8 +45,13 @@ def rev():
     return jsonify(revisions=rev)
 
 
+@app.route('/file/<name>')
+def changed_file(name):
+    result = db.getRevsForFile(name)
+    return jsonify(revisions = result)
+
 @app.route('/files')
-def changed_file():
+def changed_files():
     files = {}
     files['added'] = db.getAppendedFiles()
     files['delelted'] = db.getDeletedFiles()

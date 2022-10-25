@@ -9,7 +9,7 @@ log_2_rev=[
 logtext_1_rev=[
     "Revision: 175c40a\n",
     "###解析 git log 。通过路由 /logfile，将文件内容回写到浏览器。\n",
-    ">>>>Detail:\n",
+    "<<<<Detail:\n",
     "\n",
     "i am Detail 1\n",
     "i am Detail 2 Text\n",

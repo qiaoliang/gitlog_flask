@@ -1,0 +1,37 @@
+Revision: d0166fe
+### remove 1.txt
+<<<<Detail:
+<<<<End
+
+D	1.txt
+Revision: 175c40a
+###解析 git log 。通过路由 /logfile，将文件内容回写到浏览器。
+<<<<Detail:
+<<<<End
+
+M	1.txt
+R100	Dockerfile	app/Dockerfile
+A	app/__init__.py
+R077	app.py	app/app.py
+A	app/parser/__init__.py
+A	app/parser/logParser.py
+A	test/__init__.py
+R092	test_app.py	test/test_app.py
+Revision: cf09f40
+###init project
+<<<<Detail:
+<<<<End
+
+A	1.txt
+A	Dockerfile
+A	app.py
+A	requirements.txt
+A	templates/index.html
+A	test_app.py
+Revision: 124efee
+###init git repo
+<<<<Detail:
+<<<<End
+
+M	.gitignore
+M	README.md

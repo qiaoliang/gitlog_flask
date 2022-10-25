@@ -1,6 +1,6 @@
 '''
 解析下面 Git log 命令的输出
-$> git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n>>>>Detail:%n%b<<<<End" HEAD...224d > 1.txt
+$> git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n<<<<Detail:%n%b<<<<End" HEAD...224d > 1.txt
 '''
 from repo.revmode import ChangedFile, Revision
 
@@ -29,7 +29,7 @@ def parse(content):
         elif (line.startswith('###')):   # -> 解析当前Revision的 Brief
             ri.setBrief(line[3:-1])     # -> 去除行首的空白和行尾的换行符
             continue
-        elif (line.startswith('>>>>Detail:\n')):   # -> Detail 段是否开始
+        elif (line.startswith('<<<<Detail:\n')):   # -> Detail 段是否开始
             detailFlag = True                   # -> 设置 Detail 段开始
             continue
         elif (line.startswith('<<<<End\n')):  # -> Detail 段是否结束
