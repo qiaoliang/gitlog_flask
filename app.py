@@ -34,7 +34,11 @@ def rev():
     rev= db.getAllRevId()
     return jsonify(revisions=rev)
 
-@app.route('/changedfile') 
+@app.route('/files') 
 def changed_file():
-    rev= db.getChangedFiles()
-    return jsonify(revisions=rev)
+    files={}
+    files['added']= db.getAppendedFiles()
+    files['delelted']= db.getDeletedFiles()
+    files['renamed']= db.getRenamedFiles()
+    files['modified']= db.getModifiedFiles()
+    return jsonify(files=files)
