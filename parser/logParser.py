@@ -5,47 +5,12 @@ $> git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n>>>>Deta
 import json
 from repo.revmode import ChangedFile,Revision
 from repo.db import saveRev
-
-def convert_to_dict(obj):
-  '''把Object对象转换成Dict对象'''
-  dict = {}
-  dict.update(obj.__dict__)
-  return dict
-def convert_to_dicts(objs):
-  '''把对象列表转换为字典列表'''
-  obj_arr = []
-  for o in objs:
-    #把Object对象转换成Dict对象
-    dict = {}
-    dict.update(o.__dict__)
-    obj_arr.append(dict)
-  return obj_arr
-def class_to_dict(obj):
-  '''把对象(支持单个对象、list、set)转换成字典'''
-  is_list = obj.__class__ == [].__class__
-  is_set = obj.__class__ == set().__class__
-  if is_list or is_set:
-    obj_arr = []
-    for o in obj:
-      #把Object对象转换成Dict对象
-      dict = {}
-      dict.update(o.__dict__)
-      obj_arr.append(dict)
-    return obj_arr
-  else:
-    dict = {}
-    dict.update(obj.__dict__)
-    return dict
-
 def parseLog(path):
     '''path 是git log 文件路径'''
     lines =[]
     with open(path) as f:
         lines = f.readlines()
     return parse(lines)  # -> 解析字符串数组，返回 RevisionInfo 的 List
-
-    # result = class_to_dict(ris) # -> 将class list 转成 Dict
-    # return json.dumps(result,ensure_ascii=False) # 返回json 字串
 def parse(content):
     ris =[]
     ri = None

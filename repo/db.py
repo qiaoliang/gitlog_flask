@@ -1,13 +1,16 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import Session
-from sqlalchemy import select
-from repo.revmode import Revision, Base
+from sqlalchemy import  create_engine,select
+from sqlalchemy.orm import sessionmaker,Session
 from sqlalchemy.pool import StaticPool
-# use memory db
+from parser import logParser
+
+from repo.revmode import Revision
+
+# using memory db
 _engine = create_engine("sqlite:///:memory:", poolclass=StaticPool, connect_args={'check_same_thread': False})
+
 def engine():
     return _engine
+
 def session():
     Session = sessionmaker(_engine)
     return Session
@@ -22,10 +25,14 @@ def saveRev(ris):
         for revInfo in mysession.scalars(stmt):
             print(revInfo)
             print(revInfo.changedfiles[0])
-def getAllRev():
-    with session().begin() as mysession:
-        stmt = select(Revision)
-        for revInfo in mysession.scalars(stmt):
-            print(revInfo)
-            print(revInfo.changedfiles[0])
-    return "OK"
+
+def getAllRevInfo():
+    session = Session(engine())
+    return session.scalars(select(Revision)).all()
+
+def getAllRevId():
+    revInfo = getAllRevInfo()
+    result =[]
+    for i in revInfo:
+        result.append(i.rev)
+    return result

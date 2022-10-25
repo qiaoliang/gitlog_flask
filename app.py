@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from parser import logParser
-
 from repo import db
 from repo.revmode import Base
 class FlaskSiteConfig(object):
@@ -32,4 +31,5 @@ def route_map():
     return 'Hello World!'
 @app.route('/rev') 
 def rev():
-    return db.getAllRev()
+    rev= db.getAllRevId()
+    return jsonify(revisions=rev)
