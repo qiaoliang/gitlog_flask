@@ -34,7 +34,11 @@ class LogParseTestCase(unittest.TestCase):
  
         changes =revInfo.changedfiles
         self.assertEqual(len(changes),6)
-        self.assertEqual(changes[0].cmode,"M")
+        self.assertEqual(changes[3].cmode,"R")
+        self.assertEqual(changes[3].origin,"app.py")
+        self.assertEqual(changes[3].target,"app/app.py")
+
+
 
     def test_should_has_two_revisionse(self):
         result = logParser.parse(log_2_rev)

@@ -2,7 +2,6 @@ import unittest
 from app import app
 from repo import revmode
 
-
 class RevModeTestCase(unittest.TestCase):
     def test_parse_modified_files(self):
         line = "M	1.txt"
@@ -24,3 +23,10 @@ class RevModeTestCase(unittest.TestCase):
         self.assertEqual(result.cmode,'R')
         self.assertEqual(result.origin,"Dockerfile")
         self.assertEqual(result.target,"app/Dockerfile")
+
+    def test_parse_Renamed_files(self):
+        line = "A	1.txt"
+        result = revmode.ChangedFile.create(line)
+        self.assertEqual(result.cmode,'A')
+        self.assertEqual(result.origin,"1.txt")
+        self.assertEqual(result.target,None)
