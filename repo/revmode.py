@@ -53,9 +53,9 @@ class ChangedFile(Base):
         cfile = ChangedFile()
         items=str.split('\t')
         length = len(items)
-        if(length >= 2):
-            cfile.mode = items[0]
-            cfile.orgin = items[1]
+        if(length == 2):
+            cfile.cmode = items[0]
+            cfile.origin = items[1]
         if(length==3):
             cfile.target = items[2]
-        return cfile    
+        return cfile   

@@ -23,4 +23,4 @@ class LogParseTestCase(unittest.TestCase):
         self.assertEqual(result[0].rev, "175c40a")
         changes =result[0].changedfiles
         self.assertEqual(len(changes),6)
-        # self.assertEqual(changes[0].cmode,"M")
+        self.assertEqual(changes[0].cmode,"M")
