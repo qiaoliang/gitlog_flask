@@ -25,15 +25,15 @@ def parse(content):
         elif(line.startswith('###')):   # -> 解析当前Revision的 Brief
             ri.setBrief(line[3:-1])     # -> 去除行首的空白和行尾的换行符
             continue
-        elif(line.startswith('>>>>Detail:')):   # -> Detail 段是否开始
+        elif(line.startswith('>>>>Detail:\n')):   # -> Detail 段是否开始
             detailFlag = True                   # -> 设置 Detail 段开始
             continue
-        elif(line.startswith('<<<<End')):   #-> Detail 段是否结束
+        elif(line.startswith('<<<<End\n')):   #-> Detail 段是否结束
             detailFlag = False              # -> 设置 Detail 段已结束
             changeFlag = True               # -> 设置 Change File 段已开始
             continue
         elif (detailFlag):              # -> 收集 Detail信息
-            ri.addDetail(line[0:-1])    # -> 去除行尾的换行符
+            ri.addDetail(line[0:])      # -> 保留换行符
             continue
         elif(changeFlag):               # -> 收集变更文件名信息
             if(line[0:-1].strip() !=''):              # -> 去除多余的空行

@@ -25,9 +25,12 @@ class Revision(Base):
     def setBrief(self,b):
         self.brief = b
     def addDetail(self,d):
-        self.detail=self.detail+d
+        if(self.detail is None):
+            self.detail=""
+        self.detail = self.detail + d; 
     def addChange(self,c):
         self.changedfiles.append(c)
+
     def toDict(self):
         result= {'inst':self.id,'rev':self.rev, 'brief':self.brief, 'detail':self.detail}
         changes =[]
@@ -53,9 +56,9 @@ class ChangedFile(Base):
         cfile = ChangedFile()
         items=str.split('\t')
         length = len(items)
-        if(length == 2):
-            cfile.cmode = items[0]
+        if(length >= 2):
+            cfile.cmode = items[0][0:1]
             cfile.origin = items[1]
         if(length==3):
             cfile.target = items[2]
-        return cfile   
+        return cfile
