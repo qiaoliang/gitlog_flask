@@ -7,11 +7,12 @@ from repo.revmode import Base
 import os
 class FlaskSiteConfig(object):
     """默认配置"""
-    GITLOG_FILE = './prod_gitlog.txt'
-    if(os.getenv('FLASK_ENV')=='devolopment'):
+    GITLOG_FILE = None
+    print(os.getenv('FLASK_ENV'))
+    if(os.getenv('FLASK_ENV')=='development'):
         GITLOG_FILE = './test_gitlog.txt'
-
-
+    else:
+        GITLOG_FILE = './prod_gitlog.txt'
 
 def create_flask_app(config):
     app = Flask(__name__,

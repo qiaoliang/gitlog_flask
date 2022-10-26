@@ -1,37 +1,3788 @@
-Revision: d0166fe
-### remove 1.txt
->>>>Detail:
+Revision: 83a9a5c950eaf
+###[BlobURL] Prepare for upcoming BlobURL changes
+<<<<Detail:
+This CL refactors the code slightly to better support upcoming
+Blob URL changes. Also, for PublicURLManagerTest, we make the test
+class have an actual ExecutionContext since the upcoming changes
+will introduce different behavior depending on the context.
+
+For a more complete view of the intended changes, see:
+https://chromium-review.googlesource.com/c/chromium/src/+/3472524
+
+Bug: 1261328
+Change-Id: Icdf91fb35c360435e50ecc9151eb1d87c0900d59
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942987
+Commit-Queue: Andrew Williams <awillia@google.com>
+Reviewed-by: Kentaro Hara <haraken@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057412}
 <<<<End
 
-D	1.txt
-Revision: 175c40a
-###解析 git log 。通过路由 /logfile，将文件内容回写到浏览器。
->>>>Detail:
+M	third_party/blink/renderer/core/fileapi/public_url_manager.cc
+M	third_party/blink/renderer/core/fileapi/public_url_manager_test.cc
+Revision: 709e680b357ff
+###Introduce template class to bind crosapi
+<<<<Detail:
+In each crosapi test, we need to bind the crosapi we use.
+The function |BindCrosapiInterface()| provides an easy way to bind it.
+
+It will be used only in ash crosapi test.
+
+Bug: 1357441
+Change-Id: Icc91f77ed4ccec77c3e91c395fc2d3c969dcbb68
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3924660
+Commit-Queue: Anna Sato <annasato@google.com>
+Reviewed-by: Hidehiko Abe <hidehiko@chromium.org>
+Reviewed-by: Eriko Kurimoto <elkurin@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057411}
 <<<<End
 
-M	1.txt
-R100	Dockerfile	app/Dockerfile
-A	app/__init__.py
-R077	app.py	app/app.py
-A	app/parser/__init__.py
-A	app/parser/logParser.py
-A	test/__init__.py
-R092	test_app.py	test/test_app.py
-Revision: cf09f40
-###init project
->>>>Detail:
+M	chrome/browser/ash/crosapi/test/crosapi_test_base.cc
+M	chrome/browser/ash/crosapi/test/crosapi_test_base.h
+Revision: 49d56eec87305
+###system-extensions: Add feature flag for OEM SysX
+<<<<Detail:
+This CL adds a new Ash feature flag for the OEM System Extension
+type. The flag enables or disables this SysX type by not allowing
+to parse the type from the manifest definition.
+
+Bug: b/247763043
+Test: browser_tests --gtest_filter="OemSxBrowserTest*"
+Test: browser_tests --gtest_filter="SystemExtensionsBrowserTestWithOemFeaturePreTest*"
+Test: unit_tests --gtest_filter="SystemExtensionsSandboxedUnpackerTest*"
+Change-Id: I5ac40fa67de5e055e8e882ba915cb4eceac6a0b0
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3926230
+Commit-Queue: Bastian Kersting <bkersting@google.com>
+Reviewed-by: Giovanni Ortuno Urquidi <ortuno@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057410}
 <<<<End
 
-A	1.txt
-A	Dockerfile
-A	app.py
-A	requirements.txt
-A	templates/index.html
-A	test_app.py
-Revision: 124efee
-###init git repo
->>>>Detail:
+M	ash/constants/ash_features.cc
+M	ash/constants/ash_features.h
+M	chrome/browser/ash/system_extensions/api/oem_diagnostics_control/BUILD.gn
+M	chrome/browser/ash/system_extensions/api/oem_diagnostics_control/oem_diagnostics_control_browsertest.cc
+M	chrome/browser/ash/system_extensions/system_extensions_browsertest.cc
+M	chrome/browser/ash/system_extensions/system_extensions_sandboxed_unpacker.cc
+M	chrome/browser/ash/system_extensions/system_extensions_sandboxed_unpacker_unittest.cc
+A	chrome/test/data/system_extensions/oem_diagnostics_and_control_extension/html/index.html
+A	chrome/test/data/system_extensions/oem_diagnostics_and_control_extension/manifest.json
+A	chrome/test/data/system_extensions/oem_diagnostics_and_control_extension/sw.js
+Revision: f42596b1f4b2d
+###Add metrics for first party sets actions on all sites page
+<<<<Detail:
+This CL adds histogram entries to all sites actions for first party sets
+1. Filtering by FPS owner
+2. Clearing data for an entire FPS
+
+Bug: 1349370
+Change-Id: I08fe1f3425c60dd6dce72c9ee10744add5cde3fe
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936287
+Commit-Queue: Mariam Ali <alimariam@google.com>
+Reviewed-by: Theodore Olsauskas-Warren <sauski@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057409}
 <<<<End
 
-M	.gitignore
-M	README.md
+M	chrome/browser/resources/settings/site_settings/all_sites.ts
+M	chrome/browser/resources/settings/site_settings/constants.ts
+M	chrome/browser/ui/webui/settings/site_settings_handler.cc
+M	tools/metrics/histograms/enums.xml
+Revision: 277aace525d26
+###Extend account id migration flag to M111
+<<<<Detail:
+Bug: 1028182
+Change-Id: I7a9fafba5dcea3514d505b28439518cc48299d53
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944868
+Auto-Submit: Mihai Sardarescu <msarda@chromium.org>
+Commit-Queue: David Roger <droger@chromium.org>
+Reviewed-by: David Roger <droger@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057408}
+<<<<End
+
+M	chrome/browser/flag-metadata.json
+Revision: d3bd0a60f34ae
+###Filtering flaky WebAppBrowser, RegionCapture, Search and WebView tests from Mac12-arm-rel
+<<<<Detail:
+Since these exceed the 4% limit of flake on a CQ
+
+Added
+WebAppBrowserTest.AppInfoOpensPageInfo,
+RegionCaptureBrowserTest.CropToAllowedIfTopLevelCropsToElementInTopLevel
+SearchPreloadUnifiedBrowserTest.SuggestionChangeAfterStartPrerender,
+WebViewTests/WebViewTest.SpatialNavigationJavascriptAPI/SiteIsolationForGuestsEnabled
+to the mac12-arm64-rel CQ filter
+
+Bug: 1368577,1368579,1368580,1368581
+Change-Id: I86e62f2b15c4391ec59bc8629075e9b2d7c10151
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3922075
+Reviewed-by: Lindsay Pasricha <lindsayw@chromium.org>
+Commit-Queue: Srinivas Bathula <srbathula@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057407}
+<<<<End
+
+M	testing/buildbot/filters/mac.mac12-arm64-rel.browser_tests.filter
+Revision: cb56f5c48662b
+###Introduce command line "ash-chrome-path".
+<<<<Detail:
+If you add "--ash-chrome-path=${path_to_chrome}" to command line when
+running AshCrosapiTest, its tests run with the passed ash-chrome binary.
+
+By default, 'test_ash_chrome' under the directory that contains
+application assets is used.
+
+Change-Id: If3c85c58efc574ef0129d0fc3ac5934cb2857748
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3932296
+Commit-Queue: Anna Sato <annasato@google.com>
+Reviewed-by: Eriko Kurimoto <elkurin@chromium.org>
+Reviewed-by: Hidehiko Abe <hidehiko@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057406}
+<<<<End
+
+M	chrome/browser/ash/crosapi/test/ash_crosapi_tests_env.cc
+Revision: d30fe2240c1b7
+###Replace RunLoop::QuitWhenIdle* with RunLoop::Quit* in Kiosk tests
+<<<<Detail:
+RunLoop::QuitWhenIdle* will break if the work it's waiting moves to
+another process (e.g. Lacros). We want to avoid using them generally.
+There are 2 places in Kiosk tests that break on RunLoop:Quit*. We need
+to do more investigation later.
+
+Bug: b:240493670
+Test: unit_tests and browser_tests with filter *Kiosk*
+Change-Id: Iff7416d478a0f6d43fce32aea12b38bffce2216b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3932636
+Reviewed-by: Polina Bondarenko <pbond@chromium.org>
+Reviewed-by: Alan Cutter <alancutter@chromium.org>
+Commit-Queue: Yi Xie <yixie@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057405}
+<<<<End
+
+M	chrome/browser/ash/app_mode/web_app/web_kiosk_app_update_observer_unittest.cc
+M	chrome/browser/ash/app_mode/web_app/web_kiosk_browser_controller_ash_browsertest.cc
+M	chrome/browser/ash/login/app_mode/test/web_kiosk_browsertest.cc
+Revision: eb88e6c9f1021
+###Add IPv6NetworkResolutionFixes to field trial testing config.
+<<<<Detail:
+Bug: 1350101
+Change-Id: I6532e7283cc0048f95c51fbe33cf1f5c39f770fc
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3928267
+Commit-Queue: Diep Bui <diepbp@google.com>
+Quick-Run: Erik Ovelius <ovelius@google.com>
+Reviewed-by: Tomas Gunnarsson <tommi@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057404}
+<<<<End
+
+M	testing/variations/fieldtrial_testing_config.json
+Revision: c9535f0d0abc1
+###Serialize Eye Dropper API colors as legacy hex colors
+<<<<Detail:
+Apparently we were overzealous with the CSS Color 4 serializations as
+the eye dropper API is explicitly designed to use hex color:
+https://wicg.github.io/eyedropper-api/#colorselectionresult-dictionary
+
+Bug: 1372110
+Change-Id: I8b952a7e668b1606ed0f205b5b796e89e81f15c5
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942305
+Commit-Queue: Aaron Krajeski <aaronhk@chromium.org>
+Reviewed-by: Joshua Bell <jsbell@chromium.org>
+Reviewed-by: Kentaro Hara <haraken@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057403}
+<<<<End
+
+M	third_party/blink/renderer/modules/eyedropper/eye_dropper.cc
+Revision: ff8358e14416a
+###Fix inconsistencies in enum values between proto and trace_event_stub
+<<<<Detail:
+Bug: 241412371
+Change-Id: Ib4b4c7564f9bc71fae742057b6e365bd54c672aa
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3933058
+Commit-Queue: Aman Verma <amanvr@google.com>
+Reviewed-by: Alexander Timin <altimin@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057402}
+<<<<End
+
+M	base/trace_event/trace_event_stub.h
+M	base/tracing/protos/chrome_track_event.proto
+Revision: 0348e5233af26
+###app_restore: Rename WindowIdToAppId
+<<<<Detail:
+Since this `AppId` is different from AppId in App service, and the
+function just wrap the window id to a arc specific app id string.
+
+This CL change the function name to `WrapSessionAppIdFromWindowId`
+in order to make it meaningful.
+
+BUG=None
+TEST=build
+
+Change-Id: I5aae03eab78fceb9d47bfbdd63e3fd8d5a9bb0d8
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944334
+Commit-Queue: Shengsong Tan <sstan@chromium.org>
+Reviewed-by: Nancy Wang <nancylingwang@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057401}
+<<<<End
+
+M	chrome/browser/ash/app_restore/arc_ghost_window_shell_surface.cc
+M	chrome/browser/ash/app_restore/arc_window_utils.cc
+M	chrome/browser/ash/app_restore/arc_window_utils.h
+Revision: 198b6b7644608
+###[iOS] Tap on tangible sends histogram
+<<<<Detail:
+Bug: 1371110
+Change-Id: I1b227520cdd344e375bb8680333844d6298da3a4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937953
+Reviewed-by: Gauthier Ambard <gambard@chromium.org>
+Commit-Queue: Arthur Milchior <arthurmilchior@chromium.org>
+Reviewed-by: Alex Ilin <alexilin@chromium.org>
+Reviewed-by: Jérôme Lebel <jlebel@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057400}
+<<<<End
+
+M	components/signin/public/base/signin_metrics.h
+M	ios/chrome/browser/ui/authentication/tangible_sync/BUILD.gn
+M	ios/chrome/browser/ui/authentication/tangible_sync/tangible_sync_view_controller.h
+M	ios/chrome/browser/ui/authentication/tangible_sync/tangible_sync_view_controller.mm
+M	ios/chrome/browser/ui/elements/instruction_view.h
+M	ios/chrome/browser/ui/elements/instruction_view.mm
+M	tools/metrics/histograms/metadata/signin/histograms.xml
+Revision: 6297733a9177d
+###arc: Update ARC app states after launch ghost window
+<<<<Detail:
+Previously, if the ARC booted and app already in `need_fixup`
+state, the ghost window type still in original type since
+no app state update call.
+
+This CL update ARC app states immediately after ghost window
+launch. It make sure the ghost window type corresponding to current
+App state.
+
+BUG=None
+TEST=manually launch the app in `need_fixup` state.
+
+Change-Id: I5890523d4d4ad5146f16d14051ed79a99fd28f5f
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944531
+Reviewed-by: Nancy Wang <nancylingwang@chromium.org>
+Commit-Queue: Shengsong Tan <sstan@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057399}
+<<<<End
+
+M	chrome/browser/ash/app_restore/arc_app_launch_handler.cc
+Revision: 715a9f1172203
+###[Code Health] Migrate to base::Value::Dict in c/b/c/app_mode*
+<<<<Detail:
+Bug: 1366865, 1187061
+Change-Id: I2812893f128fef8cb83f195a7a3792390a4bc4ce
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944910
+Auto-Submit: Roman Sorokin <rsorokin@google.com>
+Commit-Queue: Jeroen Dhollander <jeroendh@google.com>
+Commit-Queue: Roman Sorokin <rsorokin@google.com>
+Reviewed-by: Jeroen Dhollander <jeroendh@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057398}
+<<<<End
+
+M	chrome/browser/chromeos/app_mode/chrome_kiosk_external_loader_broker.cc
+M	chrome/browser/chromeos/app_mode/chrome_kiosk_external_loader_broker.h
+M	chrome/browser/chromeos/app_mode/kiosk_app_external_loader.cc
+M	chrome/browser/chromeos/app_mode/kiosk_app_external_loader.h
+Revision: d85358f417295
+###Add StubAuthenticator::AuthenticateToUnlock
+<<<<Detail:
+This is needed if we enable the kUseAuthFactor feature for
+BrailleDisplayPrivateAPIUserTest.KeyEventOnLockScreen and probably other
+tests as well.
+
+Bug: b:241259026
+Change-Id: Id74930b2f8811eea5108780b03683163eda2834c
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941695
+Auto-Submit: Martin Bidlingmaier <mbid@google.com>
+Commit-Queue: Denis Kuznetsov <antrim@chromium.org>
+Reviewed-by: Denis Kuznetsov <antrim@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057397}
+<<<<End
+
+M	chromeos/ash/components/login/auth/stub_authenticator.cc
+Revision: c4d71ae4f9f05
+###[GridNG] Build up NGGridSizingTree for subgrid layout
+<<<<Detail:
+In order to correctly perform subgrid layout we need to do a significant
+refactor in NGGrid to allow the topmost grid container to size the whole
+grid tree. This is required since we need to provide the contribution
+size of every subgrid up to the same step in the parent grid's sizing
+algorithm, which we are not able to easily do in `ComputeMinMaxSizes`
+nor `Layout` because it expects grid sizing to be finalized.
+
+This CL introduces `NGGridSizingTree`, a class representing a tree of
+multiple nested grids, with the root of the tree being the topmost grid
+and the rest of the nodes being subgrids (at least one subgridded axis).
+
+Our tree structure is "flattened", meaning it's contained in a single
+vector with each tree node storing a pointer to its parent (except the
+position 0, which is the root) and built in such a way that the nodes of
+every subtree are contiguous in the vector. To perform grid sizing, each
+node stores data for their respective grid's algorithm, e.g., its layout
+track collections, grid items, placement data, etc.
+
+Bug: 618969
+Change-Id: I8052b0e8a41cd9207f46597c4bbe620f26a190d1
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3940365
+Reviewed-by: Ian Kilpatrick <ikilpatrick@chromium.org>
+Commit-Queue: Ethan Jimenez <ethavar@microsoft.com>
+Cr-Commit-Position: refs/heads/main@{#1057396}
+<<<<End
+
+M	third_party/blink/renderer/core/layout/build.gni
+M	third_party/blink/renderer/core/layout/ng/grid/layout_ng_grid.cc
+M	third_party/blink/renderer/core/layout/ng/grid/layout_ng_grid.h
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_data.h
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_item.cc
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_item.h
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_layout_algorithm.cc
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_layout_algorithm.h
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_layout_algorithm_test.cc
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_node.cc
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_node.h
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_placement.cc
+M	third_party/blink/renderer/core/layout/ng/grid/ng_grid_placement.h
+D	third_party/blink/renderer/core/layout/ng/grid/ng_grid_properties.h
+R077	third_party/blink/renderer/core/layout/ng/grid/ng_grid_properties.cc	third_party/blink/renderer/core/layout/ng/grid/ng_grid_sizing_tree.cc
+A	third_party/blink/renderer/core/layout/ng/grid/ng_grid_sizing_tree.h
+M	third_party/blink/renderer/core/layout/ng/ng_out_of_flow_layout_part.cc
+Revision: 32d86114a7d84
+###[Passwords][Sync] Force downloading passwords for potential notes
+<<<<Detail:
+This CL is forcing the redownload of all passwords from the sync
+server when starting a browser instance that has support for password
+notes for the first time.
+More details are in the linked bug.
+
+Bug: 1369638
+Change-Id: I1f8890b2c2449c98f46f259fd134e7058745b569
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941804
+Commit-Queue: Mohamed Amir Yosef <mamir@chromium.org>
+Reviewed-by: Mikel Astiz <mastiz@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057395}
+<<<<End
+
+M	components/password_manager/core/browser/sync/password_proto_utils.cc
+M	components/password_manager/core/browser/sync/password_sync_bridge.cc
+M	components/password_manager/core/browser/sync/password_sync_bridge_unittest.cc
+M	components/sync/model/client_tag_based_model_type_processor.cc
+M	components/sync/model/client_tag_based_model_type_processor_unittest.cc
+M	components/sync/protocol/model_type_state.proto
+M	components/sync/protocol/proto_visitors.h
+M	tools/metrics/histograms/enums.xml
+Revision: e73d7ae116a2d
+###[iOS] change InstructionView color
+<<<<Detail:
+Change the InstructionView background color and step label color to
+unify all colors between different screens.
+
+Screen (as of patch 11) are on https://drive.google.com/file/d/1OkB2LcfdFJIhj20eq17EthgtxcFBBcsf/view?usp=sharing and https://drive.google.com/file/d/14pJMefuKM_9xeWnXeHDjDAdKqKS01g4W/view?usp=sharing
+
+Fixed: 1371106
+Change-Id: If420ae2499618217115d473ce71802b975c85d75
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3932992
+Reviewed-by: Jérôme Lebel <jlebel@chromium.org>
+Reviewed-by: Gauthier Ambard <gambard@chromium.org>
+Commit-Queue: Arthur Milchior <arthurmilchior@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057394}
+<<<<End
+
+M	ios/chrome/browser/ui/elements/instruction_view.mm
+Revision: 77d9362f58a21
+###Roll Fuchsia Internal Images from 9.20221010.3.1 to 9.20221011.1.1
+<<<<Detail:
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/fuchsia-internal-images-chromium
+Please CC chrome-fuchsia-gardener@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:fuchsia-fyi-astro
+Tbr: chrome-fuchsia-gardener@grotations.appspotmail.com
+Disable-Retries: true
+Change-Id: Ic01b7e05cafc4aa223b47ddda1b014760d70111c
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942743
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057393}
+<<<<End
+
+M	build/fuchsia/linux_internal.sdk.sha1
+Revision: 9777bbb34b350
+###Add permission MPArch verification for RFH in PermissionControllerImpl.
+<<<<Detail:
+All permissions API callsites go via `PermissionController` and `PermissionControllerImpl`. This CL adds MPArch verifications into `//content` layer in `PermissionControllerImpl`. Current MPArch verifications exist in `PermissionContextBase::GetPermissionStatus()`, which is in `//components` layer.
+
+More details: https://chromium-review.googlesource.com/c/chromium/src/+/3220941/comments/3739068b_cc870b0f
+
+That CL adds missing conversion from `ContentSettingsType::CLIPBOARD_SANITIZED_WRITE` to `PermissionType::CLIPBOARD_SANITIZED_WRITE`.
+
+LOW_COVERAGE_REASON=All (browser) tests are available here:
+1. Portal https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/permissions/permissions_security_model_interactive_uitest.cc;l=1475-1518;drc=a432cd59d51281057ba2a2673ca645a9600bb927
+2. Fenced Frame https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/permissions/permissions_security_model_interactive_uitest.cc;l=1432-1450;drc=a432cd59d51281057ba2a2673ca645a9600bb927
+3. BFcache https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/permissions/permissions_security_model_interactive_uitest.cc;l=1645-1740;drc=a432cd59d51281057ba2a2673ca645a9600bb927
+
+Bug: 1270601, 1227711
+Change-Id: I4efc40671d7b0df5b0d0c09e789b77aea484f7ac
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3663000
+Commit-Queue: Illia Klimov <elklm@chromium.org>
+Reviewed-by: Andy Paicu <andypaicu@chromium.org>
+Reviewed-by: Olga Sharonova <olka@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057392}
+<<<<End
+
+M	components/permissions/permission_context_base.cc
+M	components/permissions/permission_util.cc
+M	components/webrtc/media_stream_devices_controller.cc
+M	content/browser/permissions/permission_controller_impl.cc
+M	third_party/blink/common/permissions/permission_utils.cc
+M	third_party/blink/public/common/permissions/permission_utils.h
+Revision: 6d314f6827c14
+###Roll Chrome Win32 PGO Profile
+<<<<Detail:
+Roll Chrome Win32 PGO profile from chrome-win32-main-1665457143-789ced98d2d51e77afa7d3bf2f9cb3b5b4ed6352.profdata to chrome-win32-main-1665466989-59b68c48f1e7c31bcf08f8102bb36757080095bc.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win32-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I1c1ca418c401cf4bd299d7b937bda090ff9db6f4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942423
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057391}
+<<<<End
+
+M	chrome/build/win32.pgo.txt
+Revision: c07b962a21e0c
+###Update V8 to version 10.8.146.
+<<<<Detail:
+Summary of changes available at:
+https://chromium.googlesource.com/v8/v8/+log/4ce8b6d0..f651da1c
+
+Please follow these instructions for assigning/CC'ing issues:
+https://v8.dev/docs/triage-issues
+
+Please close rolling in case of a roll revert:
+https://v8-roll.appspot.com/
+This only works with a Google account.
+
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux-blink-rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_chromium_chromeos_msan_rel_ng
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:mac_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:win_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:android_optional_gpu_tests_rel
+
+R=hablich@chromium.org,vahl@chromium.org,v8-waterfall-sheriff@grotations.appspotmail.com
+
+Change-Id: I35dfc0eef705a44381efd703fc27acbe2e33be1e
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943917
+Bot-Commit: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057390}
+<<<<End
+
+M	DEPS
+Revision: 46798b44f68fe
+###Roll devtools-internal from 61d7a73347de to 15b211629468 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/devtools/devtools-internal.git/+log/61d7a73347de..15b211629468
+
+Also rolling transitive DEPS:
+  https://chromium.googlesource.com/devtools/devtools-frontend.git/+log/ce01a88714ce10f6a71c29d384e74e40fe7b17a6..4478aa88299db527943f499278d0eee59410d455
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/devtools-internal-chromium
+Please CC devtools-waterfall-sheriff-onduty@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: devtools-waterfall-sheriff-onduty@grotations.appspotmail.com
+Change-Id: I3d11b7ce7e465ef56b4959af236f2522e08bea9d
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942723
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057389}
+<<<<End
+
+M	DEPS
+Revision: 70a3bdd037e4b
+###[iOS][Omnibox] Add omnibox keyboard consumer
+<<<<Detail:
+To handle selection for OmniboxPopupCarousel, left and right arrow keys needs to be forwarded to the popup. But these action are also customized
+in OmniboxTextField.
+
+OmniboxKeyboardConsumer is a protocol to handle keyboard actions in the omnibox. Now just for arrow keys, the return key may also be added later
+to this protocol.
+Arrow keys from text field are forwarded to OmniboxViewController that will dispatch them to OmniboxPopupViewController or OmniboxTextFieldIOS.
+If neither of them can perform an action, defaults actions of text
+field are executed.
+
+This CL adds the base architecture of OmniboxKeyboardConsumer without
+changing existing behavior.
+
+Later CL will remove OmniboxSuggestionCommands that used to handle up
+and down arrows keys.
+
+Bug: 1371453
+Change-Id: I2fe912bdce67d4f35814d21419fed08423107fca
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3930922
+Reviewed-by: Stepan Khapugin <stkhapugin@chromium.org>
+Auto-Submit: Christian Xu <christianxu@chromium.org>
+Commit-Queue: Christian Xu <christianxu@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057388}
+<<<<End
+
+M	ios/chrome/browser/ui/omnibox/BUILD.gn
+M	ios/chrome/browser/ui/omnibox/omnibox_coordinator.mm
+A	ios/chrome/browser/ui/omnibox/omnibox_keyboard_delegate.h
+M	ios/chrome/browser/ui/omnibox/omnibox_text_field_experimental.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h
+M	ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_text_field_legacy.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_view_controller.h
+M	ios/chrome/browser/ui/omnibox/omnibox_view_controller.mm
+M	ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.h
+M	ios/chrome/browser/ui/omnibox/popup/omnibox_popup_coordinator.mm
+M	ios/chrome/browser/ui/omnibox/popup/omnibox_popup_view_controller.h
+M	ios/chrome/browser/ui/omnibox/popup/omnibox_popup_view_controller.mm
+Revision: 00694805065ec
+###Roll clang llvmorg-16-init-6578-g0d30e92f-2 : llvmorg-16-init-7184-gdeb82d4a-1
+<<<<Detail:
+Ran `tools/clang/scripts/upload_revision.py deb82d4a20150b4c983ed02adcfd2ca84691b74b`.
+
+Bug: 1372391
+Change-Id: I02a93ee4563e9f620d72f2900e56e48f91a43af7
+Cq-Include-Trybots: chromium/try:chromeos-amd64-generic-cfi-thin-lto-rel
+Cq-Include-Trybots: chromium/try:dawn-win10-x86-deps-rel
+Cq-Include-Trybots: chromium/try:linux-chromeos-dbg
+Cq-Include-Trybots: chromium/try:linux_chromium_cfi_rel_ng
+Cq-Include-Trybots: chromium/try:linux_chromium_chromeos_msan_rel_ng
+Cq-Include-Trybots: chromium/try:linux_chromium_msan_rel_ng
+Cq-Include-Trybots: chromium/try:mac11-arm64-rel,mac_chromium_asan_rel_ng
+Cq-Include-Trybots: chromium/try:ios-catalyst
+Cq-Include-Trybots: chromium/try:win-asan,win7-rel
+Cq-Include-Trybots: chromium/try:android-official,fuchsia-official
+Cq-Include-Trybots: chromium/try:mac-official,linux-official
+Cq-Include-Trybots: chromium/try:win-official,win32-official
+Cq-Include-Trybots: chromium/try:linux-swangle-try-x64,win-swangle-try-x86
+Cq-Include-Trybots: chrome/try:linux-chromeos-chrome
+Cq-Include-Trybots: chrome/try:win-chrome,win64-chrome,linux-chrome,mac-chrome
+Cq-Include-Trybots: chrome/try:linux-pgo,mac-pgo,win32-pgo,win64-pgo
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941829
+Reviewed-by: Nico Weber <thakis@chromium.org>
+Auto-Submit: Hans Wennborg <hans@chromium.org>
+Commit-Queue: Nico Weber <thakis@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057387}
+<<<<End
+
+M	tools/clang/scripts/update.py
+Revision: 58fed813c8e15
+###Roll Projector App from Xy1Ztjw2_use1iQ_H... to lSLQXJMzFPD3rgnpk...
+<<<<Detail:
+Release_Notes: http://go/projector_app-x20/relnotes/Main/projector_app_nightly_202210110100_RC00.html
+
+https://chrome-infra-packages.appspot.com/p/chromeos_internal/apps/projector_app/app/+/lSLQXJMzFPD3rgnpkVI4YbjdDuqlrrl26-NCKafAg0EC
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/projector-app-chromium-autoroll
+Please CC cros-projector-oncall@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:chromeos-betty-pi-arc-chrome;luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: cros-projector-oncall@grotations.appspotmail.com
+Change-Id: Iea6b373f85a7cba389c11a7cbccfe5e6cc8a6475
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942721
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057386}
+<<<<End
+
+M	DEPS
+Revision: cbd299f3ca218
+###Roll src-internal from 3ee1519d1b62 to 3a45407f3c14 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/chrome/src-internal.git/+log/3ee1519d1b62..3a45407f3c14
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/src-internal-chromium-autoroll
+Please CC fabiansommer@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: fabiansommer@google.com
+Change-Id: If75f72ac74a4e813a1672655a9ca8f047ccac9e8
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944828
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057385}
+<<<<End
+
+M	DEPS
+Revision: 2e76c876ae105
+###Roll Chrome Win64 PGO Profile
+<<<<Detail:
+Roll Chrome Win64 PGO profile from chrome-win64-main-1665457143-72d14fd9608035b554c9e563754e1812f941ba94.profdata to chrome-win64-main-1665466989-2dc06971049708ada16c81934a5f5772edeec3fe.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win64-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win64-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I9adbb16395304504276efb822939ecf83e35b9ed
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942720
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057384}
+<<<<End
+
+M	chrome/build/win64.pgo.txt
+Revision: 2e7d2ed48d17c
+###Revert "fileSystemProvider: port big_file test to service workers"
+<<<<Detail:
+This reverts commit fde50047885b81e4be810c00381bf1ffe676acba.
+
+Reason for revert: This breaks compile on linux-archive-rel:
+
+https://ci.chromium.org/ui/p/chromium/builders/ci/linux-archive-rel/77245/overview
+
+Original change's description:
+> fileSystemProvider: port big_file test to service workers
+>
+> Bug: b:235414571
+> Change-Id: Ie31ac479ac9d94049bc9b4c2ee003a039666e60e
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937796
+> Reviewed-by: Luciano Pacheco <lucmult@chromium.org>
+> Commit-Queue: Alexander Bolodurin <alexbn@chromium.org>
+> Cr-Commit-Position: refs/heads/main@{#1057380}
+
+Bug: b:235414571
+Change-Id: If7fa14db663063792f23be521d69fb5c6411ab34
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3945188
+Reviewed-by: Alex Ilin <alexilin@chromium.org>
+Commit-Queue: Alex Ilin <alexilin@chromium.org>
+Auto-Submit: Fabian Sommer <fabiansommer@chromium.org>
+Owners-Override: Fabian Sommer <fabiansommer@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057383}
+<<<<End
+
+M	chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/BUILD.gn
+D	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/manifest.json
+D	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/sw.js
+D	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/test.html
+D	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/test.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/provider.js
+Revision: 9de7b0185e046
+###Revert "[MPArch] Enable WebViewPointerLockInteractiveTest.PointerLockFocus"
+<<<<Detail:
+This reverts commit 6558b35f3c46964b6a742f718bf7654c8d806786.
+
+Reason for revert:
+Unfortunately, the test is still flaky on linux-chromeos-chrome
+(failing ~ 30%)
+
+Example failing build:
+https://ci.chromium.org/ui/p/chrome/builders/ci/linux-chromeos-chrome/25856/overview
+
+Original change's description:
+> [MPArch] Enable WebViewPointerLockInteractiveTest.PointerLockFocus
+>
+> This CL re-enables WebViewPointerLockInteractiveTest.PointerLockFocus
+> with adjustment of WebView's height not to make a scroll & not to
+> hide WebView since the WebView's visibility change by scrolling
+> releases the mouse lock request and causes the test failure.
+>
+> Bug: 1261928, 412086
+> Change-Id: I7e2160dd4be392573419d9a73ecb54d711b3d597
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3924820
+> Reviewed-by: Kevin McNee <mcnee@chromium.org>
+> Commit-Queue: Miyoung Shin <myid.shin@igalia.com>
+> Cr-Commit-Position: refs/heads/main@{#1056796}
+
+Bug: 1261928, 412086
+Change-Id: I8891f3471f5ff1e42fb76dbd966a7de027c6350d
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944948
+Commit-Queue: Fabian Sommer <fabiansommer@chromium.org>
+Owners-Override: Fabian Sommer <fabiansommer@chromium.org>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057382}
+<<<<End
+
+M	chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc
+M	chrome/test/data/extensions/platform_apps/web_view/pointer_lock_focus/main.html
+Revision: e1e64711994fe
+###Roll ANGLE from 5bafe449e0b3 to f2785e415056 (1 revision)
+<<<<Detail:
+https://chromium.googlesource.com/angle/angle.git/+log/5bafe449e0b3..f2785e415056
+
+2022-10-11 gert.wollny@collabora.com capture/replay: validate after resetting unpack alignment
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/angle-chromium-autoroll
+Please CC jmadill@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in ANGLE: https://bugs.chromium.org/p/angleproject/issues/entry
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:android_optional_gpu_tests_rel;luci.chromium.try:linux_optional_gpu_tests_rel;luci.chromium.try:mac_optional_gpu_tests_rel;luci.chromium.try:win_optional_gpu_tests_rel;luci.chromium.try:linux-swangle-try-x64;luci.chromium.try:win-swangle-try-x86
+Bug: None
+Tbr: jmadill@google.com
+Change-Id: Ic18c10285ff29a3f5ec536a508ade6b074a5e681
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944430
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057381}
+<<<<End
+
+M	DEPS
+Revision: fde50047885b8
+###fileSystemProvider: port big_file test to service workers
+<<<<Detail:
+Bug: b:235414571
+Change-Id: Ie31ac479ac9d94049bc9b4c2ee003a039666e60e
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937796
+Reviewed-by: Luciano Pacheco <lucmult@chromium.org>
+Commit-Queue: Alexander Bolodurin <alexbn@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057380}
+<<<<End
+
+M	chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/BUILD.gn
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/manifest.json
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/sw.js
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/test.html
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/big_file/test.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/provider.js
+Revision: 0f184f47366cc
+###temporarily disable ice server parsing in RTCIceTransport::gather
+<<<<Detail:
+which is part of the standalone RTCIceTransport experiment
+that never shipped.
+
+This allows upgrading ParseIceServers to return an actual error
+instead of just an error type and will be re-enabled after rolling
+WebRTC into Chrome
+
+BUG=webrtc:14539
+
+Change-Id: I41577ed1c04da199334cb0a7e764e19846bb4e92
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942190
+Commit-Queue: Philipp Hancke <phancke@microsoft.com>
+Reviewed-by: Harald Alvestrand <hta@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057379}
+<<<<End
+
+M	third_party/blink/renderer/modules/peerconnection/rtc_ice_transport.cc
+Revision: e13607fd19cbe
+###isolated-apps: Show app name instead of origin in page info dialog
+<<<<Detail:
+For Isolated Web Apps the origin's host name is a non-human-readable
+string of characters, so instead of displaying the origin, the short
+name of the app will be displayed.
+
+This CL covers PageInfoMainView, PageInfoBubbleView and WebAppMenuModel.
+
+Design-doc: go/coralfish-settings-ux
+
+Bug: 1311078
+Change-Id: I7baf80ad60289cc0bb24540e021ab19a378a025c
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3921477
+Commit-Queue: Sonja Laurila <laurila@google.com>
+Reviewed-by: Christian Dullweber <dullweber@chromium.org>
+Reviewed-by: Daniel Murphy <dmurph@chromium.org>
+Reviewed-by: Olesia Marukhno <olesiamarukhno@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057378}
+<<<<End
+
+M	chrome/browser/ui/page_info/chrome_page_info_delegate.cc
+M	chrome/browser/ui/page_info/chrome_page_info_delegate.h
+M	chrome/browser/ui/views/page_info/page_info_bubble_view.cc
+M	chrome/browser/ui/views/page_info/page_info_bubble_view_dialog_browsertest.cc
+M	chrome/browser/ui/views/page_info/page_info_main_view.cc
+M	chrome/browser/ui/web_applications/web_app_menu_model.cc
+M	components/page_info/page_info.cc
+M	components/page_info/page_info.h
+M	components/page_info/page_info_delegate.h
+M	testing/buildbot/filters/pixel_tests.filter
+Revision: 59759e84d79c3
+###Roll devtools-internal from 7d4734cb0696 to 61d7a73347de (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/devtools/devtools-internal.git/+log/7d4734cb0696..61d7a73347de
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/devtools-internal-chromium
+Please CC devtools-waterfall-sheriff-onduty@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: devtools-waterfall-sheriff-onduty@grotations.appspotmail.com
+Change-Id: Ifc9baf9046af59fdbdf2ea632df2b1ff2f42d4f4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944134
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057377}
+<<<<End
+
+M	DEPS
+Revision: 6a7260c489d89
+###Better at-block-end detection during initial column balancing.
+<<<<Detail:
+We were assuming that nothing would break in the initial column
+balancing pass.  However, with forced breaks, that's not the case.
+So, check for breaks.
+
+Additionally, turn a DCHECK into CHECK. Vector::Shrink(n) had a DCHECK
+for |n| not being larger than the current size, and would then just go
+ahead and ClearUnusedSlots() with |to| being less than |from|,
+eventually ending up writing roughly size_t(-1) of zeroes (that's a lot
+of zeroes!) into memory. Turn it into a CHECK, to avoid security bugs.
+
+Bug: 1372653
+Change-Id: Ia4561617585a7d989e7974dbbb0753c77dcc777e
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941630
+Commit-Queue: Morten Stenshorne <mstensho@chromium.org>
+Reviewed-by: Ian Kilpatrick <ikilpatrick@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057376}
+<<<<End
+
+M	third_party/blink/renderer/core/layout/ng/ng_fragmentation_utils.cc
+M	third_party/blink/renderer/platform/wtf/vector.h
+A	third_party/blink/web_tests/external/wpt/css/css-multicol/crashtests/balance-with-forced-break.html
+Revision: 58227a45cfd64
+###Roll Perfetto Trace Processor Mac from db9b224ffde8 to 861d81e9ce83
+<<<<Detail:
+https://android.googlesource.com/platform/external/perfetto.git/+log/db9b224ffde8..861d81e9ce83
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/perfetto-trace-processor-mac-chromium
+Please CC perfetto-bugs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Tbr: perfetto-bugs@google.com
+Change-Id: Ia28702b48eb7f04a73a0b3cd51377c7f4d6ba3f4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942422
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057375}
+<<<<End
+
+M	tools/perf/core/perfetto_binary_roller/binary_deps.json
+Revision: 566e884e56e57
+###Remove inactive owners from /third_party/blink/public
+<<<<Detail:
+This is a re-upload of this CL [1]. See the original CL for
+the rationale of this removal.
+
+[1] https://chromium-review.googlesource.com/c/chromium/src/+/3844907
+
+R=chrishtr@chromium.org, kinuko@chromium.org
+
+Bug: 1355150
+Change-Id: I6a62b58a8aa62ca7d4a9719279bc650fa98c0b88
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944693
+Reviewed-by: Kinuko Yasuda <kinuko@chromium.org>
+Auto-Submit: Kentaro Hara <haraken@chromium.org>
+Commit-Queue: Kinuko Yasuda <kinuko@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057374}
+<<<<End
+
+M	third_party/blink/public/OWNERS
+Revision: ea71ca6feeac0
+###Extend life of Media.{RTCVideoDecoderFallbackReason, RTCVideoDecoderReinitializationLatencyMs}
+<<<<Detail:
+Fixed: chromium:1357681
+Change-Id: I0b0329fad049fc6c903b552c5a6375ec72e3c6bc
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943333
+Reviewed-by: Ilya Nikolaevskiy <ilnik@chromium.org>
+Commit-Queue: Johannes Kron <kron@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057373}
+<<<<End
+
+M	tools/metrics/histograms/metadata/media/histograms.xml
+Revision: 5bafeee2c3894
+###Delay expiry of frequently used histograms.
+<<<<Detail:
+Updates the expires_after attribute for 290 histograms that show
+frequent access in the past 180 days.  These are the 99% most
+frequently used histograms over that time that do not already
+have a date later than or within 60 days of 2023-01-09.
+
+TBR=chromium-metrics-reviews@google.com
+
+Change-Id: I57378eb9bb3aa3a6cdc8041a9ac10749a5c04122
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943933
+Commit-Queue: Chrome Metrics Logs <chrome-metrics-team+robot@google.com>
+Bot-Commit: Chrome Metrics Logs <chrome-metrics-team+robot@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057372}
+<<<<End
+
+M	tools/metrics/histograms/metadata/accessibility/histograms.xml
+M	tools/metrics/histograms/metadata/account_manager/histograms.xml
+M	tools/metrics/histograms/metadata/android/histograms.xml
+M	tools/metrics/histograms/metadata/apps/histograms.xml
+M	tools/metrics/histograms/metadata/arc/histograms.xml
+M	tools/metrics/histograms/metadata/ash/histograms.xml
+M	tools/metrics/histograms/metadata/assistant/histograms.xml
+M	tools/metrics/histograms/metadata/autofill/histograms.xml
+M	tools/metrics/histograms/metadata/borealis/histograms.xml
+M	tools/metrics/histograms/metadata/chromeos/histograms.xml
+M	tools/metrics/histograms/metadata/commerce/histograms.xml
+M	tools/metrics/histograms/metadata/compositing/histograms.xml
+M	tools/metrics/histograms/metadata/cookie/histograms.xml
+M	tools/metrics/histograms/metadata/cras/histograms.xml
+M	tools/metrics/histograms/metadata/cros_ml/histograms.xml
+M	tools/metrics/histograms/metadata/cross_device/histograms.xml
+M	tools/metrics/histograms/metadata/crostini/histograms.xml
+M	tools/metrics/histograms/metadata/cryptohome/histograms.xml
+M	tools/metrics/histograms/metadata/disk/histograms.xml
+M	tools/metrics/histograms/metadata/download/histograms.xml
+M	tools/metrics/histograms/metadata/enterprise/histograms.xml
+M	tools/metrics/histograms/metadata/extensions/histograms.xml
+M	tools/metrics/histograms/metadata/fingerprint/histograms.xml
+M	tools/metrics/histograms/metadata/gpu/histograms.xml
+M	tools/metrics/histograms/metadata/history/histograms.xml
+M	tools/metrics/histograms/metadata/kerberos/histograms.xml
+M	tools/metrics/histograms/metadata/media/histograms.xml
+M	tools/metrics/histograms/metadata/memory/histograms.xml
+M	tools/metrics/histograms/metadata/nearby/histograms.xml
+M	tools/metrics/histograms/metadata/net/histograms.xml
+M	tools/metrics/histograms/metadata/network/histograms.xml
+M	tools/metrics/histograms/metadata/new_tab_page/histograms.xml
+M	tools/metrics/histograms/metadata/offline/histograms.xml
+M	tools/metrics/histograms/metadata/omnibox/histograms.xml
+M	tools/metrics/histograms/metadata/others/histograms.xml
+M	tools/metrics/histograms/metadata/page/histograms.xml
+M	tools/metrics/histograms/metadata/password/histograms.xml
+M	tools/metrics/histograms/metadata/phonehub/histograms.xml
+M	tools/metrics/histograms/metadata/plugin_vm/histograms.xml
+M	tools/metrics/histograms/metadata/power/histograms.xml
+M	tools/metrics/histograms/metadata/printing/histograms.xml
+M	tools/metrics/histograms/metadata/privacy/histograms.xml
+M	tools/metrics/histograms/metadata/profile/histograms.xml
+M	tools/metrics/histograms/metadata/quick_answers/histograms.xml
+M	tools/metrics/histograms/metadata/quota/histograms.xml
+M	tools/metrics/histograms/metadata/safe_browsing/histograms.xml
+M	tools/metrics/histograms/metadata/security/histograms.xml
+M	tools/metrics/histograms/metadata/service/histograms.xml
+M	tools/metrics/histograms/metadata/side_search/histograms.xml
+M	tools/metrics/histograms/metadata/storage/histograms.xml
+M	tools/metrics/histograms/metadata/sync/histograms.xml
+M	tools/metrics/histograms/metadata/uma/histograms.xml
+M	tools/metrics/histograms/metadata/update_engine/histograms.xml
+M	tools/metrics/histograms/metadata/v8/histograms.xml
+M	tools/metrics/histograms/metadata/web_audio/histograms.xml
+M	tools/metrics/histograms/metadata/web_rtc/histograms.xml
+Revision: 390e937f006ac
+###[DevTools] Update calls to PerformanceTestRunner.createPerformanceModelWithEvents
+<<<<Detail:
+This method will be made async in [0]. To allow for that CL to
+land, test deps need to be updated first.
+
+[0] https://crrev.com/c/3941705
+
+Bug: 1364601
+Change-Id: Ib83b2c5a215bc224205fc26256f748b3eb7f86f7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941685
+Reviewed-by: Danil Somsikov <dsv@chromium.org>
+Commit-Queue: Andres Olivares <andoli@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057371}
+<<<<End
+
+M	third_party/blink/web_tests/http/tests/devtools/tracing/category-filter.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/frame-model.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/generic-trace.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-js/timeline-js-callstacks.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-js/timeline-js-ignore-list.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-js/timeline-js-streamed-cpu-profile.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-js/timeline-open-function-call.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-aggregated-details.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-auto-zoom.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-filtering-self-time.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-filtering.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-model.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-page-metrics.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-range-stats.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-search.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/timeline-misc/timeline-user-timings.js
+M	third_party/blink/web_tests/http/tests/devtools/tracing/ui-devtools-not-generic-trace.js
+Revision: 06e02904f976d
+###Roll Dawn from a880e661db50 to 5cbb32d764fb (1 revision)
+<<<<Detail:
+https://dawn.googlesource.com/dawn.git/+log/a880e661db50..5cbb32d764fb
+
+2022-10-11 zhaoming.jiang@intel.com Tint/tranfsorm/test: Refactor and add exhaustive test for Std140
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/dawn-chromium-autoroll
+Please CC cwallez@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Dawn: https://bugs.chromium.org/p/dawn/issues/entry
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:dawn-mac-x64-deps-rel;luci.chromium.try:dawn-win10-x64-deps-rel;luci.chromium.try:dawn-win10-x86-deps-rel
+Bug: None
+Tbr: cwallez@google.com
+Change-Id: I06fe36b0d7b0a7b220f74e12ad59eede8bc9c6d8
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942722
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057370}
+<<<<End
+
+M	DEPS
+Revision: 9c27d67573ba4
+###CCA: Improve the verbalization for page deletion
+<<<<Detail:
+This CL improves the verbalization for page deletion in multi-page
+document scanning review UI.
+* Announce specific page number like "Delete page 1".
+* Speak "Page 1 deleted" after page 1 is deleted.
+
+Bug: b:223089758
+Test: Test page deletion on dut with ChromeVox active
+Change-Id: I34fc357739aa22405a7bd2368bab1111088cc2af
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3939168
+Reviewed-by: Wei Lee <wtlee@chromium.org>
+Commit-Queue: Chu-Hsuan Yang <chuhsuan@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057369}
+<<<<End
+
+M	ash/webui/camera_app_ui/resources.h
+M	ash/webui/camera_app_ui/resources/js/i18n_string.ts
+M	ash/webui/camera_app_ui/resources/js/views/document_review.ts
+M	ash/webui/camera_app_ui/resources/strings/camera_strings.grd
+M	ash/webui/camera_app_ui/resources/strings/camera_strings_grd/IDS_DELETE_PAGE_BUTTON.png.sha1
+A	ash/webui/camera_app_ui/resources/strings/camera_strings_grd/IDS_DELETE_PAGE_MESSAGE.png.sha1
+Revision: b78e8e05e644f
+###Pad video onscreen rectangle for fullscreen letterboxing.
+<<<<Detail:
+For swapchain and video onscreen rect adjustment, we have to shift
+the video up and down sometimes. In order to have the remaining
+area, which is left blank on screen by black bars at the edge,
+covered by the new video rect, we need to resize the video rect.
+1. If the video onscreen rect needs to be moved up/left by n lines,
+   we add n lines to the video onscreen rect height/width.
+2. If the video onscreen rect needs to be moved down/right by n
+   lines, we keep the original point of the video onscreen rect.
+   Meanwhile, just increase its size to make it symmetrical around
+   the monitor center.
+
+Bug: 1108536
+Change-Id: I0e22ab4fe8b7bc722c07b1e36eda5e7f4439be55
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3940176
+Commit-Queue: Chunbo Hua <chunbo.hua@intel.com>
+Reviewed-by: Maggie Chen <magchen@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057368}
+<<<<End
+
+M	ui/gl/swap_chain_presenter.cc
+Revision: c7510beaec862
+###[iOS] Switch to ios/chrome/common/ui/util/ui_util.h
+<<<<Detail:
+This patch is part of a series of patches to switch import from:
+  ios/chrome/browser/ui/util/ui_util.h
+to:
+  ios/chrome/common/ui/util/ui_util.h
+
+This is related to:
+   crrev.com/c/3936525 Moving methods to the new location
+   crrev.com/c/3936523 Cleanup old location
+
+This CL was uploaded by git cl split.
+
+R=rohitrao@chromium.org
+
+Change-Id: Ia6defa44a832a53410d9115574d7f085fd959624
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3939790
+Commit-Queue: Jérôme Lebel <jlebel@chromium.org>
+Auto-Submit: Jérôme Lebel <jlebel@chromium.org>
+Reviewed-by: Rohit Rao <rohitrao@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057367}
+<<<<End
+
+M	ios/chrome/browser/ui/omnibox/keyboard_assist/omnibox_keyboard_accessory_view.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_container_view.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm
+M	ios/chrome/browser/ui/omnibox/omnibox_view_controller.mm
+Revision: 6940660e35033
+###Add the (forgotten) histogram definitions for CUD profile deduplication metrics. Code to record these histograms already exists (see: https://chromium-review.googlesource.com/c/chromium/src/+/3810280)
+<<<<Detail:
+Bug: b:186781344
+Change-Id: I3ea980e5300efe71fa8cb41742c905bf1c071555
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937948
+Reviewed-by: Michael Thiessen <mthiesse@chromium.org>
+Reviewed-by: Clemens Arbesser <arbesser@google.com>
+Commit-Queue: Özgen Eren <ozgeneren@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057366}
+<<<<End
+
+M	components/autofill_assistant/browser/actions/collect_user_data_action_unittest.cc
+M	tools/metrics/histograms/enums.xml
+M	tools/metrics/histograms/metadata/android/histograms.xml
+Revision: 867fe9c0c082b
+###migration: Make blocking D-Bus method obvious
+<<<<Detail:
+Make it clear that RequestBrowserDataMigration is being called
+using a blocking D-Bus call by renaming it to
+BlockingRequestBrowserDataMigration.
+
+Bug: None
+Change-Id: I2ab0601e7ba170702cb32e0a056f279bc54350e2
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941585
+Reviewed-by: Ryo Hashimoto <hashimoto@chromium.org>
+Commit-Queue: Victor-Gabriel Savu <vsavu@google.com>
+Reviewed-by: Hidehiko Abe <hidehiko@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057365}
+<<<<End
+
+M	chrome/browser/ash/crosapi/browser_data_migrator.cc
+M	chromeos/ash/components/dbus/session_manager/fake_session_manager_client.cc
+M	chromeos/ash/components/dbus/session_manager/fake_session_manager_client.h
+M	chromeos/ash/components/dbus/session_manager/session_manager_client.cc
+M	chromeos/ash/components/dbus/session_manager/session_manager_client.h
+Revision: 6d6c436de4313
+###Revert "Update indexeddb-internals page to use mojom"
+<<<<Detail:
+This reverts commit 67843b564f91f368e748528264c440c3348567f7.
+
+Reason for revert:
+
+This CL (very likely) caused the test 
+ChromeURLDataManagerWebUITrustedTypesTest.NoTrustedTypesViolation/chrome___indexeddb_internals
+to start failing flakily.
+
+Failing build:
+https://ci.chromium.org/ui/p/chromium/builders/ci/mac11-arm64-rel-tests/10090/test-results
+
+Original change's description:
+> Update indexeddb-internals page to use mojom
+>
+> Updates the indexeddb-internal page to use mojom instead of the
+> WebUIMessageHandler.
+>
+> Bug: 1199077
+> Change-Id: I14fa3e302655ee6ddcc120e916e0f798f4fcbd34
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3906465
+> Reviewed-by: Alex Gough <ajgo@chromium.org>
+> Reviewed-by: Austin Sullivan <asully@chromium.org>
+> Commit-Queue: Nathan Memmott <memmott@chromium.org>
+> Cr-Commit-Position: refs/heads/main@{#1057217}
+
+Bug: 1199077, 1373356
+Change-Id: I7669c9d1e3d9f914f6ef1e5c538c0687c345067c
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941676
+Owners-Override: Fabian Sommer <fabiansommer@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Commit-Queue: Yuki Shiino <yukishiino@chromium.org>
+Reviewed-by: Yuki Shiino <yukishiino@chromium.org>
+Owners-Override: Yuki Shiino <yukishiino@chromium.org>
+Auto-Submit: Fabian Sommer <fabiansommer@chromium.org>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057364}
+<<<<End
+
+M	components/services/storage/privileged/mojom/BUILD.gn
+D	components/services/storage/privileged/mojom/indexed_db_bucket_types.mojom
+M	components/services/storage/privileged/mojom/indexed_db_control.mojom
+M	content/browser/BUILD.gn
+M	content/browser/browser_interface_binders.cc
+D	content/browser/indexed_db/BUILD.gn
+M	content/browser/indexed_db/OWNERS
+M	content/browser/indexed_db/indexed_db_context_impl.cc
+D	content/browser/indexed_db/indexed_db_internals.mojom
+M	content/browser/indexed_db/indexed_db_internals_ui.cc
+M	content/browser/indexed_db/indexed_db_internals_ui.h
+M	content/browser/resources/indexed_db/BUILD.gn
+M	content/browser/resources/indexed_db/indexeddb_internals.html
+M	content/browser/resources/indexed_db/indexeddb_internals.js
+Revision: 538c8858d27eb
+###Privacy Guide: enable PrivacyGuide2 by default
+<<<<Detail:
+Bug: 1215630
+Change-Id: I7bc8ea26758399e4aa7ee9a46d120a768110c6ed
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936269
+Reviewed-by: Olesia Marukhno <olesiamarukhno@google.com>
+Commit-Queue: Rainhard Findling <rainhard@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057363}
+<<<<End
+
+M	chrome/common/chrome_features.cc
+M	testing/variations/fieldtrial_testing_config.json
+Revision: 04ff35174adc4
+###Delay expiry of histograms causing alerts.
+<<<<Detail:
+Updates the expires_after attribute for 47 histograms that have
+been used to generate alerts in the past 180 days and do not already have
+a date later than or within 60 days of 2023-01-09.
+
+TBR=chromium-metrics-reviews@google.com
+
+Change-Id: Ieab7b045eadb23e2a78532bc93c30a724405988f
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943013
+Bot-Commit: Chrome Metrics Logs <chrome-metrics-team+robot@google.com>
+Commit-Queue: Chrome Metrics Logs <chrome-metrics-team+robot@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057362}
+<<<<End
+
+M	tools/metrics/histograms/metadata/android/histograms.xml
+M	tools/metrics/histograms/metadata/ash/histograms.xml
+M	tools/metrics/histograms/metadata/autofill/histograms.xml
+M	tools/metrics/histograms/metadata/browser/histograms.xml
+M	tools/metrics/histograms/metadata/chromeos/histograms.xml
+M	tools/metrics/histograms/metadata/compositing/histograms.xml
+M	tools/metrics/histograms/metadata/cros/histograms.xml
+M	tools/metrics/histograms/metadata/cryptohome/histograms.xml
+M	tools/metrics/histograms/metadata/dev/histograms.xml
+M	tools/metrics/histograms/metadata/feature_engagement/histograms.xml
+M	tools/metrics/histograms/metadata/history/histograms.xml
+M	tools/metrics/histograms/metadata/input/histograms.xml
+M	tools/metrics/histograms/metadata/media/histograms.xml
+M	tools/metrics/histograms/metadata/memory/histograms.xml
+M	tools/metrics/histograms/metadata/network/histograms.xml
+M	tools/metrics/histograms/metadata/others/histograms.xml
+M	tools/metrics/histograms/metadata/page/histograms.xml
+M	tools/metrics/histograms/metadata/password/histograms.xml
+M	tools/metrics/histograms/metadata/power/histograms.xml
+M	tools/metrics/histograms/metadata/safe_browsing/histograms.xml
+M	tools/metrics/histograms/metadata/service/histograms.xml
+M	tools/metrics/histograms/metadata/side_search/histograms.xml
+M	tools/metrics/histograms/metadata/sync/histograms.xml
+M	tools/metrics/histograms/metadata/tab/histograms.xml
+M	tools/metrics/histograms/metadata/uma/histograms.xml
+M	tools/metrics/histograms/metadata/web_apk/histograms.xml
+M	tools/metrics/histograms/metadata/web_rtc/histograms.xml
+M	tools/metrics/histograms/metadata/webapps/histograms.xml
+Revision: 4455776b5dcb2
+###[css-variables] Support revert-[layer] in fallbacks
+<<<<Detail:
+Bug: 1105782
+Change-Id: I45a903b1b81b411f17867fc6c311173bd755a7b7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3934282
+Reviewed-by: Rune Lillesveen <futhark@chromium.org>
+Commit-Queue: Anders Hartvoll Ruud <andruud@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057361}
+<<<<End
+
+M	third_party/blink/renderer/core/css/resolver/style_cascade.cc
+M	third_party/blink/renderer/core/css/resolver/style_cascade.h
+A	third_party/blink/web_tests/external/wpt/css/css-variables/revert-in-fallback.html
+A	third_party/blink/web_tests/external/wpt/css/css-variables/revert-layer-in-fallback.html
+Revision: 10af2b6ab9bbd
+###Roll Chrome Mac PGO Profile
+<<<<Detail:
+Roll Chrome Mac PGO profile from chrome-mac-main-1665446112-aca6ae512ccf9285ae066e71edbb6dc4e1241bbc.profdata to chrome-mac-main-1665466989-f1b73f6b32f188d96ab47e50789a884d060ecad3.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-mac-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:mac-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I81c699329c823427a0d888ef12f9cb77342c1e93
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944429
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057360}
+<<<<End
+
+M	chrome/build/mac.pgo.txt
+Revision: 008ccf78505a7
+###Roll vulkan-deps from 98c0906d8c81 to 24053e9970b7 (1 revision)
+<<<<Detail:
+https://chromium.googlesource.com/vulkan-deps.git/+log/98c0906d8c81..24053e9970b7
+
+Changed dependencies:
+* vulkan-validation-layers: https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git/+log/d68f939413..7625be6a26
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/vulkan-deps-chromium-autoroll
+Please CC cwallez@google.com,jmadill@google.com,radial-bots+chrome-roll@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:android_optional_gpu_tests_rel;luci.chromium.try:linux_optional_gpu_tests_rel;luci.chromium.try:mac_optional_gpu_tests_rel;luci.chromium.try:win_optional_gpu_tests_rel;luci.chromium.try:linux-swangle-try-x64;luci.chromium.try:win-swangle-try-x86;luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:win-asan;luci.chromium.try:linux_chromium_cfi_rel_ng
+Bug: None
+Tbr: cwallez@google.com,jmadill@google.com,radial-bots+chrome-roll@google.com
+Change-Id: I35c6d143c4f1ba55d25506aa950ee96e9c2cc723
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942858
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057359}
+<<<<End
+
+M	DEPS
+Revision: 3bd82e0222c37
+###Revert "fileSystemProvider: read test functions are applicable to Blobs"
+<<<<Detail:
+This reverts commit 30f4ed7a10de9926a4c776374e094fbb3d916ced.
+
+Reason for revert: Suspicious about causing a test failure:
+ServiceWorker/ExtensionWebRequestApiTestWithContextType.InitiatorAccessRequired
+https://ci.chromium.org/ui/p/chromium/builders/ci/Mac11%20Tests/11887/overview
+
+Original change's description:
+> fileSystemProvider: read test functions are applicable to Blobs
+>
+> Generalise the {startRead,read}FromTextFile test functions from File to
+> Blob to read files at offsets.
+>
+> Bug: b:235414571
+> Change-Id: I8c4ca6d174571401d2841f42603aac9999d16064
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3935958
+> Reviewed-by: Luciano Pacheco <lucmult@chromium.org>
+> Commit-Queue: Alexander Bolodurin <alexbn@chromium.org>
+> Cr-Commit-Position: refs/heads/main@{#1057326}
+
+Bug: b:235414571
+Change-Id: Id704a85e0a2b05f1815ec89d5e62c6f03198d3e3
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944651
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Auto-Submit: Yuki Shiino <yukishiino@chromium.org>
+Owners-Override: Yuki Shiino <yukishiino@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057358}
+<<<<End
+
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/get_all/test.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/helpers.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/read_file/test.js
+Revision: aed57cfe59dfc
+###Roll Perfetto Trace Processor Win from db9b224ffde8 to 861d81e9ce83
+<<<<Detail:
+https://android.googlesource.com/platform/external/perfetto.git/+log/db9b224ffde8..861d81e9ce83
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/perfetto-trace-processor-win-chromium
+Please CC perfetto-bugs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Tbr: perfetto-bugs@google.com
+Change-Id: I0207f90e67e18cd91e5a95197535bdf7ba57b42a
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942598
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057357}
+<<<<End
+
+M	tools/perf/core/perfetto_binary_roller/binary_deps.json
+Revision: dfd123dc71101
+###[iOS] Enable MICe FRE experiment for Canary and Dev
+<<<<Detail:
+Enable MICe FRE for Canary and Dev with:
+  20%: MICe FRE 2 steps,
+  20%: Tangible Sync A
+  20%: Tangible Sync B
+  20%: Tangible Sync C
+  20%: Control group (feature disabled)
+
+Bug: 1363812
+Change-Id: I21699e93f508945fa62d36315845ec4c89d21ebc
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3938187
+Auto-Submit: Jérôme Lebel <jlebel@chromium.org>
+Reviewed-by: Ginny Huang <ginnyhuang@chromium.org>
+Commit-Queue: Jérôme Lebel <jlebel@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057356}
+<<<<End
+
+M	ios/chrome/browser/ui/first_run/BUILD.gn
+A	ios/chrome/browser/ui/first_run/field_trial_ids.cc
+A	ios/chrome/browser/ui/first_run/field_trial_ids.h
+M	ios/chrome/browser/ui/first_run/fre_field_trial.cc
+M	ios/chrome/browser/ui/first_run/fre_field_trial_unittest.mm
+Revision: 7c2e01b58f421
+###DLP: Pass kArc as caller in ArcSelectFileHandler
+<<<<Detail:
+Passes the kArc component type as the caller's type from
+`ArcSelectFileHandler` to `SelectFileWithFileManagerParams()` which is
+needed for Data Leak Prevention checks in the picker dialog.
+
+Bug: 1364565
+Change-Id: I85b164e1fbfd269135e5bcbbe34202efd701e9f3
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3938185
+Reviewed-by: Luciano Pacheco <lucmult@chromium.org>
+Reviewed-by: Alan Ding <alanding@chromium.org>
+Auto-Submit: Aida Zolic <aidazolic@chromium.org>
+Commit-Queue: Aida Zolic <aidazolic@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057355}
+<<<<End
+
+M	chrome/browser/ash/arc/fileapi/arc_select_files_handler.cc
+Revision: cc06ad2197e35
+###Enable ProtoConvertor tests for MainContentExtraction.
+<<<<Detail:
+MainContentExtraction tests are update based on recent update in
+ProtoConvertor and tests are updated.
+
+Bug: 1278249
+Change-Id: Icea383587e97d4d58916a881f8bfd20d20441296
+AX-Relnotes: n/a
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941687
+Reviewed-by: David Tseng <dtseng@chromium.org>
+Commit-Queue: Ramin Halavati <rhalavati@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057354}
+<<<<End
+
+M	components/services/screen_ai/proto/proto_convertor_unittest.cc
+M	components/test/data/screen_ai/sample0_expected_proto.pbtxt
+M	components/test/data/screen_ai/sample1_expected_proto.pbtxt
+M	components/test/data/screen_ai/sample2_expected_proto.pbtxt
+M	components/test/data/screen_ai/sample3_expected_proto.pbtxt
+M	components/test/data/screen_ai/sample4_expected_proto.pbtxt
+M	ui/accessibility/test_ax_tree_update_json_reader.cc
+Revision: 236ef137ac7e1
+###Integrate backend source with show generic ui action.
+<<<<Detail:
+* Add a new interaction callback to request data from backend.
+* ShowGenericUI will pass a repeating callback from the Action object to the basic_interactions, just like existing OnceCallback for end_action.  The callback will be used by generic_ui to request backend data.
+* Call to backend turns the state to 'RUNNING' which we reset in the backend call response.
+
+
+Bug: b/245267029
+Change-Id: I0484dcee4439851445429898f5a8955b7f4c25c1
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3881966
+Reviewed-by: Clemens Arbesser <arbesser@google.com>
+Commit-Queue: Abhishek Gupta <aabhigupta@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057353}
+<<<<End
+
+M	components/autofill_assistant/browser/actions/action_delegate.h
+M	components/autofill_assistant/browser/actions/collect_user_data_action.cc
+M	components/autofill_assistant/browser/actions/collect_user_data_action_unittest.cc
+M	components/autofill_assistant/browser/actions/mock_action_delegate.h
+M	components/autofill_assistant/browser/actions/set_persistent_ui_action.cc
+M	components/autofill_assistant/browser/actions/show_generic_ui_action.cc
+M	components/autofill_assistant/browser/actions/show_generic_ui_action.h
+M	components/autofill_assistant/browser/actions/show_generic_ui_action_unittest.cc
+M	components/autofill_assistant/browser/android/generic_ui_interactions_android.cc
+M	components/autofill_assistant/browser/android/generic_ui_interactions_android.h
+M	components/autofill_assistant/browser/android/interaction_handler_android.cc
+M	components/autofill_assistant/browser/basic_interactions.cc
+M	components/autofill_assistant/browser/basic_interactions.h
+M	components/autofill_assistant/browser/basic_interactions_unittest.cc
+M	components/autofill_assistant/browser/fake_script_executor_ui_delegate.cc
+M	components/autofill_assistant/browser/fake_script_executor_ui_delegate.h
+M	components/autofill_assistant/browser/generic_ui.proto
+M	components/autofill_assistant/browser/generic_ui_replace_placeholders.cc
+M	components/autofill_assistant/browser/generic_ui_replace_placeholders_unittest.cc
+M	components/autofill_assistant/browser/headless/headless_ui_controller.cc
+M	components/autofill_assistant/browser/headless/headless_ui_controller.h
+M	components/autofill_assistant/browser/model.proto
+M	components/autofill_assistant/browser/script_executor.cc
+M	components/autofill_assistant/browser/script_executor.h
+M	components/autofill_assistant/browser/script_executor_ui_delegate.h
+M	components/autofill_assistant/browser/script_executor_unittest.cc
+M	components/autofill_assistant/browser/ui_controller.cc
+M	components/autofill_assistant/browser/ui_controller.h
+M	components/autofill_assistant/browser/ui_controller_unittest.cc
+M	components/autofill_assistant/browser/user_data_util.cc
+M	components/autofill_assistant/browser/user_data_util.h
+M	components/autofill_assistant/browser/user_model.cc
+M	components/autofill_assistant/browser/user_model.h
+M	components/autofill_assistant/browser/value_util.cc
+M	components/autofill_assistant/browser/value_util_unittest.cc
+Revision: 59a7b8348738a
+###[hyphens] Add a runtime flag for hyphenate-limit-chars
+<<<<Detail:
+Bug: 924069
+Change-Id: I6dbb0f620fdcf6f9cd0549c07e8e75edeab05966
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944114
+Commit-Queue: Yoshifumi Inoue <yosin@chromium.org>
+Auto-Submit: Koji Ishii <kojii@chromium.org>
+Commit-Queue: Kent Tamura <tkent@chromium.org>
+Reviewed-by: Yoshifumi Inoue <yosin@chromium.org>
+Commit-Queue: Koji Ishii <kojii@chromium.org>
+Reviewed-by: Kent Tamura <tkent@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057352}
+<<<<End
+
+M	third_party/blink/renderer/platform/runtime_enabled_features.json5
+Revision: 740ab8e8f613a
+###Roll WebGPU CTS from 6c61e3b01607 to eba1a78f3d74 (1 revision)
+<<<<Detail:
+https://chromium.googlesource.com/external/github.com/gpuweb/cts.git/+log/6c61e3b01607..eba1a78f3d74
+
+2022-10-11 jiawei.shao@intel.com Add tests on effective buffer binding size the fix existing tests (#1906)
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/webgpu-cts-chromium-autoroll
+Please CC cwallez@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:dawn-mac-x64-deps-rel;luci.chromium.try:dawn-win10-x64-deps-rel;luci.chromium.try:dawn-win10-x86-deps-rel
+Bug: None
+Tbr: cwallez@google.com
+Change-Id: I1ab0eb8d301977cb98d6a1ee8cec03e80d8a88a9
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944728
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057351}
+<<<<End
+
+M	DEPS
+Revision: 5d417b7b88b27
+###[Frameworks roll] Roll to 480269778 piper revision
+<<<<Detail:
+Change-Id: I77ba7650497a8671fb01e7074e6cca1ae157a6c7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943672
+Commit-Queue: Internal Frameworks Autoroller <bling-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Bot-Commit: Internal Frameworks Autoroller <bling-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057350}
+<<<<End
+
+M	ios/google_internal/frameworks/ChromeInternal.framework.dSYM.ios.zip.sha1
+M	ios/google_internal/frameworks/ChromeSSOInternal.framework.dSYM.ios.zip.sha1
+M	ios/google_internal/frameworks/chrome_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/chrome_internal_dynamic_framework.iossimulator.zip.sha1
+M	ios/google_internal/frameworks/chrome_sso_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/chrome_sso_internal_dynamic_framework.iossimulator.zip.sha1
+M	ios/google_internal/frameworks/chrome_test_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/chrome_test_internal_dynamic_framework.iossimulator.zip.sha1
+M	ios/google_internal/frameworks/remoting_dogfood_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/remoting_dogfood_internal_dynamic_framework.iossimulator.zip.sha1
+M	ios/google_internal/frameworks/remoting_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/remoting_internal_dynamic_framework.iossimulator.zip.sha1
+M	ios/google_internal/frameworks/web_view_shell_internal_dynamic_framework.ios.zip.sha1
+M	ios/google_internal/frameworks/web_view_shell_internal_dynamic_framework.iossimulator.zip.sha1
+Revision: 7f67b090f6d76
+###Roll Chrome Win32 PGO Profile
+<<<<Detail:
+Roll Chrome Win32 PGO profile from chrome-win32-main-1665446112-a1d4e9a4f3cec45113d19c02b22f5358df126554.profdata to chrome-win32-main-1665457143-789ced98d2d51e77afa7d3bf2f9cb3b5b4ed6352.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win32-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: Idd62c0ca5059a8be904f9dd68528251cd333d069
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942594
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057349}
+<<<<End
+
+M	chrome/build/win32.pgo.txt
+Revision: 97f0d0ba35f25
+###Roll Skia from 5fd43abc5ba7 to 1ca12f658afb (2 revisions)
+<<<<Detail:
+https://skia.googlesource.com/skia.git/+log/5fd43abc5ba7..1ca12f658afb
+
+2022-10-11 skia-autoroll@skia-public.iam.gserviceaccount.com Roll vulkan-deps from 6d9d58e17148 to 24053e9970b7 (3 revisions)
+2022-10-11 skia-autoroll@skia-public.iam.gserviceaccount.com Roll ANGLE from 54d094fe1de5 to 5bafe449e0b3 (6 revisions)
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/skia-autoroll
+Please CC armansito@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Skia: https://bugs.chromium.org/p/skia/issues/entry
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:android_optional_gpu_tests_rel;luci.chromium.try:linux-blink-rel;luci.chromium.try:linux-chromeos-compile-dbg;luci.chromium.try:linux_optional_gpu_tests_rel;luci.chromium.try:mac_optional_gpu_tests_rel;luci.chromium.try:win_optional_gpu_tests_rel
+Cq-Do-Not-Cancel-Tryjobs: true
+Bug: None
+Tbr: armansito@google.com
+Test: Test: Test: Lineage 2 Revolution MEC
+Change-Id: I6cbc6b67cc14866803d0418bff87450adfa979e2
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944096
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057348}
+<<<<End
+
+M	DEPS
+Revision: 5ea40b36410a0
+###Roll devtools-internal from 77811e9810c0 to 7d4734cb0696 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/devtools/devtools-internal.git/+log/77811e9810c0..7d4734cb0696
+
+Also rolling transitive DEPS:
+  https://chromium.googlesource.com/devtools/devtools-frontend.git/+log/909e1ca0312449ce9156b10e0f40954e3d3a460c..ce01a88714ce10f6a71c29d384e74e40fe7b17a6
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/devtools-internal-chromium
+Please CC devtools-waterfall-sheriff-onduty@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: devtools-waterfall-sheriff-onduty@grotations.appspotmail.com
+Change-Id: Iaa0ac13758e05b0c0ecae9cbd347b9c723b300c4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944132
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057347}
+<<<<End
+
+M	DEPS
+Revision: 76645ba0afc93
+###Roll Chrome Linux PGO Profile
+<<<<Detail:
+Roll Chrome Linux PGO profile from chrome-linux-main-1665446112-784228e11b348103710ba4513213664992d71c2d.profdata to chrome-linux-main-1665466989-7969d9d5052aa41730228040f9ad8b1022098331.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-linux-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: Ie2d222d4b605f5998d735eb447ebdc940c901c0e
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943778
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057346}
+<<<<End
+
+M	chrome/build/linux.pgo.txt
+Revision: 3a415bf0d2147
+###Temporarly disable tests to land crrev.com/c/3942686
+<<<<Detail:
+Bug: 1370050
+Change-Id: Ic85b3331a2186f996ae67615a689ae582440f886
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942257
+Auto-Submit: Danil Somsikov <dsv@chromium.org>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Commit-Queue: Danil Somsikov <dsv@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057345}
+<<<<End
+
+M	third_party/blink/web_tests/TestExpectations
+Revision: 531aea93e9a25
+###emoji-picker: updated SVG icons to be consistent with android
+<<<<Detail:
+Update icons for history and the emoji category, for both V1 and V2
+
+Bug: b:249163215
+Change-Id: Ib416341c4cedc08bd52eab4e9fabb513316b35d2
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944333
+Commit-Queue: Zac Partridge <zacpartridge@google.com>
+Reviewed-by: John Palmer <jopalmer@chromium.org>
+Reviewed-by: Mehrab N <mehrab@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057344}
+<<<<End
+
+M	chrome/browser/resources/chromeos/emoji_picker/icons.html
+M	chrome/browser/resources/chromeos/emoji_picker/metadata_extension.js
+Revision: 502093321dd92
+###Enable AutofillFillCreditCardAsPerFormatString by default
+<<<<Detail:
+This fixes the crutch_field, levi and moma tests that all ask for MM / YY but had MM / YYYY filled.
+
+Bug: 1326244
+Change-Id: I2c49869ce7c0045d499e4a6e7cee0c76de93e854
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3883375
+Reviewed-by: Ian Struiksma <ianstruiksma@google.com>
+Commit-Queue: Dominic Battré <battre@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057343}
+<<<<End
+
+M	DEPS
+M	components/autofill/core/common/autofill_features.cc
+Revision: de24cffecb23f
+###Escape swap chain adjustment for scrolling down in fullscreen mode.
+<<<<Detail:
+For the scrolling down scenario in video fullscreen letterboxing,
+the swap chain size adjustment should be stopped.
+
+Bug: 1371976
+Change-Id: Id95999b96f3ab03eb9add7d57118e5c593c67e4b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941204
+Reviewed-by: Maggie Chen <magchen@chromium.org>
+Commit-Queue: Chunbo Hua <chunbo.hua@intel.com>
+Cr-Commit-Position: refs/heads/main@{#1057342}
+<<<<End
+
+M	ui/gl/swap_chain_presenter.cc
+Revision: c19b4709cf278
+###media/gpu/v4l2/test: Drop inclusion of av1-ctrls.h from av1_decoder.h
+<<<<Detail:
+av1_decoder.h only includes a minor reference to av1-ctrls.h. This can
+be replaced with a type forward declaration. This avoids pulling in the
+full header file.
+
+This was marked as a TODO item.
+
+Bug: b:234019411
+Test: Build v4l2_stateless_decoder for Cherry
+Change-Id: If419cae1b4272b1d88951d03713dfd236ba33971
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3861808
+Reviewed-by: Steve Cho <stevecho@chromium.org>
+Commit-Queue: Chen-Yu Tsai <wenst@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057341}
+<<<<End
+
+M	media/gpu/v4l2/test/av1_decoder.h
+Revision: a6e5a12499f8a
+###Roll Chrome Win64 PGO Profile
+<<<<Detail:
+Roll Chrome Win64 PGO profile from chrome-win64-main-1665446112-e815dbc83b383640827f04480b6ed62b49b994ed.profdata to chrome-win64-main-1665457143-72d14fd9608035b554c9e563754e1812f941ba94.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win64-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win64-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: Ic9549991b672cc3ea40d8a870ebd82942d043eae
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944095
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057340}
+<<<<End
+
+M	chrome/build/win64.pgo.txt
+Revision: db83a42fc9807
+###personalization: use resized image for wallpaper preview
+<<<<Detail:
+Personalization Hub will use the original image for wallpaper preview
+after switching between D/L themes. The resized image was only shown
+when Personalization Hub is opened for the first time after logging in.
+This is because the image URL is generated before the wallpaper resizer
+finishes the job. We added a new observer to make sure that the URL
+is always generated from the resized wallpaper.
+
+BUG=b:241565622
+TEST=Manually
+
+Change-Id: I745f56bc8c471c017fd7404e4667f4234b26d3e1
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936876
+Reviewed-by: Xiaohui Chen <xiaohuic@chromium.org>
+Reviewed-by: Yue Li <updowndota@chromium.org>
+Reviewed-by: Jeffrey Young <cowmoo@chromium.org>
+Commit-Queue: Jerry Liu <pzliu@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057339}
+<<<<End
+
+M	ash/public/cpp/wallpaper/wallpaper_controller_observer.h
+M	ash/wallpaper/wallpaper_controller_impl.cc
+M	chrome/browser/ash/web_applications/personalization_app/personalization_app_wallpaper_provider_impl.cc
+M	chrome/browser/ash/web_applications/personalization_app/personalization_app_wallpaper_provider_impl.h
+Revision: d64fe64cc8c3d
+###Set Eche app in WebApp scope for allowing AutoPlay
+<<<<Detail:
+Create web preferences to set URL of Eche app in web app scope, so that
+AutoPlay will be allowed.
+
+Bug: b/242667561
+Change-Id: I00616439ccbecac1e94e569f86ff6ab0913137c0
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3933595
+Reviewed-by: Daniel Nishi <dhnishi@chromium.org>
+Commit-Queue: Kentaro Hara <haraken@chromium.org>
+Reviewed-by: Evan Liu <evliu@google.com>
+Reviewed-by: Kentaro Hara <haraken@chromium.org>
+Reviewed-by: Dale Curtis <dalecurtis@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057338}
+<<<<End
+
+M	ash/webui/eche_app_ui/DEPS
+M	ash/webui/eche_app_ui/eche_app_ui.cc
+Revision: a81da09054a42
+###Prerender: add Prerender's INP metrics to INP.md
+<<<<Detail:
+Bug: 1362445
+Change-Id: I39c23b90d28532fe1db914c605eb936fd7f31d66
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3935521
+Reviewed-by: Michal Mocny <mmocny@chromium.org>
+Reviewed-by: Takashi Toyoshima <toyoshim@chromium.org>
+Commit-Queue: Asami Doi <asamidoi@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057337}
+<<<<End
+
+M	chrome/browser/page_load_metrics/observers/core/INP.md
+Revision: 8cbf0988f1f16
+###Prerender: record INP in prerendered pages
+<<<<Detail:
+This CL adds the metrics for Interaction to Next Paint (INP). They
+are recorded when prerendered pages get visible to users.
+
+The following metrics are variants of what BFCacheMetricsObserver
+records for INP.
+
+4 UMAs:
+PageLoad.InteractiveTiming.AverageUserInteractionLatencyOverBudget.MaxEventDuration.Prerender
+PageLoad.InteractiveTiming.NumInteractions.Prerender
+PageLoad.InteractiveTiming.UserInteractionLatency.HighPercentile2.MaxEventDuration.Prerender
+PageLoad.InteractiveTiming.WorstUserInteractionLatency.MaxEventDuration.Prerender
+
+4 UKMs:
+PrerenderPageLoad:AverageUserInteractionLatencyOverBudget.MaxEventDuration
+PrerenderPageLoad:NumInteractions
+PrerenderPageLoad:UserInteractionLatency.HighPercentile2.MaxEventDuration
+PrerenderPageLoad:WorstUserInteractionLatency.MaxEventDuration
+
+Document for adding UKMs (internal): https://docs.google.com/document/d/1O8eJNEowY8D1kDuiR6PwOwQmHqZJLy-BjXQji1C8QOc/edit?usp=sharing
+
+Bug: 1362445
+Change-Id: I7c6d8b85b0d37034b655cdd83259136df177916a
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3889938
+Reviewed-by: Takashi Toyoshima <toyoshim@chromium.org>
+Reviewed-by: Lingqi Chi <lingqi@chromium.org>
+Commit-Queue: Asami Doi <asamidoi@chromium.org>
+Reviewed-by: Robert Kaplow <rkaplow@chromium.org>
+Reviewed-by: Michal Mocny <mmocny@chromium.org>
+Reviewed-by: Hiroki Nakagawa <nhiroki@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057336}
+<<<<End
+
+M	chrome/browser/page_load_metrics/observers/prerender_page_load_metrics_observer_browsertest.cc
+M	components/page_load_metrics/browser/observers/prerender_page_load_metrics_observer.cc
+M	components/page_load_metrics/browser/observers/prerender_page_load_metrics_observer.h
+M	tools/metrics/histograms/metadata/page/histograms.xml
+M	tools/metrics/ukm/ukm.xml
+Revision: 5ca8dd24bece6
+###Remove base::test::ParseJsonDeprecated() usage in //chrome.
+<<<<Detail:
+Replace with base::test::ParseJson() and adapt to existing code using
+base::Value::ToUniquePtrValue() when needed.
+
+Bug: 932873
+Change-Id: I75f595e850ead17b929c6b7d8fd1380bae86fae4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3940550
+Reviewed-by: Emilia Paz <emiliapaz@chromium.org>
+Commit-Queue: Lei Zhang <thestig@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057335}
+<<<<End
+
+M	chrome/browser/extensions/api/declarative_content/declarative_content_page_url_condition_tracker_unittest.cc
+M	chrome/browser/extensions/api/device_permissions_manager_unittest.cc
+M	chrome/browser/extensions/extension_protocols_unittest.cc
+M	chrome/browser/net/reporting_browsertest.cc
+Revision: a91f693c13429
+###Filtering flaky RegionCapture/13-16 tests from Mac12-arm-rel
+<<<<Detail:
+Since these exceed the 4% limit of flake on a CQ
+
+Added
+RegionCaptureBrowserCropTestInstantiation/RegionCaptureBrowserCropTest.CanCropTo/13
+RegionCaptureBrowserCropTestInstantiation/RegionCaptureBrowserCropTest.CanCropTo/14
+RegionCaptureBrowserCropTestInstantiation/RegionCaptureBrowserCropTest.CanCropTo/15
+RegionCaptureBrowserCropTestInstantiation/RegionCaptureBrowserCropTest.CanCropTo/16
+to the mac12-arm64-rel CQ filter
+
+Bug: 1369023
+Change-Id: I0bd902c4bc5f550b00cdb890d4c69c618c4dd8de
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3924818
+Commit-Queue: Srinivas Bathula <srbathula@chromium.org>
+Reviewed-by: Lindsay Pasricha <lindsayw@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057334}
+<<<<End
+
+M	testing/buildbot/filters/mac.mac12-arm64-rel.browser_tests.filter
+Revision: 966d75ce5c9e2
+###Revert "[OOBE]:  Skip UpdateScreen for Recovery mode"
+<<<<Detail:
+This reverts commit 4d508757027fc2829523fcfad897cb5c4b00cbbf.
+
+Reason for revert: Concerns regarding critical and forced Auto-Update during the recovery mode.
+
+Original change's description:
+> [OOBE]:  Skip UpdateScreen for Recovery mode
+>
+> Check if EnrollmentRecoveryRequired from Local_state and Skip the
+> Screen if it is set to true.
+>
+> Bug: 1355305
+> Change-Id: Ic9563e95a4df48a033b425f9df93992f9e9b8aff
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3938520
+> Commit-Queue: Brahim Chikhaoui <bchikhaoui@google.com>
+> Reviewed-by: Roman Sorokin <rsorokin@google.com>
+> Cr-Commit-Position: refs/heads/main@{#1056858}
+
+Bug: 1355305
+Change-Id: If8e7dcdba3c1bc3d9cca8e93e170c9f103ba7f7d
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941671
+Reviewed-by: Miriam Polzer <mpolzer@google.com>
+Reviewed-by: Roman Sorokin <rsorokin@google.com>
+Commit-Queue: Roman Sorokin <rsorokin@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057333}
+<<<<End
+
+M	chrome/browser/ash/login/screens/update_screen.cc
+M	chrome/browser/ash/login/test/oobe_screens_utils.cc
+Revision: 4ad0bc057481c
+###[Office upload] Add integration test for OneDrive upload
+<<<<Detail:
+Test: browser_tests --gtest_filter=DriveUploadHandlerTest.*
+Bug: b:243645393
+Change-Id: Id436142be323922c2209742555cfebd653c06e4b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937647
+Commit-Queue: Jeremie Boulic <jboulic@chromium.org>
+Reviewed-by: Peter Marshall <petermarshall@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057332}
+<<<<End
+
+M	chrome/browser/ui/webui/ash/cloud_upload/cloud_upload_util.h
+M	chrome/browser/ui/webui/ash/cloud_upload/drive_upload_handler.h
+M	chrome/browser/ui/webui/ash/cloud_upload/one_drive_upload_handler.cc
+A	chrome/browser/ui/webui/ash/cloud_upload/one_drive_upload_handler_browsertest.cc
+M	chrome/test/BUILD.gn
+Revision: 1e9e1bddbdb5a
+###Update copyright for pervasive.js
+<<<<Detail:
+Update the copyright header in
+content/test/data/cache_transparency/pervasive.js and
+services/test/data/pervasive.js. Also update the checksums in the tests
+that use these files.
+
+Add instructions to pervasive.js on how to update the checksums in
+future.
+
+Change-Id: I2005bafe0576e0f936e18efc8317b466cd6eb698
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3915977
+Reviewed-by: Nidhi Jaju <nidhijaju@chromium.org>
+Reviewed-by: Avi Drissman <avi@chromium.org>
+Reviewed-by: Takashi Toyoshima <toyoshim@chromium.org>
+Commit-Queue: Adam Rice <ricea@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057331}
+<<<<End
+
+M	content/browser/navigation_browsertest.cc
+M	content/test/data/cache_transparency/pervasive.js
+M	services/network/url_loader_unittest.cc
+M	services/test/data/pervasive.js
+M	third_party/blink/renderer/platform/loader/fetch/resource_loader_test.cc
+Revision: 56dbd962cc7d3
+###Roll Chrome Mac PGO Profile
+<<<<Detail:
+Roll Chrome Mac PGO profile from chrome-mac-main-1665424559-2452eefdc01bb63fc5592a582d6933e6ccdd985b.profdata to chrome-mac-main-1665446112-aca6ae512ccf9285ae066e71edbb6dc4e1241bbc.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-mac-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:mac-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I978cb241ba43fa7cb325735aff5da051a8eef45f
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943960
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057330}
+<<<<End
+
+M	chrome/build/mac.pgo.txt
+Revision: 07191b37d77bf
+###Update V8 to version 10.8.145.
+<<<<Detail:
+Summary of changes available at:
+https://chromium.googlesource.com/v8/v8/+log/83c6be46..4ce8b6d0
+
+Please follow these instructions for assigning/CC'ing issues:
+https://v8.dev/docs/triage-issues
+
+Please close rolling in case of a roll revert:
+https://v8-roll.appspot.com/
+This only works with a Google account.
+
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux-blink-rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_chromium_chromeos_msan_rel_ng
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:mac_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:win_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:android_optional_gpu_tests_rel
+
+R=hablich@chromium.org,vahl@chromium.org,v8-waterfall-sheriff@grotations.appspotmail.com
+
+Change-Id: I757869179060c5b5c2b10463c7244e183ddb3b61
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943551
+Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Bot-Commit: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057329}
+<<<<End
+
+M	DEPS
+Revision: db0fc976fe1b1
+###[Cast Streaming] Fallback to mirroring on navigation
+<<<<Detail:
+Currently, when remoting if the back or forward navigation buttons
+are pressed the remoting session freezes instead of falling back to
+mirroring.
+
+Turns out, this is due to the fact that the page doesn't necessarily
+get destroyed on navigation, and the HTMLMediaElement and its web player
+may stick around, just in a paused state.
+
+Obviously we don't want to stop remoting if the video is paused, so the
+solution in this patch is to allow the media player to know when the
+page is frozen and communicate that to its observer.
+
+Bug: 1147662
+Change-Id: I94a024548486aca81afe5bb945ff32c6577ddc63
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936590
+Reviewed-by: Dale Curtis <dalecurtis@chromium.org>
+Reviewed-by: Mark Foltz <mfoltz@chromium.org>
+Commit-Queue: Jordan Bayles <jophba@chromium.org>
+Reviewed-by: Daniel Cheng <dcheng@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057328}
+<<<<End
+
+M	media/base/media_observer.h
+M	media/remoting/renderer_controller.cc
+M	media/remoting/renderer_controller.h
+M	media/remoting/renderer_controller_unittest.cc
+M	media/remoting/triggers.h
+M	third_party/blink/public/platform/web_media_player.h
+M	third_party/blink/public/web/modules/mediastream/webmediaplayer_ms.h
+M	third_party/blink/renderer/core/exported/web_media_player_impl_unittest.cc
+M	third_party/blink/renderer/core/html/media/html_media_element.cc
+M	third_party/blink/renderer/core/html/media/html_media_element_test.cc
+M	third_party/blink/renderer/modules/mediacapturefromelement/html_video_element_capturer_source_unittest.cc
+M	third_party/blink/renderer/modules/mediastream/webmediaplayer_ms.cc
+M	third_party/blink/renderer/platform/media/web_media_player_impl.cc
+M	third_party/blink/renderer/platform/media/web_media_player_impl.h
+M	third_party/blink/renderer/platform/testing/empty_web_media_player.h
+Revision: 0544691a1cbf3
+###[File system provider] Improve FakeProvidedFileSystem test support
+<<<<Detail:
+Implement missing functionalities for FakeProvidedFileSystem, to
+properly manage the list of registered fake entries.
+
+--gtest_filter=FileSystemProviderProviderAsyncFileUtilTest.*
+
+Test: unit_tests
+Bug: b:251698485
+Change-Id: I8c6c716eb95a033f641f44a2bb52775ea599ceab
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941287
+Reviewed-by: Alexander Bolodurin <alexbn@chromium.org>
+Commit-Queue: Jeremie Boulic <jboulic@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057327}
+<<<<End
+
+M	chrome/browser/ash/file_system_provider/fake_provided_file_system.cc
+M	chrome/browser/ash/file_system_provider/fake_provided_file_system.h
+M	chrome/browser/ash/file_system_provider/fileapi/provider_async_file_util_unittest.cc
+Revision: 30f4ed7a10de9
+###fileSystemProvider: read test functions are applicable to Blobs
+<<<<Detail:
+Generalise the {startRead,read}FromTextFile test functions from File to
+Blob to read files at offsets.
+
+Bug: b:235414571
+Change-Id: I8c4ca6d174571401d2841f42603aac9999d16064
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3935958
+Reviewed-by: Luciano Pacheco <lucmult@chromium.org>
+Commit-Queue: Alexander Bolodurin <alexbn@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057326}
+<<<<End
+
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/get_all/test.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/helpers.js
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/read_file/test.js
+Revision: 7a50cbf551968
+###Roll Skia from 2cf0e89776e1 to 5fd43abc5ba7 (1 revision)
+<<<<Detail:
+https://skia.googlesource.com/skia.git/+log/2cf0e89776e1..5fd43abc5ba7
+
+2022-10-11 skia-autoroll@skia-public.iam.gserviceaccount.com Roll Dawn from 3e1501af2936 to a880e661db50 (8 revisions)
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/skia-autoroll
+Please CC armansito@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Skia: https://bugs.chromium.org/p/skia/issues/entry
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:android_optional_gpu_tests_rel;luci.chromium.try:linux-blink-rel;luci.chromium.try:linux-chromeos-compile-dbg;luci.chromium.try:linux_optional_gpu_tests_rel;luci.chromium.try:mac_optional_gpu_tests_rel;luci.chromium.try:win_optional_gpu_tests_rel
+Cq-Do-Not-Cancel-Tryjobs: true
+Bug: None
+Tbr: armansito@google.com
+Change-Id: I7dcf06f53b9f53a74cb0a8e2ee5d9fb698dcee83
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943775
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057325}
+<<<<End
+
+M	DEPS
+Revision: 709d927afb6fd
+###Roll devtools-internal from 6e59e809a560 to 77811e9810c0 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/devtools/devtools-internal.git/+log/6e59e809a560..77811e9810c0
+
+Also rolling transitive DEPS:
+  https://chromium.googlesource.com/devtools/devtools-frontend.git/+log/34119a3ac09032b7b1dc4e4c59f1c7342a16ee23..909e1ca0312449ce9156b10e0f40954e3d3a460c
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/devtools-internal-chromium
+Please CC devtools-waterfall-sheriff-onduty@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: devtools-waterfall-sheriff-onduty@grotations.appspotmail.com
+Change-Id: I5c22230805c2d967bb19a09a1bb1e727cfcdceed
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942730
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057324}
+<<<<End
+
+M	DEPS
+Revision: 9628c854f93a7
+###Roll Perfetto Trace Processor Linux from db9b224ffde8 to 861d81e9ce83
+<<<<Detail:
+https://android.googlesource.com/platform/external/perfetto.git/+log/db9b224ffde8..861d81e9ce83
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/perfetto-trace-processor-linux-chromium
+Please CC perfetto-bugs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Tbr: perfetto-bugs@google.com
+Change-Id: I1bd3d023fc1ea04c080fccaec2c4e8476e8b30a6
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944131
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057323}
+<<<<End
+
+M	tools/perf/core/perfetto_binary_roller/binary_deps.json
+Revision: 12f24cc3a2a65
+###sheriff: Disable 4 tast tests
+<<<<Detail:
+Disables:
+lockscreen.CloseLid
+peripherals.LaunchAppFromSettings.scan
+policy.AllowedLanguages
+terminal.Crosh
+
+Bug: 1373329
+Change-Id: I74c2ca8bfdeaa5241f50b92127c24d58ba73dc82
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944031
+Auto-Submit: Yuki Shiino <yukishiino@chromium.org>
+Reviewed-by: Yoichi Osato <yoichio@chromium.org>
+Commit-Queue: Yuki Shiino <yukishiino@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057322}
+<<<<End
+
+M	chromeos/tast_control.gni
+Revision: e2c738a7a2e9c
+###Security interstitials: Fix class assignment issue
+<<<<Detail:
+Incorrect refactoring resulted in classes being assigned to the error
+code rather than body element.
+
+Fixed: 1370892
+Change-Id: Icccad99770965212a9f0113fb1d85353ea1f59a9
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943670
+Reviewed-by: Demetrios Papadopoulos <dpapad@chromium.org>
+Commit-Queue: Rebekah Potter <rbpotter@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057321}
+<<<<End
+
+M	components/security_interstitials/core/browser/resources/interstitial_large.js
+Revision: 68ca6a222b1c7
+###WebNN: validate the dimensions before create output operand
+<<<<Detail:
+This CL implements the validation of output operand for operation build
+methods. The MLOperand::ValidateAndCreateOutput() method enforces the
+validation of elements number and byte length of dimensions before
+creating the operand. This CL also moves the input and constant
+validation to MLOperand::ValidateAndCreateInput() and
+MLOperand::ValidateAndCreateConstant() respectively.
+
+This CL also fixes an issue of not using checked math to calculate the
+byte length. To facilitate the graph builder, such as reshape operation,
+and the backend implementation, the MLOperand::NumberOfElements() and
+MLOperand::ByteLength() are added for better code reuse.
+
+This CL also adds unit tests to cover the output operand validation.
+
+Bug: 1273291
+Change-Id: I2520c28f0e96ab57462969b8fc1a75cef3914120
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3929172
+Commit-Queue: ningxin hu <ningxin.hu@intel.com>
+Reviewed-by: Jiewei Qian <qjw@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057320}
+<<<<End
+
+M	third_party/blink/renderer/modules/ml/webnn/ml_graph_builder.cc
+M	third_party/blink/renderer/modules/ml/webnn/ml_graph_builder_test.cc
+M	third_party/blink/renderer/modules/ml/webnn/ml_operand.cc
+M	third_party/blink/renderer/modules/ml/webnn/ml_operand.h
+Revision: 88044d569209a
+###Printing: Fix incorrect viewport-relative units resolution
+<<<<Detail:
+... in vertical writing-modes.
+
+LocalFrameView::ForceLayoutForPagination() referred to the writing-mode
+value before style resolution. So layout_view->SetPageLogicalHeight()
+had set a wrong value, and LayoutView::GetLayoutSize(), which is the
+source of viewport-relative unit values, returned a wrong value.
+
+We avoid it by keeping page's physical size in LayoutView.
+
+Bug: 1373323
+Change-Id: I11132b923ca12c70c94775c29a4d85e3f9e40d00
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944529
+Auto-Submit: Kent Tamura <tkent@chromium.org>
+Reviewed-by: Koji Ishii <kojii@chromium.org>
+Commit-Queue: Koji Ishii <kojii@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057319}
+<<<<End
+
+M	third_party/blink/renderer/core/frame/local_frame_view.cc
+M	third_party/blink/renderer/core/layout/layout_view.cc
+M	third_party/blink/renderer/core/layout/layout_view.h
+A	third_party/blink/web_tests/printing/viewport-units-in-vertical-expected.html
+A	third_party/blink/web_tests/printing/viewport-units-in-vertical.html
+Revision: 90dd57ea3cbc8
+###Add field testing config entry for the LinkCapturingPostNavUXStudy
+<<<<Detail:
+Add field testing config entry to ensure perf bot test coverage for
+the LinkCapturingPostNavUXStudy EnabledWithNewFlowAndIPH_V2 group
+and allow rollout to Beta channel.
+
+Bug: 1261316
+Change-Id: I0623cabd749cb993f2af08748e844709a0185e29
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944270
+Reviewed-by: Maggie Cai <mxcai@chromium.org>
+Commit-Queue: Vivian Pao <vpao@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057318}
+<<<<End
+
+M	testing/variations/fieldtrial_testing_config.json
+Revision: 4940211b3765b
+###Add new uma for sort engagement
+<<<<Detail:
+Bug: b/250300773
+Change-Id: I6f8edd2580906aa8a1fbc005b87c92238166bd7b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3940562
+Commit-Queue: Cathy Li <chili@chromium.org>
+Reviewed-by: Dan H <harringtond@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057317}
+<<<<End
+
+M	components/feed/core/v2/metrics_reporter.cc
+M	components/feed/core/v2/metrics_reporter.h
+M	components/feed/core/v2/metrics_reporter_unittest.cc
+M	components/feed/core/v2/public/common_enums.h
+Revision: 4191a1a8e4d6c
+###[APS] Process server response.
+<<<<Detail:
+This CL processes the success case of a server response, and wraps app
+definitions in a utility class to make reading easier.
+
+Bug: b:243088750, b:251700677
+Change-Id: I0f82b65a99dc84062f5cdb5facb9e75e08af5dd7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3939163
+Auto-Submit: Jeevan Shikaram <jshikaram@chromium.org>
+Reviewed-by: Melissa Zhang <melzhang@chromium.org>
+Commit-Queue: Jeevan Shikaram <jshikaram@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057316}
+<<<<End
+
+M	chrome/browser/BUILD.gn
+M	chrome/browser/apps/app_preload_service/app_preload_server_connector.cc
+M	chrome/browser/apps/app_preload_service/app_preload_server_connector.h
+M	chrome/browser/apps/app_preload_service/app_preload_server_connector_unittest.cc
+M	chrome/browser/apps/app_preload_service/app_preload_service.cc
+M	chrome/browser/apps/app_preload_service/app_preload_service.h
+M	chrome/browser/apps/app_preload_service/app_preload_service_unittest.cc
+A	chrome/browser/apps/app_preload_service/preload_app_definition.cc
+A	chrome/browser/apps/app_preload_service/preload_app_definition.h
+A	chrome/browser/apps/app_preload_service/proto/BUILD.gn
+A	chrome/browser/apps/app_preload_service/proto/app_provisioning.proto
+A	chrome/browser/apps/app_preload_service/proto/common.proto
+M	chrome/test/BUILD.gn
+Revision: 493e6a4ec62ab
+###Increase shards for mac12 debug sync integration unit tests.
+<<<<Detail:
+Tests regularly time out on Macmini7,1.
+2 Shards should allow tests to complete.
+
+Bug: 1366889
+Change-Id: Ic7eed3b6b478168a16b57d0a8f36d8b7e0f2f88d
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3941914
+Reviewed-by: Lindsay Pasricha <lindsayw@chromium.org>
+Commit-Queue: Lindsay Pasricha <lindsayw@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057315}
+<<<<End
+
+M	testing/buildbot/chromium.mac.json
+M	testing/buildbot/test_suite_exceptions.pyl
+Revision: 94340357ddca8
+###Roll Chrome Win32 PGO Profile
+<<<<Detail:
+Roll Chrome Win32 PGO profile from chrome-win32-main-1665435599-7678a95ba9cd5c4d578a4879c42d5a34235970cd.profdata to chrome-win32-main-1665446112-a1d4e9a4f3cec45113d19c02b22f5358df126554.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win32-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I95a13da662a073c2518b656890f75b90121b5361
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943962
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057314}
+<<<<End
+
+M	chrome/build/win32.pgo.txt
+Revision: 9677465aa2320
+###[Parent Access] Add OnParentAccessDone method to ParentAccessUIHandler
+<<<<Detail:
+Also rename the "ParentVerifiedParsed" test to a more descriptive name.
+
+Bug: b:251839457
+Change-Id: Idd32cac35fff6b4bb137fc710694945da0e90ad7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3934403
+Reviewed-by: Dominick Ng <dominickn@chromium.org>
+Reviewed-by: Aga Wronska <agawronska@chromium.org>
+Commit-Queue: Dan S <danan@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057313}
+<<<<End
+
+M	chrome/browser/ui/webui/chromeos/parent_access/parent_access_ui.mojom
+M	chrome/browser/ui/webui/chromeos/parent_access/parent_access_ui_handler_impl.cc
+M	chrome/browser/ui/webui/chromeos/parent_access/parent_access_ui_handler_impl.h
+M	chrome/browser/ui/webui/chromeos/parent_access/parent_access_ui_handler_impl_browsertest.cc
+Revision: 0c8abdef33d7c
+###Roll Chrome Win64 PGO Profile
+<<<<Detail:
+Roll Chrome Win64 PGO profile from chrome-win64-main-1665435599-698a28ecf5dd74128a419dfb6abbe58580c572b6.profdata to chrome-win64-main-1665446112-e815dbc83b383640827f04480b6ed62b49b994ed.profdata
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/pgo-win64-chromium
+Please CC pgo-profile-sheriffs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium main branch: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:win64-chrome
+Tbr: pgo-profile-sheriffs@google.com
+Change-Id: I5e01236300890ba01252c0eade317070d506174a
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944092
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057312}
+<<<<End
+
+M	chrome/build/win64.pgo.txt
+Revision: 170d0a070a9fe
+###Roll src-internal from 272b39a16628 to 3ee1519d1b62 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/chrome/src-internal.git/+log/272b39a16628..3ee1519d1b62
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/src-internal-chromium-autoroll
+Please CC yukishiino@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: yukishiino@google.com
+Change-Id: Ic1a5b497b60494498d2b4d7fc1251761dfeb2b64
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942538
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057311}
+<<<<End
+
+M	DEPS
+Revision: 6e60bdc373e15
+###cros: Disable some policy tests that are blocking LKGM uprev.
+<<<<Detail:
+These tests fail on all crso boards and blocks LKGM uprev. Some tests
+have been disabled in crrev.com/c/3940145, but there have been
+additional failures.
+
+Bug: b/251877133
+Test: None
+Change-Id: Ibbfa86cedad9bd16eaf8be5928879e849223b96e
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944030
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Auto-Submit: Yoshiki Iguchi <yoshiki@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057310}
+<<<<End
+
+M	chromeos/tast_control.gni
+Revision: 49e7016cdcfa0
+###Remove DnsHttpssvc experiment feature related codes
+<<<<Detail:
+The DnsHttpssvc experiment has finished. So this CL removes the
+DnsHttpssvc experiment feature related codes.
+
+HttpssvcMetrics is used to measure the metrics for the experiment.
+All of the metrics for Integrity record and most of metrics for HTTPS
+record will not be used. But the metrics for HTTPS record
+(Net.DNS.HTTPSSVC.RecordHttps.(Secure|Insecure).ExpectNoerror.*) are
+still valuable. This CL keeps HttpssvcMetrics class and the name for
+HTTPS record metrics as is. And I will create another CL to rename them.
+
+Bug: 1366422
+Change-Id: Ib23d89f6af83812a77e11d2568c6c9cb936037b1
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3911600
+Reviewed-by: Eric Orth <ericorth@chromium.org>
+Commit-Queue: Tsuyoshi Horo <horo@chromium.org>
+Reviewed-by: Giovanni Ortuno Urquidi <ortuno@chromium.org>
+Reviewed-by: Dominick Ng <dominickn@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057309}
+<<<<End
+
+M	net/base/features.cc
+M	net/base/features.h
+M	net/dns/BUILD.gn
+M	net/dns/dns_response_result_extractor.cc
+M	net/dns/dns_response_result_extractor_unittest.cc
+M	net/dns/dns_util.cc
+M	net/dns/host_cache.cc
+M	net/dns/host_cache_unittest.cc
+M	net/dns/host_resolver_manager.cc
+M	net/dns/host_resolver_manager.h
+M	net/dns/host_resolver_manager_unittest.cc
+M	net/dns/host_resolver_mdns_listener_impl.cc
+M	net/dns/host_resolver_mdns_task.cc
+M	net/dns/httpssvc_metrics.cc
+M	net/dns/httpssvc_metrics.h
+M	net/dns/httpssvc_metrics_unittest.cc
+D	net/dns/integrity_record_fuzzer.cc
+M	net/dns/public/dns_protocol.h
+M	net/dns/public/dns_query_type.h
+M	net/dns/record_parsed.cc
+M	net/dns/record_rdata.cc
+M	net/dns/record_rdata.h
+M	net/dns/record_rdata_unittest.cc
+M	services/network/public/cpp/host_resolver_mojom_traits.cc
+Revision: 8720e48358581
+###chromeos: Re-enable Lacros tests
+<<<<Detail:
+We had disabled some Lacros tests because of the issue on public kevin:
+b/250566486. This CL re-enables the tests since the issue has fixed.
+
+CQ_INCLUDE_TRYBOTS=luci.chrome.try:chromeos-betty-pi-arc-chrome
+CQ_INCLUDE_TRYBOTS=luci.chrome.try:chromeos-kevin-chrome
+CQ_INCLUDE_TRYBOTS=luci.chrome.try:lacros-amd64-generic-chrome
+
+Bug: b/250566486
+Bug: 1371407
+Test: None
+Change-Id: Iadd35dc1ecc624eeb0a616631730fe8a402f09ac
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944109
+Commit-Queue: Yoshiki Iguchi <yoshiki@chromium.org>
+Auto-Submit: Yoshiki Iguchi <yoshiki@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057308}
+<<<<End
+
+M	chromeos/tast_control.gni
+Revision: bb15b129b51d1
+###Revert "Add AppsGridView item drag reorder animation smoothness metrics"
+<<<<Detail:
+This reverts commit 63ba73318098da6e796309677a3b54448fce5583.
+
+Reason for revert: Suspicious about causing test failures:
+All/AppsGridViewClamshellAndTabletTest.ReorderDragAnimationMetrics
+https://ci.chromium.org/ui/p/chromium/builders/ci/Linux%20Chromium%20OS%20ASan%20LSan%20Tests%20(1)/46322/overview
+https://ci.chromium.org/ui/p/chromium/builders/ci/linux-chromeos-dbg/30406/overview
+
+Original change's description:
+> Add AppsGridView item drag reorder animation smoothness metrics
+>
+> Bug: 1371184
+> Change-Id: I1aa161210cd01cd58912b950fccc3978dba585e7
+> Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3934122
+> Reviewed-by: Yulun Wu <yulunwu@chromium.org>
+> Commit-Queue: Matthew Mourgos <mmourgos@chromium.org>
+> Reviewed-by: Tony Yeoman <tby@chromium.org>
+> Reviewed-by: Toni Barzic <tbarzic@chromium.org>
+> Cr-Commit-Position: refs/heads/main@{#1057234}
+
+Bug: 1371184
+Change-Id: Ife52dc9386ac5df21556d3cfaefa8f802ca794b8
+No-Presubmit: true
+No-Tree-Checks: true
+No-Try: true
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944112
+Owners-Override: Yuki Shiino <yukishiino@chromium.org>
+Auto-Submit: Yuki Shiino <yukishiino@chromium.org>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057307}
+<<<<End
+
+M	ash/app_list/app_list_metrics.cc
+M	ash/app_list/app_list_metrics.h
+M	ash/app_list/views/apps_grid_view.cc
+M	ash/app_list/views/apps_grid_view.h
+M	ash/app_list/views/apps_grid_view_unittest.cc
+M	tools/metrics/histograms/metadata/apps/histograms.xml
+Revision: 4041cb30b1949
+###Import wpt@9f736c52d047ed380482647728ed23e8f2db7179
+<<<<Detail:
+Using wpt-import in Chromium 6bd396dbeb39de19cb91261e0348e68626f028d4.
+With Chromium commits locally applied on WPT:
+ff4c2a0b44 "[webdriver] Add Get All/Named Cookie Command"
+279fa6d966 "[bfcache] Do not reset notRestoredReasons upon successful bfcache navigation"
+920765787f "[Fixit] Clean up redundant executor HTML files."
+1703e84185 "Navigation rewrite: Add WPT for initiator origin in document state"
+
+
+Note to sheriffs: This CL imports external tests and adds
+expectations for those tests; if this CL is large and causes
+a few new failures, please fix the failures by adding new
+lines to TestExpectations rather than reverting. See:
+https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_platform_tests.md
+
+NOAUTOREVERT=true
+R=rubber-stamper@appspot.gserviceaccount.com
+
+No-Export: true
+Cq-Include-Trybots: luci.chromium.try:linux-wpt-identity-fyi-rel,linux-wpt-input-fyi-rel,linux-blink-rel
+Change-Id: I5dc43ab1aac709b84f7d414edc2ee4c9ac454463
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943194
+Bot-Commit: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Auto-Submit: WPT Autoroller <wpt-autoroller@chops-service-accounts.iam.gserviceaccount.com>
+Commit-Queue: Rubber Stamper <rubber-stamper@appspot.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057306}
+<<<<End
+
+M	third_party/blink/web_tests/FlagExpectations/highdpi
+M	third_party/blink/web_tests/external/WPT_BASE_MANIFEST_8.json
+D	third_party/blink/web_tests/external/wpt/css/css-color/color-function-parsing.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-contrast-function-expected.txt
+R091	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-contrast-computed.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-contrast-function.html
+R050	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-expected.txt	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-function-expected.txt
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-mix-function-expected.txt
+R099	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-mix-computed.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-color-mix-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-hsl.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-hwb.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-lab-expected.txt
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-lab.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-relative-color-expected.txt
+R099	third_party/blink/web_tests/external/wpt/css/css-color/parsing/relative-color-computed.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-relative-color.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed-rgb.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-computed.html
+R076	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-contrast-invalid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-color-contrast-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-color-function.html
+R097	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-mix-invalid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-color-mix-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-hsl.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-hwb.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-lab.html
+R097	third_party/blink/web_tests/external/wpt/css/css-color/parsing/relative-color-invalid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-relative-color.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid-rgb.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-invalid.html
+D	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-mixed-num-pct.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-color-contrast-function-expected.txt
+R090	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-contrast-valid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-color-contrast-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-color-function.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-color-mix-function-expected.txt
+R099	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-mix-valid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-color-mix-function.html
+D	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-expected.txt
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-hsl.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-hwb.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-lab-expected.txt
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-lab.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-relative-color-expected.txt
+R099	third_party/blink/web_tests/external/wpt/css/css-color/parsing/relative-color-valid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-relative-color.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-rgb.html
+A	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-system-color-expected.txt
+R084	third_party/blink/web_tests/external/wpt/css/css-color/parsing/system-color-valid.html	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid-system-color.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/color-valid.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/opacity-computed.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/opacity-invalid.html
+M	third_party/blink/web_tests/external/wpt/css/css-color/parsing/opacity-valid.html
+D	third_party/blink/web_tests/external/wpt/css/css-color/rgb-rounding-001.html
+A	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-computed-color-contrast-function-expected.txt
+R058	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-computed-expected.txt	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-computed-color-function-expected.txt
+A	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-computed-lab-expected.txt
+A	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-valid-color-contrast-function-expected.txt
+R069	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-valid-expected.txt	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-valid-color-function-expected.txt
+A	third_party/blink/web_tests/virtual/stable/external/wpt/css/css-color/parsing/color-valid-lab-expected.txt
+Revision: bce52159075c8
+###Adjust siso builder mb configs
+<<<<Detail:
+- Disable code coverage on siso builders
+  - code coverage doesn't work well on remote execution.
+- Set enable_precompiled_headers=false to the Win builders.
+
+Bug: b/248132996, b/251737778
+Change-Id: I7651d3f7d440a57a5910496d33830987bb8884af
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944528
+Reviewed-by: Takuto Ikuta <tikuta@chromium.org>
+Auto-Submit: Junji Watanabe <jwata@google.com>
+Reviewed-by: Fumitoshi Ukai <ukai@google.com>
+Commit-Queue: Junji Watanabe <jwata@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057305}
+<<<<End
+
+M	tools/mb/mb_config.pyl
+M	tools/mb/mb_config_expectations/internal.chrome.fyi.json
+Revision: 9b874684433b6
+###CrOS Settings: Review type casting and non-null assertions
+<<<<Detail:
+In order to adhere to go/typescript-strict-null-checks, this changes
+to use casting for asserting element queries and to prefer the
+TS non-null assertion operator "!" when immediately dereferencing
+a value.
+
+Bug: chromium:1315757
+Test: Successful compilation
+Change-Id: Id518598bbc7862ee5806e9e1208a8219dd13dea5
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3939160
+Reviewed-by: Jeffrey Young <cowmoo@chromium.org>
+Auto-Submit: Wes Okuhara <wesokuhara@google.com>
+Commit-Queue: Jeffrey Young <cowmoo@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057304}
+<<<<End
+
+M	chrome/browser/resources/settings/chromeos/device_page/pointers.ts
+M	chrome/browser/resources/settings/chromeos/os_search_page/os_search_selection_dialog.ts
+M	chrome/browser/resources/settings/chromeos/os_settings_main/os_settings_main.ts
+M	chrome/browser/resources/settings/chromeos/os_settings_ui/os_settings_ui.ts
+Revision: b03496aa14650
+###Roll Perfetto Trace Processor Mac from 5b62a0322d70 to db9b224ffde8
+<<<<Detail:
+https://android.googlesource.com/platform/external/perfetto.git/+log/5b62a0322d70..db9b224ffde8
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/perfetto-trace-processor-mac-chromium
+Please CC perfetto-bugs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Tbr: perfetto-bugs@google.com
+Change-Id: Ib945683ccc6dfb91cb35d4d7ce14de1c395febe0
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942836
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057303}
+<<<<End
+
+M	tools/perf/core/perfetto_binary_roller/binary_deps.json
+Revision: 5bd9f1c73c5fb
+###Roll Perfetto from db9b224ffde8 to 861d81e9ce83 (1 revision)
+<<<<Detail:
+https://android.googlesource.com/platform/external/perfetto.git/+log/db9b224ffde8..861d81e9ce83
+
+2022-10-11 haiping@google.com Revert "Include slices that partially overlap with launch duration."
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/perfetto-chromium-autoroll
+Please CC perfetto-bugs@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:linux-perfetto-rel
+Bug: None
+Tbr: perfetto-bugs@google.com
+Change-Id: I521f32e22f251515d25a85e83628be44ea28446c
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944093
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057302}
+<<<<End
+
+M	DEPS
+Revision: 1f63c6b1b9fb4
+###Hiding the PushNotification Registration behind Flag
+<<<<Detail:
+In this CL, the APNS registration call is hidden behind
+the push notification feature flag.
+
+Bug: 1370125
+Change-Id: Ic0396155a867b343851dea91962d64b5856ac41b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936363
+Commit-Queue: Daniel White <danieltwhite@google.com>
+Reviewed-by: Rohit Rao <rohitrao@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057301}
+<<<<End
+
+M	ios/chrome/app/BUILD.gn
+M	ios/chrome/app/main_application_delegate.mm
+Revision: 9187617ba0a81
+###Roll Dawn from 112d7614483a to a880e661db50 (2 revisions)
+<<<<Detail:
+https://dawn.googlesource.com/dawn.git/+log/112d7614483a..a880e661db50
+
+2022-10-11 dawn-autoroll@skia-public.iam.gserviceaccount.com Roll ANGLE from 3e25d37f23d0 to 5bafe449e0b3 (5 revisions)
+2022-10-10 dawn-autoroll@skia-public.iam.gserviceaccount.com Roll vulkan-deps from 1172dba33888 to 24053e9970b7 (6 revisions)
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/dawn-chromium-autoroll
+Please CC cwallez@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Dawn: https://bugs.chromium.org/p/dawn/issues/entry
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:dawn-mac-x64-deps-rel;luci.chromium.try:dawn-win10-x64-deps-rel;luci.chromium.try:dawn-win10-x86-deps-rel
+Bug: None
+Tbr: cwallez@google.com
+Change-Id: Ied55c900fc686514e48a6f80ea0b279bcc2d45d4
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942717
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057300}
+<<<<End
+
+M	DEPS
+Revision: 5c0d43f4b267e
+###Roll devtools-internal from 74d8415f20e9 to 6e59e809a560 (10 revisions)
+<<<<Detail:
+https://chrome-internal.googlesource.com/devtools/devtools-internal.git/+log/74d8415f20e9..6e59e809a560
+
+Also rolling transitive DEPS:
+  https://chromium.googlesource.com/devtools/devtools-frontend.git/+log/8a924636318e6612c9d48e2903a13ba631b44ac2..34119a3ac09032b7b1dc4e4c59f1c7342a16ee23
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/devtools-internal-chromium
+Please CC devtools-waterfall-sheriff-onduty@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: devtools-waterfall-sheriff-onduty@grotations.appspotmail.com
+Change-Id: I310e4d28d2aee22a9a37838d2c51607235e69a14
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942812
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057299}
+<<<<End
+
+M	DEPS
+Revision: 6a0394796decb
+###Roll Fuchsia Internal Images from 9.20221010.2.1 to 9.20221010.3.1
+<<<<Detail:
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/fuchsia-internal-images-chromium
+Please CC chrome-fuchsia-gardener@grotations.appspotmail.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:fuchsia-fyi-astro
+Tbr: chrome-fuchsia-gardener@grotations.appspotmail.com
+Disable-Retries: true
+Change-Id: I90683f141591e672b48b58b54223d79f7fdc39ed
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943957
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057298}
+<<<<End
+
+M	build/fuchsia/linux_internal.sdk.sha1
+Revision: d35b91dea9821
+###WebUI: Migrate more ui/webui/resources/js files to TypeScript
+<<<<Detail:
+Migrating 3 small files:
+test_loader
+test_loader_util
+os_about
+
+Bug: 1316438
+Change-Id: I6bd70e7b3c54064b0222d324ed7f6bdf7e89d1b6
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3928142
+Reviewed-by: Demetrios Papadopoulos <dpapad@chromium.org>
+Commit-Queue: Rebekah Potter <rbpotter@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057297}
+<<<<End
+
+M	ui/webui/resources/BUILD.gn
+M	ui/webui/resources/js/BUILD.gn
+R100	ui/webui/resources/js/os_about.js	ui/webui/resources/js/os_about.ts
+R099	ui/webui/resources/js/test_loader.js	ui/webui/resources/js/test_loader.ts
+R086	ui/webui/resources/js/test_loader_util.js	ui/webui/resources/js/test_loader_util.ts
+Revision: 4f0993afc4241
+###Move //{ash => chromeos/ash}/services/nearby
+<<<<Detail:
+ChromeOS components and services are meant to live in chromeos/,
+separate from Ash shell code. Fix a previous migration that used the
+wrong directory.
+
+This CL is part of the ChromeOS source code directory migration:
+https://docs.google.com/document/d/1g-98HpzA8XcoGBWUv1gQNr4rbnD5yfvbtYZyPDDbkaE.
+
+Change-Id: Id1bbff852f50aae026fbe368e08cb551e8a66776
+Bug: 1164001
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937292
+Owners-Override: Hidehiko Abe <hidehiko@chromium.org>
+Commit-Queue: Yeunjoo Choi <ychoi@igalia.com>
+Reviewed-by: Hidehiko Abe <hidehiko@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057296}
+<<<<End
+
+M	ash/BUILD.gn
+M	ash/DEPS
+M	ash/services/BUILD.gn
+D	ash/services/nearby/DIR_METADATA
+M	chrome/browser/BUILD.gn
+M	chrome/browser/ash/BUILD.gn
+M	chrome/browser/ash/login/oobe_quick_start/connectivity/BUILD.gn
+M	chrome/browser/ash/login/oobe_quick_start/connectivity/quick_start_decoder.cc
+M	chrome/browser/ash/login/oobe_quick_start/connectivity/quick_start_decoder.h
+M	chrome/browser/ash/login/oobe_quick_start/connectivity/quick_start_decoder_unittest.cc
+M	chrome/browser/ash/nearby/BUILD.gn
+M	chrome/browser/ash/nearby/DIR_METADATA
+M	chrome/browser/ash/nearby/OWNERS
+M	chrome/browser/ash/nearby/bluetooth_adapter_manager.cc
+M	chrome/browser/ash/nearby/nearby_dependencies_provider.cc
+M	chrome/browser/ash/nearby/nearby_dependencies_provider.h
+M	chrome/browser/ash/nearby/nearby_process_manager_impl.cc
+M	chrome/browser/ash/nearby/nearby_process_manager_impl.h
+M	chrome/browser/ash/nearby/nearby_process_manager_impl_unittest.cc
+M	chrome/browser/ash/secure_channel/nearby_connection_broker_impl.h
+M	chrome/browser/ash/secure_channel/nearby_connection_broker_impl_unittest.cc
+M	chrome/browser/ash/secure_channel/nearby_connector_impl.cc
+M	chrome/browser/ash/secure_channel/nearby_connector_impl.h
+M	chrome/browser/ash/secure_channel/nearby_connector_impl_unittest.cc
+M	chrome/browser/ash/secure_channel/nearby_endpoint_finder.cc
+M	chrome/browser/ash/secure_channel/nearby_endpoint_finder.h
+M	chrome/browser/ash/secure_channel/nearby_endpoint_finder_impl.h
+M	chrome/browser/ash/secure_channel/nearby_endpoint_finder_impl_unittest.cc
+M	chrome/browser/ash/secure_channel/util/histogram_util.h
+M	chrome/browser/chromeos/BUILD.gn
+M	chrome/browser/nearby_sharing/BUILD.gn
+M	chrome/browser/nearby_sharing/fake_nearby_connections_manager.h
+M	chrome/browser/nearby_sharing/file_attachment.h
+M	chrome/browser/nearby_sharing/firewall_hole/nearby_connections_firewall_hole.h
+M	chrome/browser/nearby_sharing/firewall_hole/nearby_connections_firewall_hole_factory.cc
+M	chrome/browser/nearby_sharing/firewall_hole/nearby_connections_firewall_hole_factory.h
+M	chrome/browser/nearby_sharing/firewall_hole/nearby_connections_firewall_hole_factory_unittest.cc
+M	chrome/browser/nearby_sharing/incoming_frames_reader.cc
+M	chrome/browser/nearby_sharing/incoming_frames_reader.h
+M	chrome/browser/nearby_sharing/incoming_frames_reader_unittest.cc
+M	chrome/browser/nearby_sharing/instantmessaging/receive_messages_express.h
+M	chrome/browser/nearby_sharing/nearby_connection_impl.h
+M	chrome/browser/nearby_sharing/nearby_connections_manager.h
+M	chrome/browser/nearby_sharing/nearby_connections_manager_impl.cc
+M	chrome/browser/nearby_sharing/nearby_connections_manager_impl.h
+M	chrome/browser/nearby_sharing/nearby_connections_manager_impl_unittest.cc
+M	chrome/browser/nearby_sharing/nearby_file_handler.cc
+M	chrome/browser/nearby_sharing/nearby_file_handler.h
+M	chrome/browser/nearby_sharing/nearby_share_metrics_logger.cc
+M	chrome/browser/nearby_sharing/nearby_share_metrics_logger.h
+M	chrome/browser/nearby_sharing/nearby_sharing_service_impl.cc
+M	chrome/browser/nearby_sharing/nearby_sharing_service_impl.h
+M	chrome/browser/nearby_sharing/nearby_sharing_service_impl_unittest.cc
+M	chrome/browser/nearby_sharing/network_traversal_ice_config_fetcher.h
+M	chrome/browser/nearby_sharing/outgoing_share_target_info.h
+M	chrome/browser/nearby_sharing/paired_key_verification_runner.h
+M	chrome/browser/nearby_sharing/paired_key_verification_runner_unittest.cc
+M	chrome/browser/nearby_sharing/payload_tracker.h
+M	chrome/browser/nearby_sharing/share_target.h
+M	chrome/browser/nearby_sharing/sharing_mojo_service.cc
+M	chrome/browser/nearby_sharing/sharing_mojo_service.h
+M	chrome/browser/nearby_sharing/tachyon_ice_config_fetcher.h
+M	chrome/browser/nearby_sharing/tcp_socket/nearby_connections_tcp_socket_factory.cc
+M	chrome/browser/nearby_sharing/tcp_socket/nearby_connections_tcp_socket_factory.h
+M	chrome/browser/nearby_sharing/tcp_socket/nearby_connections_tcp_socket_factory_unittest.cc
+M	chrome/browser/nearby_sharing/text_attachment.h
+M	chrome/browser/nearby_sharing/webrtc_request_builder.h
+M	chrome/browser/nearby_sharing/webrtc_request_builder_unittest.cc
+M	chrome/browser/nearby_sharing/webrtc_signaling_messenger.h
+M	chrome/browser/nearby_sharing/wifi_credentials_attachment.h
+M	chrome/browser/resources/nearby_share/BUILD.gn
+M	chrome/browser/resources/nearby_share/shared/BUILD.gn
+M	chrome/browser/ui/webui/nearby_internals/nearby_internals_ui_trigger_handler.cc
+M	chrome/browser/ui/webui/nearby_share/BUILD.gn
+M	chrome/browser/ui/webui/nearby_share/nearby_share.mojom
+M	chrome/services/sharing/BUILD.gn
+M	chrome/services/sharing/DEPS
+M	chrome/services/sharing/nearby/BUILD.gn
+M	chrome/services/sharing/nearby/decoder/BUILD.gn
+M	chrome/services/sharing/nearby/decoder/nearby_decoder.cc
+M	chrome/services/sharing/nearby/decoder/nearby_decoder.h
+M	chrome/services/sharing/nearby/decoder/nearby_decoder_decode_advertisement_fuzzer.cc
+M	chrome/services/sharing/nearby/decoder/nearby_decoder_decode_frame_fuzzer.cc
+M	chrome/services/sharing/nearby/decoder/nearby_decoder_unittest.cc
+M	chrome/services/sharing/nearby/nearby_connections.cc
+M	chrome/services/sharing/nearby/nearby_connections.h
+M	chrome/services/sharing/nearby/nearby_connections_conversions.cc
+M	chrome/services/sharing/nearby/nearby_connections_conversions.h
+M	chrome/services/sharing/nearby/nearby_connections_unittest.cc
+M	chrome/services/sharing/nearby/nearby_shared_remotes.h
+M	chrome/services/sharing/nearby/platform.cc
+M	chrome/services/sharing/nearby/platform/BUILD.gn
+M	chrome/services/sharing/nearby/platform/bidirectional_stream.h
+M	chrome/services/sharing/nearby/platform/bidirectional_stream_unittest.cc
+M	chrome/services/sharing/nearby/platform/input_stream_impl.h
+M	chrome/services/sharing/nearby/platform/input_stream_impl_unittest.cc
+M	chrome/services/sharing/nearby/platform/output_stream_impl.h
+M	chrome/services/sharing/nearby/platform/output_stream_impl_unittest.cc
+M	chrome/services/sharing/nearby/platform/webrtc.cc
+M	chrome/services/sharing/nearby/platform/webrtc.h
+M	chrome/services/sharing/nearby/platform/wifi_lan_medium.cc
+M	chrome/services/sharing/nearby/platform/wifi_lan_medium.h
+M	chrome/services/sharing/nearby/platform/wifi_lan_medium_unittest.cc
+M	chrome/services/sharing/nearby/platform/wifi_lan_server_socket.h
+M	chrome/services/sharing/nearby/platform/wifi_lan_server_socket_unittest.cc
+M	chrome/services/sharing/nearby/platform/wifi_lan_socket_unittest.cc
+M	chrome/services/sharing/nearby/test_support/BUILD.gn
+M	chrome/services/sharing/nearby/test_support/mock_webrtc_dependencies.h
+M	chrome/services/sharing/public/cpp/BUILD.gn
+M	chrome/services/sharing/public/cpp/advertisement.h
+M	chrome/services/sharing/public/cpp/conversions.h
+M	chrome/services/sharing/sharing_impl.cc
+M	chrome/services/sharing/sharing_impl.h
+M	chrome/services/sharing/sharing_impl_unittest.cc
+M	chrome/services/sharing/webrtc/BUILD.gn
+M	chrome/test/BUILD.gn
+M	chrome/utility/BUILD.gn
+M	chrome/utility/DEPS
+M	chrome/utility/services.cc
+M	chromeos/ash/services/BUILD.gn
+M	chromeos/ash/services/bluetooth_config/BUILD.gn
+M	chromeos/ash/services/bluetooth_config/DEPS
+M	chromeos/ash/services/bluetooth_config/bluetooth_device_status_notifier_impl.cc
+M	chromeos/ash/services/bluetooth_config/bluetooth_device_status_notifier_impl_unittest.cc
+R100	ash/services/nearby/COMMON_METADATA	chromeos/ash/services/nearby/COMMON_METADATA
+R100	ash/services/nearby/DEPS	chromeos/ash/services/nearby/DEPS
+A	chromeos/ash/services/nearby/DIR_METADATA
+R100	ash/services/nearby/OWNERS	chromeos/ash/services/nearby/OWNERS
+R100	ash/services/nearby/README.md	chromeos/ash/services/nearby/README.md
+R092	ash/services/nearby/public/cpp/BUILD.gn	chromeos/ash/services/nearby/public/cpp/BUILD.gn
+R061	ash/services/nearby/public/cpp/fake_firewall_hole.h	chromeos/ash/services/nearby/public/cpp/fake_firewall_hole.h
+R087	ash/services/nearby/public/cpp/fake_firewall_hole_factory.cc	chromeos/ash/services/nearby/public/cpp/fake_firewall_hole_factory.cc
+R071	ash/services/nearby/public/cpp/fake_firewall_hole_factory.h	chromeos/ash/services/nearby/public/cpp/fake_firewall_hole_factory.h
+R093	ash/services/nearby/public/cpp/fake_nearby_process_manager.cc	chromeos/ash/services/nearby/public/cpp/fake_nearby_process_manager.cc
+R090	ash/services/nearby/public/cpp/fake_nearby_process_manager.h	chromeos/ash/services/nearby/public/cpp/fake_nearby_process_manager.h
+R096	ash/services/nearby/public/cpp/fake_tcp_connected_socket.cc	chromeos/ash/services/nearby/public/cpp/fake_tcp_connected_socket.cc
+R089	ash/services/nearby/public/cpp/fake_tcp_connected_socket.h	chromeos/ash/services/nearby/public/cpp/fake_tcp_connected_socket.h
+R095	ash/services/nearby/public/cpp/fake_tcp_server_socket.cc	chromeos/ash/services/nearby/public/cpp/fake_tcp_server_socket.cc
+R091	ash/services/nearby/public/cpp/fake_tcp_server_socket.h	chromeos/ash/services/nearby/public/cpp/fake_tcp_server_socket.h
+R096	ash/services/nearby/public/cpp/fake_tcp_socket_factory.cc	chromeos/ash/services/nearby/public/cpp/fake_tcp_socket_factory.cc
+R088	ash/services/nearby/public/cpp/fake_tcp_socket_factory.h	chromeos/ash/services/nearby/public/cpp/fake_tcp_socket_factory.h
+R090	ash/services/nearby/public/cpp/mock_nearby_connections.cc	chromeos/ash/services/nearby/public/cpp/mock_nearby_connections.cc
+R093	ash/services/nearby/public/cpp/mock_nearby_connections.h	chromeos/ash/services/nearby/public/cpp/mock_nearby_connections.h
+R087	ash/services/nearby/public/cpp/mock_nearby_process_manager.cc	chromeos/ash/services/nearby/public/cpp/mock_nearby_process_manager.cc
+R083	ash/services/nearby/public/cpp/mock_nearby_process_manager.h	chromeos/ash/services/nearby/public/cpp/mock_nearby_process_manager.h
+R090	ash/services/nearby/public/cpp/mock_nearby_sharing_decoder.cc	chromeos/ash/services/nearby/public/cpp/mock_nearby_sharing_decoder.cc
+R082	ash/services/nearby/public/cpp/mock_nearby_sharing_decoder.h	chromeos/ash/services/nearby/public/cpp/mock_nearby_sharing_decoder.h
+R094	ash/services/nearby/public/cpp/nearby_client_uuids.cc	chromeos/ash/services/nearby/public/cpp/nearby_client_uuids.cc
+R079	ash/services/nearby/public/cpp/nearby_client_uuids.h	chromeos/ash/services/nearby/public/cpp/nearby_client_uuids.h
+R092	ash/services/nearby/public/cpp/nearby_process_manager.cc	chromeos/ash/services/nearby/public/cpp/nearby_process_manager.cc
+R087	ash/services/nearby/public/cpp/nearby_process_manager.h	chromeos/ash/services/nearby/public/cpp/nearby_process_manager.h
+R096	ash/services/nearby/public/cpp/tcp_server_socket_port.cc	chromeos/ash/services/nearby/public/cpp/tcp_server_socket_port.cc
+R087	ash/services/nearby/public/cpp/tcp_server_socket_port.h	chromeos/ash/services/nearby/public/cpp/tcp_server_socket_port.h
+R096	ash/services/nearby/public/cpp/tcp_server_socket_port_unittest.cc	chromeos/ash/services/nearby/public/cpp/tcp_server_socket_port_unittest.cc
+R095	ash/services/nearby/public/mojom/BUILD.gn	chromeos/ash/services/nearby/public/mojom/BUILD.gn
+R100	ash/services/nearby/public/mojom/DEPS	chromeos/ash/services/nearby/public/mojom/DEPS
+R100	ash/services/nearby/public/mojom/OWNERS	chromeos/ash/services/nearby/public/mojom/OWNERS
+R090	ash/services/nearby/public/mojom/firewall_hole.mojom	chromeos/ash/services/nearby/public/mojom/firewall_hole.mojom
+R099	ash/services/nearby/public/mojom/nearby_connections.mojom	chromeos/ash/services/nearby/public/mojom/nearby_connections.mojom
+R096	ash/services/nearby/public/mojom/nearby_connections_mojom_traits.cc	chromeos/ash/services/nearby/public/mojom/nearby_connections_mojom_traits.cc
+R067	ash/services/nearby/public/mojom/nearby_connections_mojom_traits.h	chromeos/ash/services/nearby/public/mojom/nearby_connections_mojom_traits.h
+R100	ash/services/nearby/public/mojom/nearby_connections_types.mojom	chromeos/ash/services/nearby/public/mojom/nearby_connections_types.mojom
+R090	ash/services/nearby/public/mojom/nearby_decoder.mojom	chromeos/ash/services/nearby/public/mojom/nearby_decoder.mojom
+R098	ash/services/nearby/public/mojom/nearby_decoder_types.mojom	chromeos/ash/services/nearby/public/mojom/nearby_decoder_types.mojom
+R100	ash/services/nearby/public/mojom/nearby_share_target_types.mojom	chromeos/ash/services/nearby/public/mojom/nearby_share_target_types.mojom
+R089	ash/services/nearby/public/mojom/quick_start_decoder.mojom	chromeos/ash/services/nearby/public/mojom/quick_start_decoder.mojom
+R100	ash/services/nearby/public/mojom/quick_start_decoder_types.mojom	chromeos/ash/services/nearby/public/mojom/quick_start_decoder_types.mojom
+R085	ash/services/nearby/public/mojom/sharing.mojom	chromeos/ash/services/nearby/public/mojom/sharing.mojom
+R074	ash/services/nearby/public/mojom/tcp_server_socket_port.mojom	chromeos/ash/services/nearby/public/mojom/tcp_server_socket_port.mojom
+R088	ash/services/nearby/public/mojom/tcp_server_socket_port_mojom_traits.cc	chromeos/ash/services/nearby/public/mojom/tcp_server_socket_port_mojom_traits.cc
+R057	ash/services/nearby/public/mojom/tcp_server_socket_port_mojom_traits.h	chromeos/ash/services/nearby/public/mojom/tcp_server_socket_port_mojom_traits.h
+R096	ash/services/nearby/public/mojom/tcp_socket_factory.mojom	chromeos/ash/services/nearby/public/mojom/tcp_socket_factory.mojom
+R095	ash/services/nearby/public/mojom/webrtc.mojom	chromeos/ash/services/nearby/public/mojom/webrtc.mojom
+R100	ash/services/nearby/public/mojom/webrtc_signaling_messenger.mojom	chromeos/ash/services/nearby/public/mojom/webrtc_signaling_messenger.mojom
+M	device/bluetooth/public/mojom/BUILD.gn
+Revision: 99f13a90b3689
+###Change Japanese number of suggestions data type to be a number.
+<<<<Detail:
+If we rely on isNumberValue converting this data to a string, found that there is a persistence issue due to the type being stored as a number and the isSettingsValid()_ [1] function returning that the string is not the same, causing the stored string to be rejected as an invalid value.
+
+This meant that on opening the settings page, it would find that the
+string "8" != number 8 and would replace it with the default value.
+
+This is not a problem for the ZHUYIN PAGE SIZE, since that is not a number and is not converted to a string when stored.
+
+The code does not actually handle converted values correctly. Also the comment is wrong, this is a number. So I just deleted the isNumberValue function and conversion logic entirely.
+
+BUG=b:250997017
+R=mlcui
+
+Change-Id: Icf9268bf894eb749fc6c76712470a91199b8a703
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3933603
+Commit-Queue: Keith Lee <keithlee@chromium.org>
+Reviewed-by: Michael Cui <mlcui@google.com>
+Auto-Submit: Keith Lee <keithlee@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057295}
+<<<<End
+
+M	chrome/browser/resources/settings/chromeos/os_languages_page/input_method_options_page.js
+M	chrome/browser/resources/settings/chromeos/os_languages_page/input_method_util.js
+Revision: b70d62a5cfb58
+###fileSystemProvider: port create_file test to service workers
+<<<<Detail:
+Bug: b:235414571
+Change-Id: Ie3207340def814d8ce40e6979cfdd2b5a1583d89
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3933600
+Reviewed-by: Alexander Bolodurin <alexbn@chromium.org>
+Commit-Queue: Peter Marshall <petermarshall@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057294}
+<<<<End
+
+M	chrome/browser/chromeos/extensions/file_system_provider/file_system_provider_apitest.cc
+M	chrome/test/data/extensions/api_test/file_system_provider/service_worker/BUILD.gn
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/create_file/manifest.json
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/create_file/sw.js
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/create_file/test.html
+A	chrome/test/data/extensions/api_test/file_system_provider/service_worker/create_file/test.js
+Revision: 7c77a5b5a8cf0
+###Update V8 to version 10.8.144.
+<<<<Detail:
+Summary of changes available at:
+https://chromium.googlesource.com/v8/v8/+log/91ee0de8..83c6be46
+
+Please follow these instructions for assigning/CC'ing issues:
+https://v8.dev/docs/triage-issues
+
+Please close rolling in case of a roll revert:
+https://v8-roll.appspot.com/
+This only works with a Google account.
+
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux-blink-rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_chromium_chromeos_msan_rel_ng
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:linux_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:mac_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:win_optional_gpu_tests_rel
+CQ_INCLUDE_TRYBOTS=luci.chromium.try:android_optional_gpu_tests_rel
+
+R=hablich@chromium.org,vahl@chromium.org,v8-waterfall-sheriff@grotations.appspotmail.com
+
+Change-Id: Ia794f53a0e17d79b5392db70108abea20632752f
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943669
+Bot-Commit: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Commit-Queue: v8-ci-autoroll-builder <v8-ci-autoroll-builder@chops-service-accounts.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057293}
+<<<<End
+
+M	DEPS
+Revision: da0752c836df4
+###Enable profile migration for kiosk mode.
+<<<<Detail:
+This patch enables profile migration for kiosk by adding a check point
+in `KioskLaunchController::OnProfileLoaded()`. This step is needed
+because where for non-kiosk sessions the check happens in
+`UserSessionManager::DoBrowserLaunchInternal()` but this function is not
+called for kiosk sessions.
+
+
+Test: browser_tests --gtest_filter=BrowserDataMigratorForKiosk*
+Bug: 1364085
+Change-Id: I561fa957bb190fa0c8c19ea9dde78a824666a7b5
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3899232
+Reviewed-by: Stefan Kuhne <skuhne@chromium.org>
+Reviewed-by: Ben Franz <bfranz@chromium.org>
+Reviewed-by: Denis Kuznetsov <antrim@chromium.org>
+Commit-Queue: Yuta Hijikata <ythjkt@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057292}
+<<<<End
+
+M	chrome/browser/ash/crosapi/browser_data_migrator.h
+M	chrome/browser/ash/crosapi/browser_data_migrator_browsertest.cc
+M	chrome/browser/ash/login/app_mode/kiosk_launch_controller.cc
+M	chrome/browser/ash/login/session/chrome_session_manager.cc
+Revision: d759ab5dbda17
+###Roll vulkan-deps from 6d9d58e17148 to 98c0906d8c81 (2 revisions)
+<<<<Detail:
+https://chromium.googlesource.com/vulkan-deps.git/+log/6d9d58e17148..98c0906d8c81
+
+Changed dependencies:
+* vulkan-loader: https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-Loader.git/+log/6c64537135..cb519989cd
+* vulkan-validation-layers: https://chromium.googlesource.com/external/github.com/KhronosGroup/Vulkan-ValidationLayers.git/+log/5562a0c3b2..d68f939413
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/vulkan-deps-chromium-autoroll
+Please CC cwallez@google.com,jmadill@google.com,radial-bots+chrome-roll@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:android_optional_gpu_tests_rel;luci.chromium.try:linux_optional_gpu_tests_rel;luci.chromium.try:mac_optional_gpu_tests_rel;luci.chromium.try:win_optional_gpu_tests_rel;luci.chromium.try:linux-swangle-try-x64;luci.chromium.try:win-swangle-try-x86;luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:win-asan;luci.chromium.try:linux_chromium_cfi_rel_ng
+Bug: None
+Tbr: cwallez@google.com,jmadill@google.com,radial-bots+chrome-roll@google.com
+Change-Id: I8a5b1cfa2c4e92980143c989f40af22704d4c128
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942360
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057291}
+<<<<End
+
+M	DEPS
+Revision: 09b642b5dc649
+###borealis: Allow borealis to run on i3/r3 without a token
+<<<<Detail:
+This cl obviates the old "run on minimal hardware" token by actually
+allowing borealis to run on minimal hardware.
+
+Bug: b/252887744
+Change-Id: Ie16cecac4791be8fe81a012d3f0699bab259148c
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944110
+Auto-Submit: Nic Hollingum <hollingum@google.com>
+Reviewed-by: Daniel Ng <danielng@google.com>
+Commit-Queue: Nic Hollingum <hollingum@google.com>
+Commit-Queue: Daniel Ng <danielng@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057290}
+<<<<End
+
+M	chrome/browser/ash/borealis/borealis_features.cc
+Revision: aaa84125403df
+###[RQ] Moves extraction of repeatable queries to a background thread.
+<<<<Detail:
+Currently the repeatable queries are extracted from the in-memory URL DB
+in the main thread. This change moves the extraction to the history
+backend thread to improve NTP page load time and browser responsiveness.
+
+Bug: 1370234
+Change-Id: I04f3757e7aaf5c090b08a96eb958997d5e0f47a6
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3929712
+Reviewed-by: manuk hovanesian <manukh@chromium.org>
+Reviewed-by: Scott Violet <sky@chromium.org>
+Commit-Queue: Moe Ahmadi <mahmadi@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057289}
+<<<<End
+
+M	components/history/core/browser/history_backend.cc
+M	components/history/core/browser/history_backend.h
+M	components/history/core/browser/history_backend_unittest.cc
+M	components/history/core/browser/history_service.cc
+M	components/history/core/browser/history_service.h
+M	components/history/core/browser/history_service_unittest.cc
+M	components/history/core/browser/history_types.h
+M	components/history/core/browser/keyword_search_term_util.cc
+M	components/history/core/browser/keyword_search_term_util.h
+M	components/history/core/browser/top_sites_impl.cc
+M	components/history/core/browser/top_sites_impl.h
+M	components/history/core/browser/top_sites_impl_unittest.cc
+M	components/history/core/browser/url_database.cc
+M	components/history/core/browser/url_database.h
+M	components/history/core/browser/url_database_unittest.cc
+M	tools/metrics/histograms/metadata/history/histograms.xml
+Revision: 52ecc61a0a9c7
+###AppServiceProxyLacros: Reinitialize resets app service
+<<<<Detail:
+The set of initialized app types is cleared when ReinitializeForTesting
+is called on the Lacros app service.
+
+Bug: 1361180
+Change-Id: I6f88d7781c95b7300c7b88f51432d20c12a78a4b
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943450
+Auto-Submit: Eric Willigers <ericwilligers@chromium.org>
+Commit-Queue: Maggie Cai <mxcai@chromium.org>
+Reviewed-by: Maggie Cai <mxcai@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057288}
+<<<<End
+
+M	chrome/browser/apps/app_service/app_service_proxy_base.cc
+M	chrome/browser/apps/app_service/app_service_proxy_lacros.cc
+M	components/services/app_service/public/cpp/app_registry_cache.cc
+Revision: cc29b824cba24
+###Roll src-internal from 8d83fa7d68d1 to 272b39a16628 (1 revision)
+<<<<Detail:
+https://chrome-internal.googlesource.com/chrome/src-internal.git/+log/8d83fa7d68d1..272b39a16628
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://skia-autoroll.corp.goog/r/src-internal-chromium-autoroll
+Please CC yukishiino@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chrome.try:linux-chromeos-chrome
+Bug: None
+Tbr: yukishiino@google.com
+Change-Id: I9e63d437df23c7b22fa7bece99a1a01a4b460cf7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3942460
+Commit-Queue: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Bot-Commit: chromium-internal-autoroll <chromium-internal-autoroll@skia-corp.google.com.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057287}
+<<<<End
+
+M	DEPS
+Revision: b3046d3d56586
+###borealis: remove checks for *-borealis boards
+<<<<Detail:
+Bug: none
+Change-Id: I875d6a23260df53d0e989f774e8b6addc8cdf9ee
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3869941
+Reviewed-by: Nic Hollingum <hollingum@google.com>
+Commit-Queue: Daniel Ng <danielng@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057286}
+<<<<End
+
+M	chrome/browser/ash/borealis/borealis_features.cc
+Revision: 487c5d120e797
+###Updating trunk VERSION from 5353.0 to 5354.0
+<<<<Detail:
+* This is an automated release commit.
+* Do not revert without consulting chrome-pmo@google.com.
+NOAUTOREVERT=true
+
+Change-Id: If35043d6c5c9ca237fd0a25b7c22b73bb6e7d2d1
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3943496
+Bot-Commit: Chrome Release Bot (LUCI) <chrome-official-brancher@chops-service-accounts.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057285}
+<<<<End
+
+M	chrome/VERSION
+Revision: 217de397f68ca
+###AppList removes file suggestions through the service
+<<<<Detail:
+This CL ensures that the app list code uses the file suggestion keyed
+service to remove file suggestions. In this way, other file suggestion
+clients (such as holding space) are notified of the suggestion removal.
+
+In detail, this CL does the following things:
+
+1. `RemovedResultsRanker::ctor` accepts a profile pointer as the
+parameter rather than a pointer to proto.
+
+2, `FileSuggestKeyedService` provides a new API to allow the client
+to remove a suggestion by the search result metadata.
+
+3. Refactor the unit tests of `RemovedResultsRanker`. This CL moves
+the test cases that check the proto data recovered from the disk into
+a separate test class.
+
+4. Add a unit test that verifies when removing file suggestions through
+`RemovedResultsRanker`, the file suggest keyed service's API is used.
+
+Bug: 1372940
+Change-Id: I4a4bbce5ea27d9f15ce603ced1403321045ccefe
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3940481
+Reviewed-by: Tony Yeoman <tby@chromium.org>
+Commit-Queue: Andrew Xu <andrewxu@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057284}
+<<<<End
+
+M	chrome/browser/ui/app_list/search/files/file_suggest_keyed_service.cc
+M	chrome/browser/ui/app_list/search/files/file_suggest_keyed_service.h
+M	chrome/browser/ui/app_list/search/files/mock_file_suggest_keyed_service.h
+M	chrome/browser/ui/app_list/search/ranking/ranker_delegate.cc
+A	chrome/browser/ui/app_list/search/ranking/removed_results_proto_unittest.cc
+M	chrome/browser/ui/app_list/search/ranking/removed_results_ranker.cc
+M	chrome/browser/ui/app_list/search/ranking/removed_results_ranker.h
+M	chrome/browser/ui/app_list/search/ranking/removed_results_ranker_unittest.cc
+M	chrome/test/BUILD.gn
+Revision: b2b2bfa0e73d0
+###[ios] Create FieldTrial configs for ContentSuggestionsUIModuleRefresh
+<<<<Detail:
+Change-Id: I0fc42d9a98f438764359a5fc43cff166f22a85db
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3910665
+Auto-Submit: Chris Lu <thegreenfrog@chromium.org>
+Commit-Queue: Chris Lu <thegreenfrog@chromium.org>
+Reviewed-by: Gauthier Ambard <gambard@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057283}
+<<<<End
+
+M	testing/variations/fieldtrial_testing_config.json
+Revision: 077d5b9f4a088
+###Roll WebGPU CTS from 74b1f15354f7 to 6c61e3b01607 (1 revision)
+<<<<Detail:
+https://chromium.googlesource.com/external/github.com/gpuweb/cts.git/+log/74b1f15354f7..6c61e3b01607
+
+2022-10-11 gyuyoung@igalia.com op: Implement 'multiple_pairs_of_draws_in_one_render_bundle' test in multiple_buffers.spec.ts (#1907)
+
+If this roll has caused a breakage, revert this CL and stop the roller
+using the controls here:
+https://autoroll.skia.org/r/webgpu-cts-chromium-autoroll
+Please CC cwallez@google.com on the revert to ensure that a human
+is aware of the problem.
+
+To file a bug in Chromium: https://bugs.chromium.org/p/chromium/issues/entry
+
+To report a problem with the AutoRoller itself, please file a bug:
+https://bugs.chromium.org/p/skia/issues/entry?template=Autoroller+Bug
+
+Documentation for the AutoRoller is here:
+https://skia.googlesource.com/buildbot/+doc/main/autoroll/README.md
+
+Cq-Include-Trybots: luci.chromium.try:dawn-linux-x64-deps-rel;luci.chromium.try:dawn-mac-x64-deps-rel;luci.chromium.try:dawn-win10-x64-deps-rel;luci.chromium.try:dawn-win10-x86-deps-rel
+Bug: None
+Tbr: cwallez@google.com
+Change-Id: Ib3f021d9c28ae6ecdfab002f4f8300a6706e34ee
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3944151
+Commit-Queue: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Bot-Commit: chromium-autoroll <chromium-autoroll@skia-public.iam.gserviceaccount.com>
+Cr-Commit-Position: refs/heads/main@{#1057282}
+<<<<End
+
+M	DEPS
+Revision: e67b9b52d6ba2
+###[iOS] Switch to ios/chrome/common/ui/util/ui_util.h
+<<<<Detail:
+This patch is part of a series of patches to switch import from:
+  ios/chrome/browser/ui/util/ui_util.h
+to:
+  ios/chrome/common/ui/util/ui_util.h
+
+This is related to:
+   crrev.com/c/3936525 Moving methods to the new location
+   crrev.com/c/3936523 Cleanup old location
+
+This CL was uploaded by git cl split.
+
+R=droger@chromium.org
+
+Change-Id: I7266b503142ab11f3d31562edd50a66b8d1feb22
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3939475
+Auto-Submit: Jérôme Lebel <jlebel@chromium.org>
+Reviewed-by: David Roger <droger@chromium.org>
+Commit-Queue: Jérôme Lebel <jlebel@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057281}
+<<<<End
+
+M	ios/chrome/browser/google/BUILD.gn
+M	ios/chrome/browser/google/google_logo_service.mm
+M	ios/chrome/browser/memory/memory_debugger.mm
+Revision: 591b7ee173d48
+###Reenable BackForwardCacheBrowserTest.PresentationConnectionClosed
+<<<<Detail:
+Wait for the renderer before calling OnStartPresentationSucceeded().
+
+Bug: 1297406
+Change-Id: I75389a3d1024c0a2d267180c152967efe39199ea
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3937580
+Commit-Queue: Fergal Daly <fergal@chromium.org>
+Reviewed-by: Fergal Daly <fergal@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057280}
+<<<<End
+
+M	content/browser/back_forward_cache_features_browsertest.cc
+Revision: 3f6530d4997a0
+###[iOS] Switch to ios/chrome/common/ui/util/ui_util.h
+<<<<Detail:
+This patch is part of a series of patches to switch import from:
+  ios/chrome/browser/ui/util/ui_util.h
+to:
+  ios/chrome/common/ui/util/ui_util.h
+
+This is related to:
+   crrev.com/c/3936525 Moving methods to the new location
+   crrev.com/c/3936523 Cleanup old location
+
+This CL was uploaded by git cl split.
+
+R=rohitrao@chromium.org
+
+Change-Id: I27f0c587e3af79034cf6b5832690a27883295983
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3933566
+Reviewed-by: Rohit Rao <rohitrao@chromium.org>
+Auto-Submit: Jérôme Lebel <jlebel@chromium.org>
+Commit-Queue: Rohit Rao <rohitrao@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057279}
+<<<<End
+
+M	ios/chrome/browser/ui/table_view/cells/BUILD.gn
+M	ios/chrome/browser/ui/table_view/cells/table_view_attributed_string_header_footer_item.mm
+M	ios/chrome/browser/ui/table_view/cells/table_view_cell.mm
+M	ios/chrome/browser/ui/table_view/cells/table_view_link_header_footer_item.mm
+M	ios/chrome/browser/ui/table_view/cells/table_view_url_item.mm
+Revision: 41373d72bcd39
+###[journeys] Add flag for side panel journeys queryless view
+<<<<Detail:
+Bug: 1310280
+Change-Id: I7dae484ad77c1cc91cbcd014374a24c92df5be82
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3930693
+Reviewed-by: Tommy Li <tommycli@chromium.org>
+Commit-Queue: Marlon Facey <mfacey@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057278}
+<<<<End
+
+M	chrome/browser/about_flags.cc
+M	chrome/browser/flag-metadata.json
+M	chrome/browser/flag_descriptions.cc
+M	chrome/browser/flag_descriptions.h
+M	chrome/browser/ui/ui_features.cc
+M	chrome/browser/ui/ui_features.h
+M	tools/metrics/histograms/enums.xml
+Revision: b6929de778b99
+###WebUI: Update css_to_wrapper.py to be TrustedTypes compliant.
+<<<<Detail:
+This is in preparation of enabling TrustedTypes for Polymer-based
+WebUIs.
+
+Bug: 1098690
+Change-Id: I382765722d0f170a9b9a910e9e7a95fbc1906dc6
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3936600
+Auto-Submit: Demetrios Papadopoulos <dpapad@chromium.org>
+Commit-Queue: Rebekah Potter <rbpotter@chromium.org>
+Reviewed-by: Rebekah Potter <rbpotter@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057277}
+<<<<End
+
+M	tools/polymer/css_to_wrapper.py
+M	tools/polymer/tests/css_to_wrapper/foo_no_includes_style_expected.css.ts
+M	tools/polymer/tests/css_to_wrapper/foo_relative_style_expected.css.ts
+M	tools/polymer/tests/css_to_wrapper/foo_style_expected.css.ts
+M	tools/polymer/tests/css_to_wrapper/foo_style_expected.min.css.ts
+M	tools/polymer/tests/css_to_wrapper/foo_vars_expected.css.ts
+Revision: 9694e21de84d7
+###DEPS: remove unused config variable
+<<<<Detail:
+This is not used after https://crrev.com/c/3915816.
+
+Bug: 1329052
+Change-Id: I9b694a63c46c164e39a080a5b5f2469bf231c8e7
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3915686
+Auto-Submit: Takuto Ikuta <tikuta@chromium.org>
+Commit-Queue: Takuto Ikuta <tikuta@chromium.org>
+Reviewed-by: Ben Pastene <bpastene@chromium.org>
+Reviewed-by: Garrett Beaty <gbeaty@google.com>
+Cr-Commit-Position: refs/heads/main@{#1057276}
+<<<<End
+
+M	DEPS
+Revision: c2f0b8725b474
+###Track PrintJob lifetimes in printing browser tests
+<<<<Detail:
+This is a speculative fix for flaky crashes related to print jobs still
+being pending on test termination.
+
+Extend the PrintJob::Observer class to include observation of when a
+PrintJob is being destroyed.
+
+Expose a CreatePrintJob() method from PrintViewManagerBase for creation
+of PrintJob objects.  This allows tests to override this to include
+their own observer of the PrintJob.  This is needed instead of relying
+on the observer already used by PrintViewManagerBase because that class
+removes itself from observation once the print job is released, which
+is too soon for knowing when it is safe to terminate tests.
+
+Update SystemAccessProcessPrintBrowserTestBase to become a PrintJob
+observer and track PrintJob lifetimes.  This can be used to ensure that
+all PrintJobs ever created have been deleted before test termination.
+
+Ensuring PrintJob termination should be more reliable than checking for
+PrintJobWorker class having been stopped, as there is still significant
+cleanup work that has to happen after that event.
+
+Change the tests to no longer include tracking of OnDidStop() as part
+of criteria for when to exit the testing loop.
+
+Bug: 1368116
+Change-Id: I7b86ffe6794ff3aa0137ca6f7ac7b769571e56d6
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3923978
+Reviewed-by: Lei Zhang <thestig@chromium.org>
+Commit-Queue: Alan Screen <awscreen@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057275}
+<<<<End
+
+M	chrome/browser/printing/print_browsertest.cc
+M	chrome/browser/printing/print_job.cc
+M	chrome/browser/printing/print_job.h
+Revision: fc8264d467adf
+###Remove intel-hd-630-family tag from expectations
+<<<<Detail:
+This tag is used in third_party/dawn/webgpu-cts/expectations.txt and
+has been replaced by intel-gen-9 tag, we can safely remove it.
+
+Bug: 1342945
+Change-Id: Ib7b9441c24f4eef9ea5dc65cda96ca5faf8e44ec
+Reviewed-on: https://chromium-review.googlesource.com/c/chromium/src/+/3811897
+Reviewed-by: Brian Sheedy <bsheedy@chromium.org>
+Commit-Queue: Hao Li <hao.x.li@intel.com>
+Reviewed-by: Austin Eng <enga@chromium.org>
+Cr-Commit-Position: refs/heads/main@{#1057274}
+<<<<End
+
+M	content/test/gpu/gpu_tests/gpu_integration_test.py
+M	content/test/gpu/gpu_tests/test_expectations/cast_streaming_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/context_lost_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/gpu_process_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/hardware_accelerated_feature_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/info_collection_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/maps_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/mediapipe_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/pixel_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/power_measurement_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/screenshot_sync_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/trace_test_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/webcodecs_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/webgl2_conformance_expectations.txt
+M	content/test/gpu/gpu_tests/test_expectations/webgl_conformance_expectations.txt
+M	content/test/gpu/validate_tag_consistency.py

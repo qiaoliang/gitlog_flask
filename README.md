@@ -48,6 +48,8 @@ $ flask run -h 127.0.0.1 -p 1313
 生成单元测试报告/代码覆盖率报告
 
 ```
+export FLASK_ENV=development
+
 pytest --junitxml=reports/test-result.xml --cov=./ --cov-report=xml --cov-report=html --cov-report=term
 ```
 
