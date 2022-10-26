@@ -2,11 +2,11 @@ import unittest
 from app import app
 from parser import logParser
 
-log_2_rev=[
+_log_2_rev=[
     "Revision: 175c40a\n",
     "Revision: 234561a\n",
 ]
-logtext_1_rev=[
+_logtext_1_rev=[
     "Revision: 175c40a\n",
     "###解析 git log 。通过路由 /logfile，将文件内容回写到浏览器。\n",
     "<<<<Detail:\n",
@@ -25,7 +25,7 @@ logtext_1_rev=[
 
 class LogParseTestCase(unittest.TestCase):
     def test_parse(self):
-        result = logParser.parse(logtext_1_rev)
+        result = logParser.parse(_logtext_1_rev)
         self.assertEqual(len(result),1)
         revInfo =result[0] 
         self.assertEqual(revInfo.rev, "175c40a")
@@ -41,7 +41,7 @@ class LogParseTestCase(unittest.TestCase):
 
 
     def test_should_has_two_revisionse(self):
-        result = logParser.parse(log_2_rev)
+        result = logParser.parse(_log_2_rev)
         self.assertEqual(len(result),2)
         self.assertEqual(result[0].rev, "175c40a")
         self.assertEqual(result[1].rev, "234561a")

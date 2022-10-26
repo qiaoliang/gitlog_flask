@@ -29,13 +29,14 @@ class Revision(Base):
             self.detail=""
         self.detail = self.detail + d; 
     def addChange(self,c):
+        c.revid = self.rev
         self.changedfiles.append(c)
 
-    def toDict(self):
-        result= {'inst':self.id,'rev':self.rev, 'brief':self.brief, 'detail':self.detail}
+    def dict(self):
+        result= {'instid':self.id,'rev':self.rev, 'brief':self.brief, 'detail':self.detail}
         changes =[]
         for f_item in self.changedfiles:
-            changes.append(f_item.toDict())
+            changes.append(f_item.dict())
         result['changedfiles'] = changes
         return result 
 class ChangedFile(Base):
@@ -49,7 +50,7 @@ class ChangedFile(Base):
     revision = relationship("Revision", back_populates="changedfiles")
     def __repr__(self):
         return f"ChangedFile(id={self.id!r}, revid={self.revid!r}, cmode={self.cmode!r},origin={self.origin!r},target={self.origin!r})"
-    def toDict(self):
+    def dict(self):
         return {'instid':self.id,'cmode':self.cmode, 'origin':self.origin, 'target':self.target,'revid':self.revid}
     @staticmethod
     def create(str):

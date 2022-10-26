@@ -27,7 +27,7 @@ $ pip3 install -r requirements.txt
 
 ```bash
 $ cd {your_chromium_dir}/src
-$ git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n<<<<Detail:%n%b<<<<End" HEAD...{your_old-revision} > prod_gitlog.txt
+$ git log --name-status --abbrev-commit --format="Revision: %h%n###%s%n<<<<Detail:%n%b<<<<End" HEAD...{your_old_revision} > prod_gitlog.txt
 $ cp prod_gitlog.txt {your_flask_app_dir}
 ```
 

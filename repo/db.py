@@ -70,7 +70,7 @@ def _getFiles(cmode):
     return files
 
 
-def tranformToFiles(dbret):
+def rowToFiles(dbret):
     result = []
     for i in dbret:
         result.append(i.origin)
@@ -78,19 +78,19 @@ def tranformToFiles(dbret):
 
 
 def getAppendedFiles():
-    return tranformToFiles(_getFiles("A"))
+    return rowToFiles(_getFiles("A"))
 
 
 def getModifiedFiles():
-    return tranformToFiles(_getFiles("M"))
+    return rowToFiles(_getFiles("M"))
 
 
 def getDeletedFiles():
-    return tranformToFiles(_getFiles("D"))
+    return rowToFiles(_getFiles("D"))
 
 
 def getRenamedFiles():
-    return tranformToFiles(_getFiles("R"))
+    return rowToFiles(_getFiles("R"))
 
 
 def getAllRevId():
