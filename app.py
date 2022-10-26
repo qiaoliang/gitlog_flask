@@ -48,7 +48,7 @@ def rev():
 
 @app.route('/file/<name>')
 def changed_file(name):
-    result = db.getRevsForFile(name)
+    result = db.getRevInfosForFile(name)
     return jsonify(revisions = result)
 
 @app.route('/files')
