@@ -21,9 +21,8 @@ def create_flask_app(config):
                 template_folder="templates")    # -> 设定：在 templates 目录下存储静态资源
 
     app.config.from_object(config)  # -> 设定：从配置类 Config 中读取配置信息
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    cors = CORS(app, resources={r"/*": {"origins": "*"}})
     return app
-
 
 app = create_flask_app(FlaskSiteConfig)
 
@@ -59,3 +58,7 @@ def changed_files():
     files['renamed'] = db.getRenamedFiles()
     files['modified'] = db.getModifiedFiles()
     return jsonify(files=files)
+
+@app.route('/addedfiles')
+def added_files():
+    return jsonify(db.getAppendedFiles())

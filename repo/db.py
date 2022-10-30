@@ -61,11 +61,12 @@ def getRevInfosForFile(name):
 def _getFiles(cmode):
     with engine().connect() as conn:
         result = conn.execute(
-            text("SELECT distinct origin FROM changed_files WHERE cmode = :mode"),
+            text("SELECT origin,revid,target,id FROM changed_files WHERE cmode = :mode  GROUP BY origin ORDER BY revid"),
             {"mode": cmode}
         )
         files = []
         for item in result:
+            print(item)
             files.append(item)
     return files
 
@@ -73,7 +74,8 @@ def _getFiles(cmode):
 def rowToFiles(dbret):
     result = []
     for i in dbret:
-        result.append(i.origin)
+        ret ={"id":str(i.id), "rev":i.revid,"origin":i.origin,"target":str(i.target)}
+        result.append(ret)
     return result
 
 
