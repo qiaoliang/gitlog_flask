@@ -17,28 +17,28 @@ _revInfo_with_changes_text = [
 
 class RevModeTestCase(unittest.TestCase):
     maxDiff = None
-    def test_parse_modified_files(self):
+    def test_create_a_modified_files(self):
         line = "M	1.txt"
         result = revmode.ChangedFile.create(line)
         self.assertEqual(result.cmode, "M")
         self.assertEqual(result.origin, "1.txt")
         self.assertEqual(result.target, None)
 
-    def test_parse_deleted_files(self):
+    def test_create_a_deleted_files(self):
         line = "D	app/parser/logParser.py"
         result = revmode.ChangedFile.create(line)
         self.assertEqual(result.cmode, "D")
         self.assertEqual(result.origin, "app/parser/logParser.py")
         self.assertEqual(result.target, None)
 
-    def test_parse_Renamed_files(self):
+    def test_create_a_Renamed_files(self):
         line = "R100	Dockerfile	app/Dockerfile"
         result = revmode.ChangedFile.create(line)
         self.assertEqual(result.cmode, 'R')
         self.assertEqual(result.origin, "Dockerfile")
         self.assertEqual(result.target, "app/Dockerfile")
 
-    def test_parse_Renamed_files(self):
+    def test_create_a_Renamed_files(self):
         line = "A	1.txt"
         result = revmode.ChangedFile.create(line)
         self.assertEqual(result.cmode, 'A')
@@ -71,3 +71,47 @@ class RevModeTestCase(unittest.TestCase):
                 }
         self.assertEqual(expected, result[0].dict())
 
+    def ChangedFile(self,cmode = "M",origin="1.txt",target=None,rev="This_REV_ID",id=0):
+            afile = revmode.ChangedFile()
+            afile.cmode = cmode
+            afile.origin = origin
+            afile.target = target
+            afile.revid = rev
+            afile.id = id
+            return afile
+class CFileBuilder(object):
+    @staticmethod
+    def newInstance():
+        afile = revmode.ChangedFile()
+        afile._cmode = "M"
+        afile._origin = "origin.txt"
+        afile._target = None
+        afile._revid = "DEFULT_REV"
+        afile._id = 0
+        return afile
+
+    def cmode(self,cmode):
+        self._cmode = cmode
+        return self
+
+    def origin(self,origin):
+        self._origin = origin
+        return self
+
+    def target(self,target):
+        self._target = target
+        return self
+    def rev(self,rev_id):
+        self._revid = rev_id
+        return self
+    def id(self,id):
+        self._id = id
+        return self
+    def build(self):
+        afile = revmode.ChangedFile()
+        afile.id = self._id
+        afile.cmode = self._cmode
+        afile.origin = self._origin
+        afile.target = self._target
+        afile.revid = self._revid
+        return afile

@@ -4,16 +4,14 @@ from repo.revmode import Base
 
 class DbTestCase(unittest.TestCase):
     @classmethod
-    def setupClass(self):
+    def setupClass(cls):
         Base.metadata.create_all(db.engine())
 
     def test_getAllRevId(self):
         self.assertEqual(4, len(db.getAllRevId()))
 
-
     def test_getAppendedFiles(self):
         self.assertEqual(10, len(db.getAppendedFiles()))
-
 
     def test_getRevIdsForFile(self):
         expect = ['d0166fe', '175c40a', 'cf09f40']
