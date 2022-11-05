@@ -17,6 +17,7 @@ _revInfo_with_changes_text = [
 
 class RevModeTestCase(unittest.TestCase):
     maxDiff = None
+
     def test_create_a_modified_files(self):
         line = "M	1.txt"
         result = revmode.ChangedFile.create(line)
@@ -63,50 +64,57 @@ class RevModeTestCase(unittest.TestCase):
 
     def test_RevisionInfo_to_dict(self):
         result = logParser.parse(_revInfo_with_changes_text)
-        expected= {'instid':None,'rev':'175c40a', 'brief':'IamBrief', 'detail':'\ni am Detail 1\n',
-                    'changedfiles':[
-                        {'cmode': 'M', 'origin': '1.txt','target': None, 'instid': None, 'revid': '175c40a'},
-                        {'cmode': 'R', 'origin': 'Dockerfile','target': 'app/Dockerfile', 'instid': None, 'revid': '175c40a'},
+        expected = {'instid': None, 'rev': '175c40a', 'brief': 'IamBrief', 'detail': '\ni am Detail 1\n',
+                    'changedfiles': [
+                        {'cmode': 'M', 'origin': '1.txt', 'target': None,
+                            'instid': None, 'revid': '175c40a'},
+                        {'cmode': 'R', 'origin': 'Dockerfile',
+                            'target': 'app/Dockerfile', 'instid': None, 'revid': '175c40a'},
                     ]
-                }
+                    }
         self.assertEqual(expected, result[0].dict())
 
-    def ChangedFile(self,cmode = "M",origin="1.txt",target=None,rev="This_REV_ID",id=0):
-            afile = revmode.ChangedFile()
-            afile.cmode = cmode
-            afile.origin = origin
-            afile.target = target
-            afile.revid = rev
-            afile.id = id
-            return afile
-class CFileBuilder(object):
-    @staticmethod
-    def newInstance():
+    def ChangedFile(self, cmode="M", origin="1.txt", target=None, rev="This_REV_ID", id=0):
         afile = revmode.ChangedFile()
-        afile._cmode = "M"
-        afile._origin = "origin.txt"
-        afile._target = None
-        afile._revid = "DEFULT_REV"
-        afile._id = 0
+        afile.cmode = cmode
+        afile.origin = origin
+        afile.target = target
+        afile.revid = rev
+        afile.id = id
         return afile
 
-    def cmode(self,cmode):
+
+class FileBuilder(object):
+    @staticmethod
+    def newInstance():
+        builder = FileBuilder()
+        builder._cmode = "M"
+        builder._origin = "origin.txt"
+        builder._target = None
+        builder._revid = "DEFULT_REV"
+        builder._id = 0
+        return builder
+
+    def cmode(self, cmode):
         self._cmode = cmode
         return self
 
-    def origin(self,origin):
+    def origin(self, origin):
         self._origin = origin
         return self
 
-    def target(self,target):
+    def target(self, target):
         self._target = target
         return self
-    def rev(self,rev_id):
+
+    def rev(self, rev_id):
         self._revid = rev_id
         return self
-    def id(self,id):
+
+    def id(self, id):
         self._id = id
         return self
+
     def build(self):
         afile = revmode.ChangedFile()
         afile.id = self._id
@@ -115,3 +123,50 @@ class CFileBuilder(object):
         afile.target = self._target
         afile.revid = self._revid
         return afile
+
+
+class RevBuilder(object):
+    @staticmethod
+    def newInstance():
+        builder = RevBuilder()
+        builder = revmode.Revision()
+        builder._rev = "REV_ID"
+        builder._id= 0
+        builder._brief="IamBrief"
+        builder._detail= "I am the first Line in Detail\n I am the first Line in Detail"
+        builder._changedfiles = []
+        return builder
+
+    def rev(self, rev):
+        self._rev = rev
+        return self
+
+    def brief(self, b):
+        self._brief = b
+        return self
+
+    def detail(self, d):
+        self._detail = d
+        return self
+
+    def id(self, id):
+        self._id = id
+        return self
+
+    def addFile(self, c):
+        if(self._changes == None ):
+            self._changes =[]
+        if(c!= None and type(c)== revmode.ChangedFile):
+            c.rev = self._rev
+            c.id = self._changes.len()
+            self._changes.append(c)
+        return self
+
+    def build(self):
+        rev = revmode.Revision()
+        rev.id = self._id
+        rev.rev = self._rev
+        rev.brief = self._brief
+        rev.detail = self._detail
+        rev.changedfiles = self._changes
+        return rev

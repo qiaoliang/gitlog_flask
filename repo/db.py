@@ -49,7 +49,7 @@ def getRevInfosByIds(revIds):
         stmt = select(Revision).where(Revision.rev == i)
         revInfo =session.scalars(stmt).one()
         if(revInfo !=None):
-            result.append(revInfo)
+            result.append(revInfo.dict())
     return result
 
 def getRevInfosForFile(name):
