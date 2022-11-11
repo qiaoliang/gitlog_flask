@@ -28,7 +28,7 @@ pipeline {
     stage('单元测试') {
       
       steps {
-        sh "pytest --junitxml=reports/test-result.xml"
+        sh "pytest --junitxml=reports/test-result.xml --cov=./ --cov-report=xml --cov-report=html --cov-report=term"
       }
       post {
         always {
@@ -38,19 +38,19 @@ pipeline {
       }
     }
     
-    stage('构建镜像并推送到 CODING Docker 制品库') {
-      steps {
-        sh "docker build -t ${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} -f ${DOCKERFILE_PATH} ${DOCKER_BUILD_CONTEXT}"
-        useCustomStepPlugin(
-          key: 'SYSTEM:artifact_docker_push',
-          version: 'latest',
-          params: [
-            image:"${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}",
-            repo:"${DOCKER_REPO_NAME}"
-          ]
-        )
-      }
-    }
+    // stage('构建镜像并推送到 CODING Docker 制品库') {
+    //   steps {
+    //     sh "docker build -t ${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} -f ${DOCKERFILE_PATH} ${DOCKER_BUILD_CONTEXT}"
+    //     useCustomStepPlugin(
+    //       key: 'SYSTEM:artifact_docker_push',
+    //       version: 'latest',
+    //       params: [
+    //         image:"${CODING_DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}",
+    //         repo:"${DOCKER_REPO_NAME}"
+    //       ]
+    //     )
+    //   }
+    // }
     
     //stage("部署到远端服务") {
     //  steps {
