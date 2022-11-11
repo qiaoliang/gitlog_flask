@@ -9,10 +9,10 @@ class FlaskSiteConfig(object):
     """默认配置"""
     GITLOG_FILE = None
     print(os.getenv('FLASK_ENV'))
-    if(os.getenv('FLASK_ENV')=='development'):
-        GITLOG_FILE = './test_gitlog.txt'
-    else:
+    if(os.getenv('FLASK_ENV')=='production'):
         GITLOG_FILE = './prod_gitlog.txt'
+    else:
+        GITLOG_FILE = './test_gitlog.txt'
 
 def create_flask_app(config):
     app = Flask(__name__,

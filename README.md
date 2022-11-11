@@ -36,7 +36,7 @@ $ cp prod_gitlog.txt {your_flask_app_dir}
 
 ```bash
 $ export FLASK_app=app
-$ export FLASK_ENV=develop  # 默认是 production
+$ export FLASK_ENV=production
 $ flask run -h 127.0.0.1 -p 1313
 ```
 
@@ -45,11 +45,9 @@ $ flask run -h 127.0.0.1 -p 1313
 
 ## 测试
 
-生成单元测试报告/代码覆盖率报告
+生成单元测试报告/代码覆盖率报告，其中所需的测试数据由 test_gitlog.txt 文件提供.
 
 ```
-export FLASK_ENV=development
-
 pytest --junitxml=reports/test-result.xml --cov=./ --cov-report=xml --cov-report=html --cov-report=term
 ```
 
