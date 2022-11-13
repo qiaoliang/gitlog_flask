@@ -133,7 +133,7 @@ class RevBuilder(object):
         builder._rev = "REV_ID"
         builder._id= 0
         builder._brief="IamBrief"
-        builder._detail= "I am the first Line in Detail\n I am the first Line in Detail"
+        builder._detail= "I am 1st Line in Detail\n I am 2rd Line in Detail"
         builder._changedfiles = []
         return builder
 
@@ -160,6 +160,14 @@ class RevBuilder(object):
             c.rev = self._rev
             c.id = self._changes.len()
             self._changes.append(c)
+        return self
+
+    def addFiles(self, c):
+        if(c== None or not isinstance(c,list)):
+            return self
+        for item in c:
+            if(type(item)==  revmode.ChangedFile):
+                self.addFile(item)
         return self
 
     def build(self):
