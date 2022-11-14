@@ -48,28 +48,28 @@ class RevModeTestCase(unittest.TestCase):
 
     def test_Changed_file_to_dict(self):
         modified_file = revmode.ChangedFile.create("M	1.txt")
-        modified_file.revid = '4527ss5223'
+        modified_file.rev = '4527ss5223'
         modified_file.id = 1
         expect1 = {'cmode': 'M', 'origin': '1.txt',
-                   'target': None, 'instid': 1, 'revid': '4527ss5223'}
+                   'target': None, 'id': 1, 'rev': '4527ss5223'}
         self.assertEqual(expect1, modified_file.dict())
 
         renamed_file = revmode.ChangedFile.create(
             "R100	Dockerfile	app/Dockerfile")
-        renamed_file.revid = '23232323'
+        renamed_file.rev = '23232323'
         renamed_file.id = 2
         expect2 = {'cmode': 'R', 'origin': 'Dockerfile',
-                   'target': 'app/Dockerfile', 'instid': 2, 'revid': '23232323'}
+                   'target': 'app/Dockerfile', 'id': 2, 'rev': '23232323'}
         self.assertEqual(expect2, renamed_file.dict())
 
     def test_RevisionInfo_to_dict(self):
         result = logParser.parse(_revInfo_with_changes_text)
-        expected = {'instid': None, 'rev': '175c40a', 'brief': 'IamBrief', 'detail': '\ni am Detail 1\n',
-                    'changedfiles': [
+        expected = {'id': None, 'rev': '175c40a', 'brief': 'IamBrief', 'detail': '\ni am Detail 1\n',
+                    'changes': [
                         {'cmode': 'M', 'origin': '1.txt', 'target': None,
-                            'instid': None, 'revid': '175c40a'},
+                            'id': None, 'rev': '175c40a'},
                         {'cmode': 'R', 'origin': 'Dockerfile',
-                            'target': 'app/Dockerfile', 'instid': None, 'revid': '175c40a'},
+                            'target': 'app/Dockerfile', 'id': None, 'rev': '175c40a'},
                     ]
                     }
         self.assertEqual(expected, result[0].dict())
@@ -79,7 +79,7 @@ class RevModeTestCase(unittest.TestCase):
         afile.cmode = cmode
         afile.origin = origin
         afile.target = target
-        afile.revid = rev
+        afile.rev = rev
         afile.id = id
         return afile
 
@@ -108,7 +108,7 @@ class FileBuilder(object):
         return self
 
     def rev(self, rev_id):
-        self._revid = rev_id
+        self._rev = rev_id
         return self
 
     def id(self, id):
@@ -121,7 +121,7 @@ class FileBuilder(object):
         afile.cmode = self._cmode
         afile.origin = self._origin
         afile.target = self._target
-        afile.revid = self._revid
+        afile.rev = self._rev
         return afile
 
 
@@ -134,7 +134,7 @@ class RevBuilder(object):
         builder._id= 0
         builder._brief="IamBrief"
         builder._detail= "I am 1st Line in Detail\n I am 2rd Line in Detail"
-        builder._changedfiles = []
+        builder._changs = []
         return builder
 
     def rev(self, rev):
@@ -176,5 +176,5 @@ class RevBuilder(object):
         rev.rev = self._rev
         rev.brief = self._brief
         rev.detail = self._detail
-        rev.changedfiles = self._changes
+        rev.changes = self._changes
         return rev

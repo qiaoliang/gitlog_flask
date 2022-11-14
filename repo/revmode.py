@@ -14,7 +14,7 @@ class Revision(Base):
     rev = Column(String(30))
     brief = Column(String)
     detail = Column(String)
-    changedfiles = relationship(
+    changes = relationship(
          "ChangedFile", back_populates="revision", cascade="all, delete-orphan"
     )
     def __repr__(self):
@@ -29,15 +29,15 @@ class Revision(Base):
             self.detail=""
         self.detail = self.detail + d; 
     def addChange(self,c):
-        c.revid = self.rev
-        self.changedfiles.append(c)
+        c.rev = self.rev
+        self.changes.append(c)
 
     def dict(self):
-        result= {'instid':self.id,'rev':self.rev, 'brief':self.brief, 'detail':self.detail}
+        result= {'id':self.id,'rev':self.rev, 'brief':self.brief, 'detail':self.detail}
         changes =[]
-        for f_item in self.changedfiles:
+        for f_item in self.changes:
             changes.append(f_item.dict())
-        result['changedfiles'] = changes
+        result['changes'] = changes
         return result 
 class ChangedFile(Base):
     __tablename__ = "changed_files"
@@ -46,12 +46,12 @@ class ChangedFile(Base):
     cmode = Column(String(30))
     origin = Column(String)
     target = Column(String)
-    revid = Column(String, ForeignKey("revision_infos.rev"), nullable=False)
-    revision = relationship("Revision", back_populates="changedfiles")
+    rev = Column(String, ForeignKey("revision_infos.rev"), nullable=False)
+    revision = relationship("Revision", back_populates="changes")
     def __repr__(self):
-        return f"ChangedFile(id={self.id!r}, revid={self.revid!r}, cmode={self.cmode!r},origin={self.origin!r},target={self.origin!r})"
+        return f"ChangedFile(id={self.id!r}, rev={self.rev!r}, cmode={self.cmode!r},origin={self.origin!r},target={self.origin!r})"
     def dict(self):
-        return {'instid':self.id,'cmode':self.cmode, 'origin':self.origin, 'target':self.target,'revid':self.revid}
+        return {'id':self.id,'cmode':self.cmode, 'origin':self.origin, 'target':self.target,'rev':self.rev}
     @staticmethod
     def create(str):
         cfile = ChangedFile()

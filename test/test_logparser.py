@@ -32,7 +32,7 @@ class LogParseTestCase(unittest.TestCase):
         self.assertEqual(revInfo.brief,"解析 git log 。通过路由 /logfile，将文件内容回写到浏览器。")
         self.assertEqual(revInfo.detail,"\ni am Detail 1\ni am Detail 2 Text\n")
  
-        files =revInfo.changedfiles
+        files =revInfo.changes
         self.assertEqual(len(files),6)
         self.assertEqual(files[3].cmode,"R")
         self.assertEqual(files[3].origin,"app.py")

@@ -62,3 +62,15 @@ def changed_files():
 @app.route('/addedfiles')
 def added_files():
     return jsonify(db.getAppendedFiles())
+
+@app.route('/revinfo/<revid>')
+def get_revInfo(revid):
+    revInfo = db.getRevInfoByRevId(revid)
+    result ={}
+    result['id']=revInfo.id
+    result['rev']=revInfo.rev
+    result['brief']=revInfo.brief
+    result['detail']=revInfo.detail
+    result['changes']=revInfo.changes
+
+    return jsonify(result)
